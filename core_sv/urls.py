@@ -16,6 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+import core
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^test-core$', 'core.views.test_core')
 ]
