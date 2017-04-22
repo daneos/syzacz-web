@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from core.utils import validate_sessid
 
 plugin_env = {
+	"version": lambda: (0,0,1),
 	"validate_sessid": validate_sessid
 }
 
@@ -21,7 +22,8 @@ print plugin_list
 for p in plugin_list:
 	try:
 		__import__(p, locals(), globals())
-		globals()[p].init(plugin_env)
+		ver = globals()[p].init(plugin_env)
+		print "Loaded plugin: %s %d.%d.%d" % ((p,) + ver)
 	except Exception as e:
 		print "Error loading plugin %s: %s" % (p, str(e))
 

@@ -23,7 +23,7 @@ base_url = r"^syzacz/testing"
 session = r"(?P<sessid>[0-9a-f\-]+)"
 
 urlpatterns = [
-	url(r'^admin/', include(admin.site.urls)),
+	url(r'%s/dba/' % base_url,							include(admin.site.urls)),
 
 	url(r'%s/test-core$' % base_url, 					'core.views.test_core')
 ]

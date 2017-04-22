@@ -5,6 +5,7 @@ env = {}
 def init(plugin_env):
 	global env
 	env = plugin_env
+	return (0,0,2)
 
 def urls():
 	return [
@@ -14,6 +15,7 @@ def urls():
 
 def test_plugin(rq, sessid):
 	if env["validate_sessid"](sessid):
-		return "Welcome from plugin view! sessid=%s" % sessid
+		ver = env["version"]()
+		return "Welcome from plugin view! sessid=%s<br>Core version: %d.%d.%d" % ((sessid,)+ver)
 	else:
 		return "Core did not validate session!"
