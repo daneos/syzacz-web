@@ -14,11 +14,8 @@ def urls():
 
 
 def test_plugin(rq):
-	if env["validate_sessid"](rq):
-		ver = env["version"]()
-		return {
-			"sessid": env["sessid"](rq),
-			"core_version": "%d.%d.%d" % ver
-		}
-	else:
-		return { "error":"Core did not validate session!" }
+	ver = env["version"]()
+	return {
+		"sessid": env["sessid"](rq),
+		"core_version": "%d.%d.%d" % ver
+	}

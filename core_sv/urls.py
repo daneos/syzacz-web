@@ -22,7 +22,6 @@ import plugins
 
 
 base_url = r"^%s" % conf.app_base
-session = r"(?P<sessid>[0-9a-f\-]+)"
 
 urlpatterns = [
 	url(r'%s/dba/' % base_url,							include(admin.site.urls)),
