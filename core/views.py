@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.db.models import Q
 from django.http import HttpResponse
 from django.template.context_processors import csrf
+from django.core.exceptions import ObjectDoesNotExist
 
 from conf import app_base
 from core.models import *
@@ -33,27 +34,33 @@ def register(rq):
 		return redirect("/%s/login" % app_base)
 
 
+def _login_form(rq, context, next_url=None):
+	if next_url:
+		context["next"] = next_url
+	context.update(csrf(rq))
+	return syzacz_render('core/login_form.template.html', context)
+
 def login(rq):
 	next_url = rq.GET.get("next")
 
 	if rq.method == "GET":
-		context = {}
-		if next_url:
-			context["next"] = next_url
-		context.update(csrf(rq))
-		return syzacz_render('core/login_form.template.html', context)
+		return _login_form(rq, {}, next_url)
 
 	if rq.method == "POST":
-		# WARNING! Plain-text auth using syzacz-db, this should be changed
-		user = get_object_or_404(User, cn=rq.POST.get("username"))
-		if user.password == rq.POST.get("password"):
-			session = Session(user=user, remote=get_request_remote_ip(rq), local=get_request_local_ip(rq))
-			session.save()
-			response = redirect(next_url or "/%s/home" % app_base)
-			response.set_cookie("syzacz_sessid", session.session_hash)
-			return response
-		else:
-			return error("Invalid userame or password.")
+		try:
+			user = User.objects.get(cn=rq.POST.get("username"))
+		except ObjectDoesNotExist:
+			user = None
+
+		if user:
+			# WARNING! Plain-text auth using syzacz-db, this should be changed
+			if user.password == rq.POST.get("password"):
+				session = Session(user=user, remote=get_request_remote_ip(rq), local=get_request_local_ip(rq))
+				session.save()
+				response = redirect(next_url or "/%s/home" % app_base)
+				response.set_cookie("syzacz_sessid", session.session_hash)
+				return response
+		return _login_form(rq, { "error":"Invalid user name or password" }, next_url)
 
 
 def logout(rq):

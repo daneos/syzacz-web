@@ -1,6 +1,10 @@
 {% extends "generic.template.html" %}
 
 {% block content %}
+	{% if error %}
+		<span style="color:red">{{ error }}</span><br>
+	{% endif %}
+	
 	{% if next %}
 		<form action="/{{ app_base}}/login?next={{ next }}" method="post">
 	{% else %}
