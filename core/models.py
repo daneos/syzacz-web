@@ -33,4 +33,4 @@ class Log(models.Model):
 	message = models.CharField(max_length=200)
 
 	def __str__(self):
-		return "Log(id: %d, timestamp:%s, message:%s" % (self.id, self.timestamp, self.message)
+		return "Log(id: %d, timestamp:%s, message:%s)" % (self.id, self.timestamp, self.message)

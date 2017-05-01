@@ -17,7 +17,7 @@ def syzacz_render(template, context={}):
 
 def validate_sessid(rq):
 	session = Session.objects.get(session_hash=sessid(rq))
-	print "[CHECK] %s" % str(session)
+	log("[CHECK] %s" % str(session))
 	if session:
 		if session.active:
 			session.last_activity = datetime.now()
