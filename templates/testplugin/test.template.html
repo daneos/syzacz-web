@@ -1,0 +1,11 @@
+{% extends "generic.template.html" %}
+
+{% block content %}
+	{% if error %}
+		ERROR: <span style="color:red">{{ error }}</span>
+	{% else %}
+		<h4>Welcome from plugin view!</h4>
+		sessid=<span style="color:blue">{{ sessid }}</span><br>
+		Core version: <span style="color:#999">{{ core_version }}</span>
+	{% endif %}
+{% endblock %}
