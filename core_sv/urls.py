@@ -30,8 +30,8 @@ urlpatterns = [
 
 	url(r'%s/register$' % base_url,						'core.views.register'),
 	url(r'%s/login' % base_url,							'core.views.login'),
-	url(r'%s/logout$' % (base_url, session),			'core.views.logout'),
-	url(r'%s/home$' % (base_url, session),				'core.views.home')
+	url(r'%s/logout$' % base_url,						'core.views.logout'),
+	url(r'%s/home$' % base_url,							'core.views.home')
 ]
 
 urlpatterns.extend(plugins.makeUrls(base_url))
