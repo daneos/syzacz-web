@@ -5,6 +5,7 @@ import glob
 from django.conf.urls import url
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
+from django.apps import apps
 
 from conf import app_base
 from core.utils import *
@@ -14,7 +15,8 @@ plugin_env = {
 	"version": lambda: (0,0,1),
 	"get_object_or_404": get_object_or_404,
 	"sessid": sessid,
-	"log": log
+	"log": log,
+	"getModel": lambda name: apps.get_model(app_label="core", model_name=name)
 }
 
 plugin_list = []
