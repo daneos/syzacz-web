@@ -1,18 +1,52 @@
-{% extends "generic.template.html" %}
-
-{% block content %}
-	{% if error %}
-		<span style="color:red">{{ error }}</span><br>
-	{% endif %}
-	
-	{% if next %}
-		<form action="/{{ app_base}}/login?next={{ next }}" method="post">
+{% extends "generic.template.html" %} {% block content %} {% if error %}
+<div style="color:red; text-align: center;">{{ error }}</div><br> {% endif %} {% if next %}
+<form action="/{{ app_base}}/login?next={{ next }}" method="post">
 	{% else %}
-		<form action="/{{ app_base}}/login" method="post">
-	{% endif %}
-		{% csrf_token %}
-		username: <input type="text" name="username" /><br>
-		password: <input type="password" name="password" /><br>
-		<input type="submit" value="Login" />
+	<form action="/{{ app_base}}/login" method="post">
+		{% endif %} {% csrf_token %}
+
+
+		<div class="container">
+			<div class="row welcome text-center">
+				<div class="span12">
+					<p class="lead">Zaloguj się</p>
+				</div>
+			</div>
+
+			<hr>
+			<div class="row">
+				<div class="span12 text-center">
+
+					<table>
+						<tr>
+							<th><label for="login">Login</label></th>
+							<td><input type="text" id="login" name="username" /></td>
+						</tr>
+				
+						<tr>
+							<th><label for="password">password</label></th>
+							<td><input type="password" id="password" name="password" /></td>
+						</tr>
+				
+						<tr>
+							<th><label for="submit"></label></th>
+							<td><input type="submit" value="Login" /></td>
+						</tr>
+					</table>
 	</form>
-{% endblock %}
+						<hr><div style="text-align: right"><a href="/{{ app_base}}/register" style="color:gray">Poproś o założenie panelu</a></div>
+
+	</div>
+	</div>
+
+	</div>
+
+
+
+
+
+
+
+
+
+	{% endblock %}
