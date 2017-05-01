@@ -28,6 +28,7 @@ urlpatterns = [
 
 	url(r'%s/test-core$' % base_url, 					'core.views.test_core'),
 
+	url(r'^$',											'core.views.landing'),
 	url(r'%s/register$' % base_url,						'core.views.register'),
 	url(r'%s/login' % base_url,							'core.views.login'),
 	url(r'%s/logout$' % base_url,						'core.views.logout'),

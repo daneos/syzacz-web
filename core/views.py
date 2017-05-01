@@ -10,6 +10,12 @@ from conf import app_base
 from core.models import *
 from core.utils import *
 
+def landing(rq):
+	if validate_sessid(rq):
+		return redirect("/%s/home" % app_base)
+	else:
+		return redirect("/%s/login" % app_base)
+
 
 def register(rq):
 	if rq.method == "GET":
