@@ -15,7 +15,15 @@ def urls():
 
 def test_plugin(rq):
 	ver = env["version"]()
+	sessid = env["sessid"](rq)
+	Session = env["getModel"]("Session")
+	User = env["getModel"]("User")
+
+	s = Session.objects.get(session_hash=sessid)
+	u = User.objects.get(pk=s.user.id)
+
 	return {
-		"sessid": env["sessid"](rq),
+		"sessid": sessid,
+		"user": u.cn,
 		"core_version": "%d.%d.%d" % ver
 	}
