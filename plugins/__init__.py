@@ -4,12 +4,14 @@ import os
 import glob
 from django.conf.urls import url
 from django.http import HttpResponse
+from django.shortcuts import render_to_response, get_object_or_404
 
-from core.utils import validate_sessid
+from core.utils import *
 
 plugin_env = {
 	"version": lambda: (0,0,1),
-	"validate_sessid": validate_sessid
+	"validate_sessid": validate_sessid,
+	"get_object_or_404": get_object_or_404
 }
 
 plugin_list = []
@@ -35,13 +37,16 @@ def makeUrls(base_url, session):
 			[
 				url(
 					r"%s" % (u[0] % (base_url, session)),
-					lambda *args, **kwargs: buildView(globals()[p], u[1], *args, **kwargs)
+					lambda *args, **kwargs: buildView(globals()[p], u[1], u[2], *args, **kwargs)
 				)
 				for u in p_urls
 			]
 		)
 	return urls
 
-def buildView(plugin, callback, *args, **kwargs):
+def buildView(plugin, callback, template, *args, **kwargs):
 	print "building view for %s" % callback
-	return HttpResponse(getattr(plugin, callback)(*args, **kwargs))
+	if template:
+		return syzacz_render(template, getattr(plugin, callback)(*args, **kwargs))
+	else:
+		return HttpResponse(getattr(plugin, callback)(*args, **kwargs))

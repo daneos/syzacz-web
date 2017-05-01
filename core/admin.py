@@ -1,3 +1,8 @@
 from django.contrib import admin
+from core.models import *
 
-# Register your models here.
+admin.sites.AdminSite.site_header = "Database admin: SyZaCz-web"
+admin.sites.AdminSite.site_title = "SyZaCz-web"
+
+admin.site.register(User)
+admin.site.register(Session)

@@ -1,3 +1,29 @@
+import uuid
 from django.db import models
 
-# Create your models here.
+class User(models.Model):
+	id = models.AutoField(primary_key=True)
+	ldap = models.CharField(max_length=100)
+	cn = models.CharField(max_length=50)
+	name = models.CharField(max_length=100)
+	surname = models.CharField(max_length=100)
+	phone = models.CharField(max_length=20)
+	email = models.EmailField()
+	password = models.CharField(max_length=128)
+
+	def __str__(self):
+		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
+
+
+class Session(models.Model):
+	id = models.AutoField(primary_key=True)
+	time_start = models.DateTimeField(auto_now_add=True)
+	last_activity = models.DateTimeField(auto_now_add=True)
+	active = models.BooleanField(default=True)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	remote = models.GenericIPAddressField()
+	local = models.GenericIPAddressField()
+	session_hash = models.UUIDField(default=uuid.uuid4)
+
+	def __str__(self):
+		return "Session(id:%d, active:%s, user:%s, remote:%s, local:%s, hash:%s)" % (self.id, self.active, self.user, self.remote, self.local, str(self.session_hash))

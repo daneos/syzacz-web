@@ -16,16 +16,22 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+import conf
 import core
 import plugins
 
-base_url = r"^syzacz/testing"
+
+base_url = r"^%s" % conf.app_base
 session = r"(?P<sessid>[0-9a-f\-]+)"
 
 urlpatterns = [
 	url(r'%s/dba/' % base_url,							include(admin.site.urls)),
 
-	url(r'%s/test-core$' % base_url, 					'core.views.test_core')
+	url(r'%s/test-core$' % base_url, 					'core.views.test_core'),
+
+	url(r'%s/login$' % base_url,						'core.views.login'),
+	url(r'%s/logout/%s$' % (base_url, session),			'core.views.logout'),
+	url(r'%s/home/%s$' % (base_url, session),			'core.views.home')
 ]
 
 urlpatterns.extend(plugins.makeUrls(base_url, session))

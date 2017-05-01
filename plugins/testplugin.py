@@ -9,13 +9,16 @@ def init(plugin_env):
 
 def urls():
 	return [
-		[ "%s/test-plugin/%s", "test_plugin", None ]
+		[ "%s/test-plugin/%s", "test_plugin", "testplugin/test.template.html" ]
 	]
 
 
 def test_plugin(rq, sessid):
 	if env["validate_sessid"](sessid):
 		ver = env["version"]()
-		return "Welcome from plugin view! sessid=%s<br>Core version: %d.%d.%d" % ((sessid,)+ver)
+		return {
+			"sessid": sessid,
+			"core_version": "%d.%d.%d" % ver
+		}
 	else:
-		return "Core did not validate session!"
+		return { "error":"Core did not validate session!" }
