@@ -1,7 +1,36 @@
-{% extends "generic.template.html" %}
+{% extends "generic.template.html" %} {% block content %}
 
-{% block content %}
-	<div style="color:green">
-		syzacz home
+
+
+
+
+<div class="container">
+	<div class="row welcome text-center">
+		<div class="span12">
+			<p class="lead">System Zarządzania Członkami Hackerspace</p>
+		</div>
 	</div>
+
+	<hr>
+	
+	 
+     <div id="menuBoczne ">menu</div>
+	 <div id="zawartosc" style="border: 2px solid black; ">zawartosc</div>
+
+
+
+
+
+
+</div>
+{% endblock %} {% block menu %}
+<div id="topmenu">
+	<ul id="menu-gorne-menu" class="nav nav-pills">
+		<li class="menu-item"><a href="/">HOME</a></li>
+		<li class="menu-item"><a target="_blank" href="http://wiki.hackerspace-krk.pl/">WIKI</a></li>
+
+		<li class="menu-item"><a href="/">USTAWIENIA</a></li>
+
+	</ul>
+</div>
 {% endblock %}
