@@ -90,3 +90,6 @@ ENV/
 
 # SQLite databases
 *.sqlite3
+
+# Sublime project
+.sublime-project/
