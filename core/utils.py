@@ -5,6 +5,7 @@ from uuid import uuid4
 
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.core.exceptions import ObjectDoesNotExist
 
 from conf import app_base
 from core.models import *
@@ -16,7 +17,11 @@ def syzacz_render(template, context={}):
 	return render_to_response(template, context)
 
 def validate_sessid(rq):
-	session = Session.objects.get(session_hash=sessid(rq))
+	try:
+		session = Session.objects.get(session_hash=sessid(rq))
+	except ObjectDoesNotExist:
+		log("[CHECK] Non-existent sessid:%s" % sessid(rq))
+		return False
 	log("[CHECK] %s" % str(session))
 	if session:
 		if session.active:
