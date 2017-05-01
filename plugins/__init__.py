@@ -6,12 +6,14 @@ from django.conf.urls import url
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 
+from conf import app_base
 from core.utils import *
 
 plugin_env = {
 	"version": lambda: (0,0,1),
 	"validate_sessid": validate_sessid,
-	"get_object_or_404": get_object_or_404
+	"get_object_or_404": get_object_or_404,
+	"sessid": sessid
 }
 
 plugin_list = []
@@ -29,24 +31,27 @@ for p in plugin_list:
 	except Exception as e:
 		print "Error loading plugin %s: %s" % (p, str(e))
 
-def makeUrls(base_url, session):
+def makeUrls(base_url):
 	urls = []
 	for p in plugin_list:
 		p_urls = globals()[p].urls()
 		urls.extend(
 			[
 				url(
-					r"%s" % (u[0] % (base_url, session)),
-					lambda *args, **kwargs: buildView(globals()[p], u[1], u[2], *args, **kwargs)
+					r"%s" % (u[0] % base_url),
+					lambda *args, **kwargs: buildView(globals()[p], u[0] % app_base, u[1], u[2], *args, **kwargs)
 				)
 				for u in p_urls
 			]
 		)
 	return urls
 
-def buildView(plugin, callback, template, *args, **kwargs):
+def buildView(plugin, url, callback, template, *args, **kwargs):
 	print "building view for %s" % callback
-	if template:
-		return syzacz_render(template, getattr(plugin, callback)(*args, **kwargs))
+	if validate_sessid(args[0]):
+		if template:
+			return syzacz_render(template, getattr(plugin, callback)(*args, **kwargs))
+		else:
+			return HttpResponse(getattr(plugin, callback)(*args, **kwargs))
 	else:
-		return HttpResponse(getattr(plugin, callback)(*args, **kwargs))
+		return session_expired("/%s" % url)
