@@ -7,11 +7,13 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 
 from core.utils import *
+from core.log import log
 
 plugin_env = {
 	"version": lambda: (0,0,1),
 	"validate_sessid": validate_sessid,
-	"get_object_or_404": get_object_or_404
+	"get_object_or_404": get_object_or_404,
+	"log": log
 }
 
 plugin_list = []

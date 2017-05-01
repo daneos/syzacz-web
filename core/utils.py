@@ -8,14 +8,16 @@ from django.shortcuts import render_to_response, get_object_or_404
 
 from conf import app_base
 from core.models import *
+from core.log import log
 
 def syzacz_render(template, context={}):
+	log("[RENDER] %s" % template)
 	context.update({"app_base":app_base})
 	return render_to_response(template, context)
 
 def validate_sessid(sessid):
 	session = get_object_or_404(Session, session_hash=sessid)
-	print "[CHECK] %s" % str(session)
+	log("[CHECK] %s" % str(session))
 	if session.active:
 		session.last_activity = datetime.now()
 		session.save()
