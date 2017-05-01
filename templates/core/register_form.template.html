@@ -1,0 +1,13 @@
+{% extends "generic.template.html" %}
+
+{% block content %}
+	<form action="/{{ app_base}}/register" method="post">
+		{% csrf_token %}
+		username: <input type="text" name="cn" /><br>
+		name: <input type="text" name="name" /><br>
+		surname: <input type="text" name="surname" /><br>
+		email: <input type="text" name="email" /><br>
+		password: <input type="password" name="password" /><br>
+		<input type="submit" value="Login" />
+	</form>
+{% endblock %}

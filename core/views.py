@@ -11,22 +11,20 @@ from core.models import *
 from core.utils import *
 
 
-# def register(rq):
-# 	event = "0001 User registered"
-# 	try:
-# 		user = User(
-# 			name=rq.GET.get("name"),
-# 			surname=rq.GET.get("surname"),
-# 			address=rq.GET.get("address"),
-# 			phone=rq.GET.get("phone"),
-# 			email=rq.GET.get("email"),
-# 			password=rq.GET.get("p")
-# 		)
-# 		user.save()
-# 	except Exception:
-# 		return response("error", "9003 Not registered")
-# 	else:
-# 		return response("ok", IdSerializer(event, user))
+def register(rq):
+	if rq.method == "GET":
+		context = {}
+		context.update(csrf(rq))
+		return syzacz_render('core/register_form.template.html', context)
+	if rq.method == "POST":
+		user = User()
+		user.cn = rq.POST.get("cn")
+		user.name = rq.POST.get("name")
+		user.surname = rq.POST.get("surname")
+		user.email = rq.POST.get("email")
+		user.password = rq.POST.get("password")
+		user.save()
+		return redirect("/%s/login" % app_base)
 
 
 def login(rq):
