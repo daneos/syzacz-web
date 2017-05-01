@@ -29,9 +29,9 @@ urlpatterns = [
 
 	url(r'%s/test-core$' % base_url, 					'core.views.test_core'),
 
-	url(r'%s/login$' % base_url,						'core.views.login'),
-	url(r'%s/logout/%s$' % (base_url, session),			'core.views.logout'),
-	url(r'%s/home/%s$' % (base_url, session),			'core.views.home')
+	url(r'%s/login' % base_url,						'core.views.login'),
+	url(r'%s/logout$' % base_url,						'core.views.logout'),
+	url(r'%s/home$' % base_url,							'core.views.home')
 ]
 
-urlpatterns.extend(plugins.makeUrls(base_url, session))
+urlpatterns.extend(plugins.makeUrls(base_url))

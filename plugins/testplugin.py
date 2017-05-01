@@ -9,15 +9,15 @@ def init(plugin_env):
 
 def urls():
 	return [
-		[ "%s/test-plugin/%s", "test_plugin", "testplugin/test.template.html" ]
+		[ "%s/test-plugin", "test_plugin", "testplugin/test.template.html" ]
 	]
 
 
-def test_plugin(rq, sessid):
-	if env["validate_sessid"](sessid):
+def test_plugin(rq):
+	if env["validate_sessid"](rq):
 		ver = env["version"]()
 		return {
-			"sessid": sessid,
+			"sessid": env["sessid"](rq),
 			"core_version": "%d.%d.%d" % ver
 		}
 	else:
