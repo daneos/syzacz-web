@@ -34,25 +34,104 @@ class Placement(models.Model):
     rack_id = models.CharField(max_length=32)
     additinal_information = models.CharField(max_length=512)
 
-class Resources (models.Model):
+    def __str__(self):
+        return "Placement(id:%d, room_name:%s, rack_id:%s, additional_information%s)" % (self.id, self.room_name, self.rack_id, self.additinal_information)
+
+class Resource(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=512)
     remained = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)])
     remained_alarm = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)])
 
+    def __str__(self):
+        return "Resource(id:%d, name:%s, description:%s, remained:%d, remained_alarm:%d)" % (self.id, self.name, self.description, self.remained, self.remained_alarm)
+
+class Resource_using(models.Model):
+    id = models.AutoField(primary_key=True)
+    use_date = models.DateTimeField(auto_now_add=True)
+    amount = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)])
+    comment = models.CharField(max_length=256)
+    member_id = models.ForeignKey('User')
+    resource_id = models.ForeignKey('Resource')
+
+    def __str__(self):
+        return "Resource_using(id:%d, use_date:%s, amount:%d, comment:%s, member_id:%d, resource_id:%d)" % (self.id, self.use_date, self.amount, self.comment, self.member_id, self.resource_id)
+
 class Tool(models.Model):
     id = models.AutoField(primary_key=True)
     description = models.CharField(max_length=512)
-    isAble = models.BooleanField(default=True)
-    lentPermission = models.BooleanField(default=True)
+    is_able = models.BooleanField(default=True)
+    lent_permission = models.BooleanField(default=True)
+    member_id = models.ForeignKey('User')
+    placement_id = models.ForeignKey('Placement')
+
+    def __str__(self):
+        return "Tool(id:%d, description:%s, is_able:%s, lent_permission:%s, member_id:%d, placement_id:%d)" % (self.id, self.description, self.is_able, self.lent_permission, self.member_id, self.placement_id)
+
+class Lent(models.Model):
+    id = models.AutoField(primary_key=True)
+    lent_date = models.DateTimeField(auto_now_add=True)
+    planned_return_date = models.DateTimeField(auto_now_add=True)
+    return_date = models.DateTimeField(auto_now_add=False)
+    comment = models.CharField(max_length=256)
+    member_id = models.ForeignKey('User')
+    tool_id = models.ForeignKey('Tool')
+
+    def __str__(self):
+        return "Lent(id:%d, lent_date:%s, planned_return_date:%s, return_date:%s, comment:%s ,member_id:%d, placement_id:%d)" % (self.id, self.lent_date, self.planned_return_date, self.return_date,self.comment, self.member_id, self.tool_id)
+
+class Lent_form(models.Model):
+    id = models.AutoField(primary_key=True)
+    lent_date = models.DateTimeField(auto_now_add=True)
+    planned_return_date = models.DateTimeField(auto_now_add=True)
+    comment = models.CharField(max_length=256)
+    permission = models.BooleanField(default=False)
     memberId = models.ForeignKey('User')
-    placementId = models.ForeignKey('Placement')
+    placementId = models.ForeignKey('Tools')
+
+    def __str__(self):
+        return "Lent_form(id:%d, lent_date:%s, planned_return_date:%s, comment:%s , permission:%s, member_id:%d, tool_id:%d)" % (self.id, self.lent_date, self.planned_return_date,self.comment, self.member_id, self.tool_id)
+
+
+class Priority(models.Model):
+    id = models.AutoField(primary_key=True)
+    priority_name = models.CharField(max_length=32)
+    priority_level = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)])
+
+    def __str__(self):
+        return "Priority(id:%d, priority_name:%s, priority_level:%d)" % (self.id, self.priority_name, self.priority_level)
+
+class Notification(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_priority = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)])
+    description = models.CharField(max_length=512)
+    member_id = models.ForeignKey('User')
+    priority_id = models.ForeignKey('Priority')
+
+    def __str__(self):
+        return "Notification(id: %d, user_priority:%d, description:%s, member_id:%s, priority_id:%s)" % (self.id, self.user_priority, self.description, self.member_id, self.priority_id)
+
+class Special_function(models.Model):
+    id = models.AutoField(primary_key=True)
+    function_name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return "Special_function(id:%d, function_name:%s)" % (self.id, self.function_name)
+
+class Members_special_function(models.Model):
+    member_id = models.ForeignKey('User')
+    priority_id = models.ForeignKey('Special_function')
+
+    def __str__(self):
+        return "Members_special_function(member_id:%d, priority_id:%d)" % (self.id, self.function_name)
+
 
 class Log(models.Model):
     id = models.AutoField(primary_key=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     message = models.CharField(max_length=200)
+    member_id = models.ForeignKey('User')
 
     def __str__(self):
-        return "Log(id: %d, timestamp:%s, message:%s)" % (self.id, self.timestamp, self.message)
+        return "Log(id: %d, timestamp:%s, message:%s, member_id:%s)" % (self.id, self.timestamp, self.message, self.member_id)
