@@ -87,8 +87,8 @@ class Lent_form(models.Model):
     planned_return_date = models.DateTimeField(auto_now_add=True)
     comment = models.CharField(max_length=256)
     permission = models.BooleanField(default=False)
-    memberId = models.ForeignKey('User')
-    placementId = models.ForeignKey('Tools')
+    member_id = models.ForeignKey('User')
+    tool_id = models.ForeignKey('Tool')
 
     def __str__(self):
         return "Lent_form(id:%d, lent_date:%s, planned_return_date:%s, comment:%s , permission:%s, member_id:%d, tool_id:%d)" % (self.id, self.lent_date, self.planned_return_date,self.comment, self.member_id, self.tool_id)
