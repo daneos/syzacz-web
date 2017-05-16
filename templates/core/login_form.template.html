@@ -1,0 +1,18 @@
+{% extends "generic.template.html" %}
+
+{% block content %}
+	{% if error %}
+		<span style="color:red">{{ error }}</span><br>
+	{% endif %}
+	
+	{% if next %}
+		<form action="/{{ app_base}}/login?next={{ next }}" method="post">
+	{% else %}
+		<form action="/{{ app_base}}/login" method="post">
+	{% endif %}
+		{% csrf_token %}
+		username: <input type="text" name="username" /><br>
+		password: <input type="password" name="password" /><br>
+		<input type="submit" value="Login" />
+	</form>
+{% endblock %}
