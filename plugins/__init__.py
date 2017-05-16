@@ -16,7 +16,8 @@ plugin_env = {
 	"get_object_or_404": get_object_or_404,
 	"sessid": sessid,
 	"log": log,
-	"getModel": lambda name: apps.get_model(app_label="core", model_name=name)
+	"getModel": lambda name: apps.get_model(app_label="core", model_name=name),
+	"csrf": csrf
 }
 
 plugin_list = []
