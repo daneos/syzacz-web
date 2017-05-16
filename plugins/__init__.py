@@ -6,6 +6,7 @@ from django.conf.urls import url
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.apps import apps
+from django.template.context_processors import csrf
 
 from conf import app_base
 from core.utils import *
