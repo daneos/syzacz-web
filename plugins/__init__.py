@@ -4,6 +4,7 @@ import os
 import glob
 from django.conf.urls import url
 from django.http import HttpResponse
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.apps import apps
 from django.template.context_processors import csrf
@@ -13,7 +14,7 @@ from core.utils import *
 from core.log import log
 
 plugin_env = {
-	"version": lambda: (0,0,1),
+	"version": lambda: (0,0,2),
 	"get_object_or_404": get_object_or_404,
 	"sessid": sessid,
 	"log": log,
@@ -54,9 +55,13 @@ def makeUrls(base_url):
 def buildView(plugin, url, callback, template, *args, **kwargs):
 	print "building view for %s" % callback
 	if validate_sessid(args[0]):
+		context = getattr(plugin, callback)(*args, **kwargs)
+		print "VIEWBUILDER: type returned: %s" % type(context)
+		if type(context) == HttpResponseRedirect:
+			return context
 		if template:
-			return syzacz_render(template, getattr(plugin, callback)(*args, **kwargs))
+			return syzacz_render(template, context)
 		else:
-			return HttpResponse(getattr(plugin, callback)(*args, **kwargs))
+			return HttpResponse(context)
 	else:
 		return session_expired("/%s" % url)
