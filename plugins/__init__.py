@@ -33,9 +33,9 @@ for p in plugin_list:
 	try:
 		__import__(p, locals(), globals())
 		ver = globals()[p].init(plugin_env)
-		print "Loaded plugin: %s %d.%d.%d" % ((p,) + ver)
+		log("[LOAD] %s %d.%d.%d" % ((p,) + ver))
 	except Exception as e:
-		print "Error loading plugin %s: %s" % (p, str(e))
+		log("[LOAD] Error loading plugin %s: %s" % (p, str(e)))
 
 
 def makeUrls(base_url):
@@ -63,7 +63,6 @@ def pluginCallback(plugin, url, callback, template, *args, **kwargs):
 	log("[RUN] %s.%s" % (plugin.__name__, callback))
 	if validate_sessid(args[0]):
 		context = getattr(plugin, callback)(*args, **kwargs)
-		print "VIEWBUILDER: type returned: %s" % type(context)
 		if type(context) == HttpResponseRedirect:
 			return context
 		if template:
