@@ -9,30 +9,27 @@ def init(plugin_env):
 
 def urls():
 	return [
-		#[ "%s/addTool$", "addTool", "addTool.html" ]
-		#["%s/showTools", "showTools", "addTool.html"]
-		["%s/get_tool_information/123", "get_tool_information", "get_tool_information.html"]
+		["%s/get_tool_information/(?P<tool_id>[0-9]+/$)", "get_tool_information", "get_tool_information.html"]
         ["%s/get_tools_information/$", "get_tools_information", "get_tool_information.html"]
+        ["%s/add_tool/(?P<member_id>[0-9]+) (?P<placement_id>[0-9]+)/$", "modify_resource_amount", "modify_resource_amount.html"]
 	]
 
-def get_tool_information(rq, new_tool_info):
+def get_tool_information(rq, tool_id):
 
-    if not(isinstance( new_tool_info, int )) or (newToolInfo < 0):
+    if not(isinstance(tool_id, int )) or (tool_id < 0):
 		return {"error":"Bad argument"}
 
     tool_model = env["getModel"]("Tool")
 
     try:
-        tool = tool_model.objects.get(id=new_tool_info)
+        tool = tool_model.objects.get(id=tool_id)
     except ObjectDoesNotExist:
         return {"error": "Object does not exist"}
 
     return {"result":tool}
 
 def get_tools_information(rq):
-
     tool_model = env["getModel"]("Tool")
-
     try:
         tools = tool_model.objects.all()
     except ObjectDoesNotExist:
@@ -40,28 +37,23 @@ def get_tools_information(rq):
 
     return {"result": tools}
 
-def add_tool(rq):
+def add_tool(rq, member_id, placement_id):
+	tool_description = env["tool_description"](rq)
+	tool_is_able = env["tool_is_able"](rq)
+	tool_lent_permission = env["tool_lent_permission"](rq)
+	tool_member_id = member_id #zabezpeiczyć czy istnieje taki member
+	tool_placement_id = placement_id # zabezpieczyć czy istnieje takie miejsce
 
+    tool_model = env["getModel"]("Tool")
 
+    try:
+		tool_model.description = tool_description
+		tool_model.is_able = tool_is_able
+		tool_model.lent_permission = tool_lent_permission
+		tool_model.member_id = tool_member_id
+		tool_model.placement_id = tool_placement_id
+		tool_model.save()
+    except Error:
+        return {"error": "Cannot add new object"}
 
-
-
-
-
-
-
-
-def test_plugin(rq):
-	ver = env["version"]()
-	sessid = env["sessid"](rq)
-	Session = env["getModel"]("Session")
-	User = env["getModel"]("User")
-
-	s = Session.objects.get(session_hash=sessid)
-	u = User.objects.get(pk=s.user.id)
-
-	return {
-		"sessid": sessid,
-		"user": u.cn,
-		"core_version": "%d.%d.%d" % ver
-}
+    return {"result": "0"}
