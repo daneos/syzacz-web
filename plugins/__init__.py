@@ -46,7 +46,7 @@ def makeUrls(base_url):
 			[
 				url(
 					r"%s" % (u[0] % base_url),
-					lambda *args, **kwargs: buildView(globals()[p], u[0] % app_base, u[1], u[2], *args, **kwargs)
+					buildView(p, u)
 				)
 				for u in p_urls
 			]
@@ -54,8 +54,13 @@ def makeUrls(base_url):
 	return urls
 
 
-def buildView(plugin, url, callback, template, *args, **kwargs):
-	print "building view for %s" % callback
+def buildView(plugin, urlconf):
+	log("[BUILD-VIEW] %s.%s" % (plugin, urlconf))
+	return lambda *args, **kwargs: pluginCallback(globals()[p], urlconf[0] % app_base, urlconf[1], urlconf[2], *args, **kwargs)
+
+
+def pluginCallback(plugin, url, callback, template, *args, **kwargs):
+	log("[RUN] %s.%s" % (plugin.__name__, callback))
 	if validate_sessid(args[0]):
 		context = getattr(plugin, callback)(*args, **kwargs)
 		print "VIEWBUILDER: type returned: %s" % type(context)
