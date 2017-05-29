@@ -56,7 +56,7 @@ def makeUrls(base_url):
 
 def buildView(plugin, urlconf):
 	log("[BUILD-VIEW] %s.%s" % (plugin, urlconf))
-	return lambda *args, **kwargs: pluginCallback(globals()[p], urlconf[0] % app_base, urlconf[1], urlconf[2], *args, **kwargs)
+	return lambda *args, **kwargs: pluginCallback(globals()[plugin], urlconf[0] % app_base, urlconf[1], urlconf[2], *args, **kwargs)
 
 
 def pluginCallback(plugin, url, callback, template, *args, **kwargs):
