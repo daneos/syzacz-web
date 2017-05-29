@@ -11,7 +11,7 @@ def urls():
 	return [
 		["%s/get_tool_information/(?P<tool_id>[0-9]+/$)", "get_tool_information", "get_tool_information.html"]
         ["%s/get_tools_information/$", "get_tools_information", "get_tool_information.html"]
-        ["%s/add_tool/(?P<member_id>[0-9]+) (?P<placement_id>[0-9]+)/$", "modify_resource_amount", "modify_resource_amount.html"]
+        ["%s/add_tool/(?P<member_id>[0-9]+)/(?P<placement_id>[0-9]+)/$", "modify_resource_amount", "modify_resource_amount.html"]
 	]
 
 def get_tool_information(rq, tool_id):
@@ -38,9 +38,9 @@ def get_tools_information(rq):
     return {"result": tools}
 
 def add_tool(rq, member_id, placement_id):
-	tool_description = env["tool_description"](rq)
-	tool_is_able = env["tool_is_able"](rq)
-	tool_lent_permission = env["tool_lent_permission"](rq)
+	tool_description = rq.POST.get("tool_description")
+	tool_is_able = rq.POST.get("tool_is_able")
+	tool_lent_permission = rq.POST.get("tool_lent_permission")
 	tool_member_id = member_id #zabezpeiczyć czy istnieje taki member
 	tool_placement_id = placement_id # zabezpieczyć czy istnieje takie miejsce
 

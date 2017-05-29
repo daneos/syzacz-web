@@ -16,7 +16,7 @@ def urls():
         ["%s/get_resource__using_information/$", "get_resource_using_information", "get_resource_using_information.html"]
         ["%s/add_resource/$", "add_resource", "add_resource.html"]
         ["%s/add_resource_using/$", "add_resource_using", "add_resource_using.html"]
-        ["%s/modify_resource_amount/(?P<resource_id>[0-9]+) (?P<new_amount>[0-9]+)/$", "modify_resource_amount", "modify_resource_amount.html"]
+        ["%s/modify_resource_amount/(?P<resource_id>[0-9]+)/(?P<new_amount>[0-9]+)/$", "modify_resource_amount", "modify_resource_amount.html"]
     ]
 
 def get_resource_information(rq, resource_id):
@@ -67,10 +67,10 @@ def get_tools_information(rq):
     return {"result": resource}
 
 def add_resource(rq):
-    resource_name = env["resource_name"](rq)
-    resource_description = env["resource_description"](rq)
-    resource_remained = env["resource_remained"](rq)
-    resource_remained_alarm = env["resource_remained_alarm"](rq)
+    resource_name = rq.POST.get("resource_name")
+    resource_description = rq.POST.get("resource_description")
+    resource_remained = rq.POST.get("resource_remained")
+    resource_remained_alarm = rq.POST.get("resource_remained_alarm")
 
     resource_model = env["getModel"]("Resource")
 
@@ -86,11 +86,11 @@ def add_resource(rq):
     return {"result": "0"}
 
 def add_resource_using(rq):
-    resource_use_date = env["resource_use_date"](rq)
-    resource_amount = env["resource_amount"](rq)
-    resource_comment = env["resource_comment"](rq)
-    resource_member_id = env["resource_member_id"](rq)
-    resource_id = env["resource_id"](rq)
+    resource_use_date = rq.POST.get("resource_use_date")
+    resource_amount = rq.POST.get("resource_amount")
+    resource_comment = rq.POST.get("resource_comment")
+    resource_member_id = rq.POST.get("resource_member_id")
+    resource_id = rq.POST.get("resource_id")
 
     resource_model = env["getModel"]("Resource_using")
 
