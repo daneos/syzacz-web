@@ -5,15 +5,17 @@ from conf import app_base
 
 env = {}
 
+
 def init(plugin_env):
 	global env
 	env = plugin_env
-	return (0,0,3)
+	return (0, 0, 3)
+
 
 def urls():
 	return [
-		[ "%s/test-plugin", "test_plugin", "testplugin/test.template.html" ],
-		[ "%s/test-redirect", "test_redirect", None ]
+		["%s/test-plugin", "test_plugin", "testplugin/test.template.html"],
+		["%s/test-redirect", "test_redirect", None]
 	]
 
 

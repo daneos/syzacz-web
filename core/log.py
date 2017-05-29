@@ -1,6 +1,7 @@
 import conf
 from core.models import Log
 
+
 def log(message):
 	new_log = Log(message=message)
 	new_log.save()

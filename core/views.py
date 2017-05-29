@@ -1,8 +1,8 @@
-from time import time, mktime
-from datetime import datetime
-from base64 import b64encode
-from django.shortcuts import render_to_response, get_object_or_404, redirect
-from django.db.models import Q
+# from time import time, mktime
+# from datetime import datetime
+# from base64 import b64encode
+from django.shortcuts import get_object_or_404, redirect
+# from django.db.models import Q
 from django.http import HttpResponse
 from django.template.context_processors import csrf
 from django.core.exceptions import ObjectDoesNotExist
@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from conf import app_base
 from core.models import *
 from core.utils import *
+
 
 def landing(rq):
 	if validate_sessid(rq):
@@ -40,6 +41,7 @@ def _login_form(rq, context, next_url=None):
 	context.update(csrf(rq))
 	return syzacz_render('core/login_form.template.html', context)
 
+
 def login(rq):
 	next_url = rq.GET.get("next")
 
@@ -60,7 +62,7 @@ def login(rq):
 				response = redirect(next_url or "/%s/home" % app_base)
 				response.set_cookie("syzacz_sessid", session.session_hash)
 				return response
-		return _login_form(rq, { "error":"Invalid user name or password" }, next_url)
+		return _login_form(rq, { "error": "Invalid user name or password" }, next_url)
 
 
 def logout(rq):

@@ -5,7 +5,7 @@ import glob
 from django.conf.urls import url
 from django.http import HttpResponse
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.apps import apps
 from django.template.context_processors import csrf
 
@@ -14,7 +14,7 @@ from core.utils import *
 from core.log import log
 
 plugin_env = {
-	"version": lambda: (0,0,2),
+	"version": lambda: (0, 0, 2),
 	"get_object_or_404": get_object_or_404,
 	"sessid": sessid,
 	"log": log,
@@ -23,7 +23,7 @@ plugin_env = {
 }
 
 plugin_list = []
-for f in glob.glob(os.path.dirname(__file__)+"/*"):
+for f in glob.glob(os.path.dirname(__file__) + "/*"):
 	if os.path.isfile(f) and not os.path.basename(f).startswith('_') and not os.path.basename(f).endswith("pyc"):
 		plugin_list.append(os.path.basename(f)[:-3])
 
@@ -36,6 +36,7 @@ for p in plugin_list:
 		print "Loaded plugin: %s %d.%d.%d" % ((p,) + ver)
 	except Exception as e:
 		print "Error loading plugin %s: %s" % (p, str(e))
+
 
 def makeUrls(base_url):
 	urls = []
@@ -51,6 +52,7 @@ def makeUrls(base_url):
 			]
 		)
 	return urls
+
 
 def buildView(plugin, url, callback, template, *args, **kwargs):
 	print "building view for %s" % callback
