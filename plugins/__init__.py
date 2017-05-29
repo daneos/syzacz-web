@@ -38,15 +38,22 @@ def makeUrls(base_url):
 	urls = []
 	for p in plugin_list:
 		p_urls = globals()[p].urls()
-		urls.extend(
-			[
-				url(
+		# urls.extend(
+		# 	[
+		# 		url(
+		# 			r"%s" % (u[0] % base_url),
+		# 			lambda *args, **kwargs: buildView(globals()[p], u[0] % app_base, u[1], u[2], *args, **kwargs)
+		# 		)
+		# 		for u in p_urls
+		# 	]
+		# )
+		for u in p_urls:
+			uc = url(
 					r"%s" % (u[0] % base_url),
 					lambda *args, **kwargs: buildView(globals()[p], u[0] % app_base, u[1], u[2], *args, **kwargs)
 				)
-				for u in p_urls
-			]
-		)
+			print uc
+			urls.append(uc)
 	return urls
 
 def buildView(plugin, url, callback, template, *args, **kwargs):
@@ -55,6 +62,6 @@ def buildView(plugin, url, callback, template, *args, **kwargs):
 		if template:
 			return syzacz_render(template, getattr(plugin, callback)(*args, **kwargs))
 		else:
-			return HttpResponse(getattr(plugin, callback)(*args, **kwargs))
+			return HttpResponse(str(getattr(plugin, callback)(*args, **kwargs)))
 	else:
 		return session_expired("/%s" % url)

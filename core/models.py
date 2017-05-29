@@ -35,7 +35,7 @@ class Placement(models.Model):
     additinal_information = models.CharField(max_length=512)
 
     def __str__(self):
-        return "Placement(id:%d, room_name:%s, rack_id:%s, additional_information%s)" % (self.id, self.room_name, self.rack_id, self.additinal_information)
+        return "Placement(id:%d, room_name:%s, rack_id:%s, additional_information:%s)" % (self.id, self.room_name, self.rack_id, self.additinal_information)
 
 class Resource(models.Model):
     id = models.AutoField(primary_key=True)
@@ -67,7 +67,7 @@ class Tool(models.Model):
     placement_id = models.ForeignKey('Placement')
 
     def __str__(self):
-        return "Tool(id:%d, description:%s, is_able:%s, lent_permission:%s, member_id:%d, placement_id:%d)" % (self.id, self.description, self.is_able, self.lent_permission, self.member_id, self.placement_id)
+        return "Tool(id:%d, description:%s, is_able:%s, lent_permission:%s, member_id:%s, placement_id:%s)" % (self.id, self.description, self.is_able, self.lent_permission, self.member_id, self.placement_id)
 
 class Lent(models.Model):
     id = models.AutoField(primary_key=True)
@@ -131,7 +131,6 @@ class Log(models.Model):
     id = models.AutoField(primary_key=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     message = models.CharField(max_length=200)
-    member_id = models.ForeignKey('User')
 
     def __str__(self):
         return "Log(id: %d, timestamp:%s, message:%s, member_id:%s)" % (self.id, self.timestamp, self.message, self.member_id)
