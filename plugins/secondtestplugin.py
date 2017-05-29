@@ -9,13 +9,13 @@ env = {}
 def init(plugin_env):
 	global env
 	env = plugin_env
-	return (0, 0, 3)
+	return (0, 0, 2)
 
 
 def urls():
 	return [
-		["%s/test-plugin", "test_plugin", "testplugin/test.template.html"],
-		["%s/test-redirect", "test_redirect", None]
+		["%s/2-test-plugin", "test_plugin", "testplugin/test.template.html"],
+		["%s/2-test-redirect", "test_redirect", None]
 	]
 
 
@@ -29,8 +29,8 @@ def test_plugin(rq):
 	u = User.objects.get(pk=s.user.id)
 
 	return {
-		"sessid": sessid,
-		"user": u.cn,
+		"sessid": "2222222222222222",
+		"user": "22222222",
 		"core_version": "%d.%d.%d" % ver
 	}
 

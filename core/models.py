@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 
+
 class User(models.Model):
 	id = models.AutoField(primary_key=True)
 	ldap = models.CharField(max_length=100)
@@ -26,6 +27,7 @@ class Session(models.Model):
 
 	def __str__(self):
 		return "Session(id:%d, active:%s, user:%s, remote:%s, local:%s, hash:%s)" % (self.id, self.active, self.user, self.remote, self.local, str(self.session_hash))
+
 
 class Log(models.Model):
 	id = models.AutoField(primary_key=True)
