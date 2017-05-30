@@ -11,22 +11,23 @@
 		<div class="row">
 			<div class="span12 text-center">
 				<form action="" method="POST">
+					{% csrf_token %}
 					<table>
 						<tr>
 							<th><label for="login">username</label></th>
 							<td><input type="text" id="login" name="cn" /></td>
 						</tr>
 						<tr>
-							<th><label for="display_name">name</label></th>
-							<td><input type="text" id="display_name" name="name" /></td>
+							<th><label for="name">name</label></th>
+							<td><input type="text" id="name" name="name" /></td>
 						</tr>
 						<tr>
-							<th><label for="display_name">surname</label></th>
-							<td><input type="text" id="display_name" name="surname" /></td>
+							<th><label for="surname">surname</label></th>
+							<td><input type="text" id="surname" name="surname" /></td>
 						</tr>
 						<tr>
-							<th><label for="display_name">e-email</label></th>
-							<td><input type="email" id="display_name" name="email" /></td>
+							<th><label for="email">e-email</label></th>
+							<td><input type="email" id="email" name="email" /></td>
 						</tr>
 						<tr>
 							<th><label for="password">password</label></th>

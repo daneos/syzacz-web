@@ -20,7 +20,7 @@
      <div class="leftmenu">
 		 		
             <ol>
-               <li><a href="#">strona główna</a></li>
+               <li><a href="/">strona główna</a></li>
                
                <li><a href="#">sprzęt</a>
                
@@ -45,11 +45,12 @@
                         
                </li>
 
-               <li><a href="#">konto</a>
+               <li><a href="#">konto <span class="username">{{ user.cn }}</span></a>
                <ul >
                         <li><a href="#">status konta</a></li>
                         <li><a href="#">ustawienia</a></li>
                         <li><a href="#">dane do przelewu</a></li>
+                        <li><a href="/{{ app_base }}/logout">wyloguj</a></li>
             
                  </ul>
                
@@ -86,7 +87,7 @@ n arcu vel, dignissim gravida odio. elerisque, a tempus arcu ullamcorper. Vivamu
 		<li class="menu-item"><a href="/">HOME</a></li>
 		<li class="menu-item"><a target="_blank" href="http://wiki.hackerspace-krk.pl/">WIKI</a></li>
 
-		<li class="menu-item"><a href="/">USTAWIENIA</a></li>
+		<li class="menu-item"><a href="http://whois.hskrk.pl/">WHOIS</a></li>
 
 	</ul>
 </div>
