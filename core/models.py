@@ -14,7 +14,6 @@ class User(models.Model):
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
 
-
 class Session(models.Model):
 	id = models.AutoField(primary_key=True)
 	time_start = models.DateTimeField(auto_now_add=True)
