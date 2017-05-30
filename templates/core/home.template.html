@@ -6,82 +6,69 @@
 
 
 <div class="container">
-	<div class="row welcome text-center">
-		<div class="span12">
-			<p class="lead">System Zarządzania Członkami Hackerspace</p>
-		</div>
-	</div>
+
+                            <div class="row welcome text-center">
+                                <div class="span12">
+                                    <p class="lead" style="line-height:50px;">System Zarządzania Członkami Hackerspace</p>
+                                </div>
+                            </div>
 
 	<hr>
 	
 	 <div class="middle">
-     <div class="menuBoczne ">
-		 
-		 
-		 
-		 
-		 
-		
+
+     <div class="leftmenu">
+		 		
             <ol>
+               <li><a href="/">strona główna</a></li>
+               
+               <li><a href="#">sprzęt</a>
+               
+                <ul>
+                        <li><a href="#">dodaj</a></li>
+                        <li><a href="#">wypożycz</a></li>
+                        <li><a href="#">oddaj</a></li>
+                     </ul>
+               </li>
+              
+              
+              
+              
+               <li><a href="#">faktury</a>
+               
+               
+                 <ul >
+                        <li><a href="#">historia faktur</a></li>
+                        <li><a href="#">dodaj fakture</a></li>
+            
+                 </ul>
+                        
+               </li>
 
-
-                <li><a href="#">Strona główna</a></li>
-                <li><a href="#">Klasyki NES</a>
-
-                    <ul>
-
-                        <li><a href="#">Contra</a></li>
-                        <li><a href="#">Mario Bros</a></li>
-                        <li><a href="#">Duck Tales</a></li>
-                        <li><a href="#">Legend of Zelda</a></li>
-
-                    </ul>
-
-
-                </li>
-                <li><a href="#">Gry filmowe</a>
-
-                    <ul>
-
-                        <li><a href="#">Home Alone</a></li>
-                        <li><a href="#">Dick Tracy</a></li>
-                        <li><a href="#">The Simpsons</a></li>
-                        <li><a href="#">Top Gun</a></li>
-
-                    </ul>
-                </li>
-                <li><a href="#">Bijatyki</a>
-                    <ul>
-
-                        <li><a href="#">Mortal Kombat</a></li>
-                        <li><a href="#">Nekketsu K.D.</a></li>
-                        <li><a href="#">Double Dragon</a></li>
-                        <li><a href="#">Turtles T.</a></li>
-
-                    </ul>
-                </li>
-                <li><a href="#">Gry sportowe</a>
-                    <ul>
-
-                        <li><a href="#">Goal 3</a></li>
-                        <li><a href="#">Excitebike</a></li>
-                        <li><a href="#">Ike Ike Hockey</a></li>
-                        <li><a href="#">Tenis</a></li>
-
-                    </ul>
-                </li>
-                <li><a href="#">O autorach</a></li>
-
+               <li><a href="#">@<span class="username">{{ user.cn }}</span></a>
+               <ul >
+                        <li><a href="#">status konta</a></li>
+                        <li><a href="#">ustawienia</a></li>
+                        <li><a href="#">dane do przelewu</a></li>
+                        <li><a href="/{{ app_base }}/logout">wyloguj</a></li>
+            
+                 </ul>
+               
+               </li>
 
 
 
             </ol>
 		
-		
-		
-		
-		</div>
-	 <div class="zawartosc">zawartosc</div>
+	  </div>
+
+	  <div class="zawartosc"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rhoncus nisl vitae neque molestie, in bibendum nisl feugiat. Integer posuere dictum augue sit amet luctus. Ut id porta est. Aenean ac leo sed risus aliquam vehicula. Nunc a mauris sagittis, eleifend dolor at, dapibus massa. Suspendisse potenti. Maecenas blandit ipsum ex. Fusce ligula risus, tincidunt sit amet ipsum at, convallis viverra quam. Aenean sit amet urna ante. Quisque bibendum dui id ex molestie, eu ullamcorper odio convallis.
+n arcu vel, dignissim gravida odio. elerisque, a tempus arcu ullamcorper. Vivamus consectetur, tortor quis maximus lobortis, nisi lacus fermentum ipsum, ac viverra arcu felis lobortis enim. Duis non interdum arcu. Suspendisse eu imperdiet magna. Aliquam maximus quam vel erat tincidunt euismod. Quisque eget justo at metus malesuada consequat. Vivamus a leo arcu. Nulla rhoncus massa non nibh gravida tristique. </div>
+
+
+     </div>
+
+  <div style="clear:both;"></div>
 </div>
 
 
@@ -89,13 +76,18 @@
 
 
 </div>
-{% endblock %} {% block menu %}
+{% endblock %} 
+
+
+
+
+{% block menu %}
 <div id="topmenu">
 	<ul id="menu-gorne-menu" class="nav nav-pills">
 		<li class="menu-item"><a href="/">HOME</a></li>
 		<li class="menu-item"><a target="_blank" href="http://wiki.hackerspace-krk.pl/">WIKI</a></li>
 
-		<li class="menu-item"><a href="/">USTAWIENIA</a></li>
+		<li class="menu-item"><a href="http://whois.hskrk.pl/">WHOIS</a></li>
 
 	</ul>
 </div>

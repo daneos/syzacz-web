@@ -1,0 +1,91 @@
+.leftmenu{
+    
+     float:left;
+     width: 20%;
+     margin: 3%;
+     padding: 2%;
+     min-height: 400px;
+     
+}
+.zawartosc{
+ 
+     margin: 3%;
+     padding: 10px;
+}
+ol{
+    
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    font-size: 20px;
+
+}
+.middle{
+   
+   padding: 10px;
+
+}
+ol a{
+
+    color: black;
+    text-decoration: none;
+    display: block;
+
+}
+ol>li{
+         
+    padding: 5px;
+    min-block-size: 20px;
+    margin-bottom: 20px;
+
+
+
+}
+ol>li:hover>a{
+
+   color: black;
+    text-decoration: none;
+    color:#3df093;  
+
+}
+ol>li>ul{
+  
+    padding: 0;
+    margin: 10px;
+    font-size: 16px;
+    height: 20px;
+    list-style-type: square;
+    display: none;
+    
+
+
+
+
+}
+ol>li>ul>li{
+  padding: 3px;
+  min-block-size: 10px;
+  margin-left: 15px;
+
+
+}
+ol>li:hover>ul{
+
+        display: block;
+        margin-bottom: 50px;
+
+}
+
+ol>li>ul>li:hover>a{
+
+   color: black;
+   text-decoration: none;
+   color:#F04F3D;
+  
+
+}
+
+.username {
+  color: #8bc91d;
+  font-weight: bold;
+}
