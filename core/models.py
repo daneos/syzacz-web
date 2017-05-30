@@ -14,6 +14,8 @@ class User(models.Model):
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
 
+	
+
 class Book(models.Model):
 	id = models.AutoField(primary_key=True)
 	description = models.CharField(max_length=512)
