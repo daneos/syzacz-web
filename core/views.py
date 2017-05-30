@@ -77,7 +77,9 @@ def logout(rq):
 
 def home(rq):
 	if validate_sessid(rq):
-		return syzacz_render("core/home.template.html")
+		session = get_object_or_404(Session, session_hash=sessid(rq))
+		context = {"user": session.user}
+		return syzacz_render("core/home.template.html", context)
 	else:
 		return session_expired("/%s/home" % app_base)
 
