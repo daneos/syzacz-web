@@ -70,4 +70,6 @@ def pluginCallback(plugin, url, callback, template, *args, **kwargs):
 		else:
 			return HttpResponse(context)
 	else:
-		return session_expired("/%s" % url)
+		rq = args[0]
+		next_url = rq.path
+		return session_expired("%s" % next_url)
