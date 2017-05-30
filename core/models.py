@@ -14,7 +14,15 @@ class User(models.Model):
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
 
-	
+
+class Placement(models.Model):
+    id = models.AutoField(primary_key=True)
+    room_name = models.CharField(max_length=32)
+    rack_id = models.CharField(max_length=32)
+    additinal_information = models.CharField(max_length=512)
+
+    def __str__(self):
+        return "Placement(id:%d, room_name:%s, rack_id:%s, additional_information:%s)" % (self.id, self.room_name, self.rack_id, self.additinal_information)
 
 class Book(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -23,6 +31,11 @@ class Book(models.Model):
 	lent_permission = models.BooleanField(default=True)
 	member_id = models.ForeignKey('User')
 	placement_id = models.ForeignKey('Placement')
+
+	def __str__(self):
+		return "Placement(id:%d, room_name:%s, rack_id:%s, additional_information:%s)" % (
+		self.id, self.room_name, self.rack_id, self.additinal_information)
+
 
 class Session(models.Model):
 	id = models.AutoField(primary_key=True)
