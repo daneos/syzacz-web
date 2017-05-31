@@ -16,9 +16,9 @@
 	{% endif %}
 
 	{% if next %}
-		<form action="/{{ app_base}}/login?next={{ next }}" method="post">
+		<form action="/{{ app_base }}/login?next={{ next }}" method="post">
 	{% else %}
-		<form action="/{{ app_base}}/login" method="post">
+		<form action="/{{ app_base }}/login" method="post">
 	{% endif %}
 
 		{% csrf_token %}
@@ -47,7 +47,7 @@
 					</table>
 					<hr>
 					<div style="text-align: right">
-						<a href="/{{ app_base}}/register" style="color:gray">Poproś o dostęp do panelu</a>
+						<a href="/{{ app_base }}/register" style="color:gray">Poproś o dostęp do panelu</a>
 					</div>
 				</div>
 			</div>
