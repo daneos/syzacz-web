@@ -9,12 +9,12 @@ from django.shortcuts import get_object_or_404
 from django.apps import apps
 from django.template.context_processors import csrf
 
-from conf import app_base
+from conf import app_base, version
 from core.utils import *
 from core.log import log
 
 plugin_env = {
-	"version": lambda: (0, 0, 2),
+	"version": lambda: version,
 	"get_object_or_404": get_object_or_404,
 	"sessid": sessid,
 	"log": log,
@@ -33,7 +33,7 @@ for p in plugin_list:
 	try:
 		__import__(p, locals(), globals())
 		ver = globals()[p].init(plugin_env)
-		log("[LOAD] %s %d.%d.%d" % ((p,) + ver))
+		log("[LOAD] %s %s" % (p, str(ver)))
 	except Exception as e:
 		log("[LOAD] Error loading plugin %s: %s" % (p, str(e)))
 

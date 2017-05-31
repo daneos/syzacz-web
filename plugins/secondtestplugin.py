@@ -2,6 +2,7 @@
 
 from django.shortcuts import redirect
 from conf import app_base
+from core.version import Version
 
 env = {}
 
@@ -9,7 +10,7 @@ env = {}
 def init(plugin_env):
 	global env
 	env = plugin_env
-	return (0, 0, 2)
+	return Version([0, 0, 3, "stable"])
 
 
 def urls():
@@ -31,7 +32,7 @@ def test_plugin(rq):
 	return {
 		"sessid": "2222222222222222",
 		"user": "22222222",
-		"core_version": "%d.%d.%d" % ver
+		"core_version": str(ver)
 	}
 
 
