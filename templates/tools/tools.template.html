@@ -10,18 +10,18 @@
 			<td>Wpożycz</td> 
 		</tr>
 		{% for tool in tools %}
-		<tr>
-			<td>{{ tool.name }}</td>
-			<td>{{ tool.description }}</td>
-			<td>{{ tool.placement_id.name }}</td>
-			<td>
-				{% if tool.available %}
-					<a href="\{{ app_base }}\tools.lend\{{ tool.id }}"><span class="wypozycz">wypozycz</span></a>
-				{% else %}
-					<a href="\{{ app_base }}\tools.return\{{ tool.id }}"><span class="oddaj">oddaj</span></a>
-				{% endif %}
-			</td> 
-		</tr>
+			<tr>
+				<td>{{ tool.name }}</td>
+				<td>{{ tool.description }}</td>
+				<td>{{ tool.placement_id.room_name }}</td>
+				<td>
+					{% if tool.available %}
+						<a href="\{{ app_base }}\tools.lend\{{ tool.id }}"><span class="wypozycz">wypożycz</span></a>
+					{% else %}
+						<a href="\{{ app_base }}\tools.return\{{ tool.id }}"><span class="oddaj">oddaj</span></a>
+					{% endif %}
+				</td> 
+			</tr>
 		{% endfor %}
 	</table>
 {% endblock %}
