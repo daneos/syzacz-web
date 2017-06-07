@@ -61,14 +61,15 @@ class Resource_using(models.Model):
 
 class Tool(models.Model):
     id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
     description = models.CharField(max_length=512)
-    is_able = models.BooleanField(default=True)
+    available = models.BooleanField(default=True)
     lent_permission = models.BooleanField(default=True)
     member_id = models.ForeignKey('User')
     placement_id = models.ForeignKey('Placement')
 
     def __str__(self):
-        return "Tool(id:%d, description:%s, is_able:%s, lent_permission:%s, member_id:%s, placement_id:%s)" % (self.id, self.description, self.is_able, self.lent_permission, self.member_id, self.placement_id)
+        return "Tool(id:%d, description:%s, is_able:%s, lent_permission:%s, member_id:%s, placement_id:%s)" % (self.id, self.description, self.available, self.lent_permission, self.member_id, self.placement_id)
 
 class Lent(models.Model):
     id = models.AutoField(primary_key=True)
