@@ -1,4 +1,4 @@
-{% extends "generic.template.html" %}
+{% extends "generic.template.html" %} 
 
 {% block menu %}
 	<div id="topmenu">
@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<hr>
-	 	<div class="middle">
+		<div class="middle">
 			<div class="leftmenu">
 				<ol>
 					<li><a href="/">strona główna</a></li>
@@ -45,9 +45,9 @@
 					</li>
 				</ol>
 			</div>
-			<div class="zawartosc">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rhoncus nisl vitae neque molestie, in bibendum nisl feugiat. Integer posuere dictum augue sit amet luctus. Ut id porta est. Aenean ac leo sed risus aliquam vehicula. Nunc a mauris sagittis, eleifend dolor at, dapibus massa. Suspendisse potenti. Maecenas blandit ipsum ex. Fusce ligula risus, tincidunt sit amet ipsum at, convallis viverra quam. Aenean sit amet urna ante. Quisque bibendum dui id ex molestie, eu ullamcorper odio convallis.
-				n arcu vel, dignissim gravida odio. elerisque, a tempus arcu ullamcorper. Vivamus consectetur, tortor quis maximus lobortis, nisi lacus fermentum ipsum, ac viverra arcu felis lobortis enim. Duis non interdum arcu. Suspendisse eu imperdiet magna. Aliquam maximus quam vel erat tincidunt euismod. Quisque eget justo at metus malesuada consequat. Vivamus a leo arcu. Nulla rhoncus massa non nibh gravida tristique.
+			<div class="plugin">
+				{% block plugins %}
+				{% endblock %}
 			</div>
 		</div>
 		<div style="clear:both;"></div>
