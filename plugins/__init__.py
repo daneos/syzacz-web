@@ -42,15 +42,22 @@ def makeUrls(base_url):
 	urls = []
 	for p in plugin_list:
 		p_urls = globals()[p].urls()
-		urls.extend(
-			[
-				url(
+		# urls.extend(
+		# 	[
+		# 		url(
+		# 			r"%s" % (u[0] % base_url),
+		# 			lambda *args, **kwargs: buildView(globals()[p], u[0] % app_base, u[1], u[2], *args, **kwargs)
+		# 		)
+		# 		for u in p_urls
+		# 	]
+		# )
+		for u in p_urls:
+			uc = url(
 					r"%s" % (u[0] % base_url),
 					buildView(p, u)
 				)
-				for u in p_urls
-			]
-		)
+			print uc
+			urls.append(uc)
 	return urls
 
 
