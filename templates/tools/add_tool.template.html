@@ -1,24 +1,27 @@
-touch {% extends "core/home.template.html" %}
+{% extends "core/home.template.html" %}
 
 {% block plugins %}
-	<span style="color:#333;; font-weight: 700;">Dodaj narzędzie:</span>  
-    </br> </br></br>
-    <div id=nazwaInputa style="float:left; margin-right: 7px;">Nazwa</br></br>Opis
-    </br></br></br></br></br>
-    Miejsce</div>
-    <div id=imputy style="float:left; padding-left: 3px;">
-      
-      <input type="text" maxlength="63"></br> 
-     <textarea rows="4" maxlength="511"></textarea> </br>
-     <select>
-	 <option>Hard Room</option>
-	 <option>Soft Room</option>
-     <option>Lab Elektroniczny</option>
-     <option>Magazynek</option>
-</select>
-</br></br>
-<button type="submit" >Zatwierdź</button>
-
-    </div>
-    
+	{% if not result %}
+		<span style="color:#333;; font-weight: 700;">Dodaj narzędzie:</span>
+		</br></br></br>
+		<div id=nazwaInputa style="float:left; margin-right: 7px;">
+			Nazwa</br></br>
+			Opis</br></br></br></br></br>
+			Miejsce
+		</div>
+		<div id=imputy style="float:left; padding-left: 3px;">
+			<input type="text" maxlength="63"></br> 
+			<textarea rows="4" maxlength="511"></textarea></br>
+			<select>
+				<option>Hard Room</option>
+				<option>Soft Room</option>
+				<option>Lab Elektroniczny</option>
+				<option>Magazynek</option>
+			</select>
+			</br></br>
+			<button type="submit" >Zatwierdź</button>
+		</div>
+	{% else %}
+		<div>chuj dodano</div>
+	{% endif %}	
 {% endblock %}

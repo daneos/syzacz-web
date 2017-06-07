@@ -73,6 +73,8 @@ def pluginCallback(plugin, url, callback, template, *args, **kwargs):
 		if type(context) == HttpResponseRedirect:
 			return context
 		if template:
+			s = Session.objects.get(session_hash=sessid(args[0]))
+			context.update({"user": s.user})
 			return syzacz_render(template, context)
 		else:
 			return HttpResponse(context)
