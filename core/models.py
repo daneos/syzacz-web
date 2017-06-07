@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.core.validators import MaxValueValidator
 
+
 class User(models.Model):
     id = models.AutoField(primary_key=True)
     ldap = models.CharField(max_length=100)
@@ -125,6 +126,7 @@ class Members_special_function(models.Model):
 
     def __str__(self):
         return "Members_special_function(member_id:%d, priority_id:%d)" % (self.id, self.function_name)
+
 
 
 class Log(models.Model):
