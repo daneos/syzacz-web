@@ -1,0 +1,36 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+
+<div  style="text-align: right;"> 
+
+<input type="text" placeholder="wyszukaj">
+
+</div>
+
+
+
+<table border="3">
+<tr>
+	<td>Nazwa Sprzętu</td>	<td>Opis</td> <td>Wpożycz</td>  <td>Miejsce</td>   
+</tr>
+<tr>
+	<td>Wiertarka</td>	<td>Mozesz sobie zrobic co chcesz</td>  <td> <a href="#"><span style="color:blue"> oddaj</span></a></td> <td>Hard Room</td>
+
+</tr>
+<tr>
+	<td>Wiertarka</td>	<td>Taki tam próbny tekst</td>  <td> <a href="#"><span style="color:green">wypożycz</span></a></td> <td>Hard Room</td>
+</tr>
+<tr>
+	<td>Wiertarka</td>	<td>Mozesz sobie zrobic co chcesz</td>  <td> <span style="color:red">wypożyczone</span></td> <td>Hard Room</td>
+</tr>
+</table>
+
+
+
+
+
+
+
+
+{% endblock %}
