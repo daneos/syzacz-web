@@ -1,4 +1,5 @@
 # import json
+import socket
 from datetime import datetime
 # from time import time
 # from uuid import uuid4
@@ -57,4 +58,4 @@ def get_request_remote_ip(rq):
 
 
 def get_request_local_ip(rq):
-	return "127.0.0.1"
+	return socket.gethostbyname(rq.META.get('SERVER_NAME'))

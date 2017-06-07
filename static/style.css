@@ -1,16 +1,18 @@
 .leftmenu{
     
      float:left;
-     width: 20%;
-     margin: 3%;
-     padding: 2%;
+     width: 15%;
      min-height: 400px;
-     
+     margin-top:3%;
+
 }
-.zawartosc{
+.plugin{
  
      margin: 3%;
      padding: 10px;
+     float:left;
+   
+ 
 }
 ol{
     
@@ -45,7 +47,7 @@ ol>li:hover>a{
 
    color: black;
     text-decoration: none;
-    color:#3df093;  
+    color:#b9bfbc;
 
 }
 ol>li>ul{
@@ -83,6 +85,51 @@ ol>li>ul>li:hover>a{
    color:#F04F3D;
   
 
+}
+
+button{
+ 
+text-align: center;
+width: 150px;
+background-color: #eee;
+border: 2px solid #ddd;
+border-radius: 5px;
+font-size: 15px;
+
+
+
+}
+.plugin{
+
+   min-width: 690px;
+
+}
+.oddaj{
+ color:blue;
+}
+.wypozycz{
+    color:green;
+}
+.przedloz{
+
+    color: grey;
+}
+a:hover{
+    text-decoration-line: none;
+}
+a:visite{
+    text-decoration-line: none;
+}
+a:active{
+    text-decoration-line: none;
+}
+a:link{
+    text-decoration: none;
+}
+.inputStyle{
+
+    float: left; margin-right: 30px; margin-left: 30px;
+    min-width: 200px;
 }
 
 .username {

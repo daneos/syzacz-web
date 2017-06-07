@@ -1,0 +1,21 @@
+touch {% extends "core/home.template.html" %}
+
+{% block plugins %}
+   
+      
+  <div class="inputStyle"> Numer faktury</div><div style="float:left;"><input type="text"/></div><div style="clear:both;"></div>
+    <div class="inputStyle"> Data wysłania</div><div style="float:left;"><input type="date"/></div><div style="clear:both;"></div>
+    <div class="inputStyle"> Data opłacenia</div><div style="float:left;"><input type="date"/></div><div style="clear:both;"></div>
+    <div class="inputStyle"> Kwota</div><div style="float:left;"><input type="text"/></div><div style="clear:both;"></div>
+    <div class="inputStyle">    Czy ma być zwracana?</div><div style="float:left;"><input type="checkbox"/>Tak   </div><div style="clear:both;"></div>
+      <br> <div class="inputStyle"> Przydziel do grupy:</div><div style="float:left;">  
+     <select>
+	 <option> Brak</option>
+	 <option>grupa 1</option>
+     <option>grupa 2</option>
+
+</select></div><div style="clear:both;"></div>  
+</br></br>
+<div style="margin-left: 38%"><button type="submit" >Zatwierdź</button></div>
+
+{% endblock %}

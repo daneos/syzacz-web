@@ -1,94 +1,55 @@
 {% extends "generic.template.html" %} 
-{% block content %}
-
-
-
-
-
-<div class="container">
-
-                            <div class="row welcome text-center">
-                                <div class="span12">
-                                    <p class="lead" style="line-height:50px;">System Zarządzania Członkami Hackerspace</p>
-                                </div>
-                            </div>
-
-	<hr>
-	
-	 <div class="middle">
-
-     <div class="leftmenu">
-		 		
-            <ol>
-               <li><a href="/">strona główna</a></li>
-               
-               <li><a href="#">sprzęt</a>
-               
-                <ul>
-                        <li><a href="#">dodaj</a></li>
-                        <li><a href="#">wypożycz</a></li>
-                        <li><a href="#">oddaj</a></li>
-                     </ul>
-               </li>
-              
-              
-              
-              
-               <li><a href="#">faktury</a>
-               
-               
-                 <ul >
-                        <li><a href="#">historia faktur</a></li>
-                        <li><a href="#">dodaj fakture</a></li>
-            
-                 </ul>
-                        
-               </li>
-
-               <li><a href="#">@<span class="username">{{ user.cn }}</span></a>
-               <ul >
-                        <li><a href="#">status konta</a></li>
-                        <li><a href="#">ustawienia</a></li>
-                        <li><a href="#">dane do przelewu</a></li>
-                        <li><a href="/{{ app_base }}/logout">wyloguj</a></li>
-            
-                 </ul>
-               
-               </li>
-
-
-
-            </ol>
-		
-	  </div>
-
-	  <div class="zawartosc"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rhoncus nisl vitae neque molestie, in bibendum nisl feugiat. Integer posuere dictum augue sit amet luctus. Ut id porta est. Aenean ac leo sed risus aliquam vehicula. Nunc a mauris sagittis, eleifend dolor at, dapibus massa. Suspendisse potenti. Maecenas blandit ipsum ex. Fusce ligula risus, tincidunt sit amet ipsum at, convallis viverra quam. Aenean sit amet urna ante. Quisque bibendum dui id ex molestie, eu ullamcorper odio convallis.
-n arcu vel, dignissim gravida odio. elerisque, a tempus arcu ullamcorper. Vivamus consectetur, tortor quis maximus lobortis, nisi lacus fermentum ipsum, ac viverra arcu felis lobortis enim. Duis non interdum arcu. Suspendisse eu imperdiet magna. Aliquam maximus quam vel erat tincidunt euismod. Quisque eget justo at metus malesuada consequat. Vivamus a leo arcu. Nulla rhoncus massa non nibh gravida tristique. </div>
-
-
-     </div>
-
-  <div style="clear:both;"></div>
-</div>
-
-
-
-
-
-</div>
-{% endblock %} 
-
-
-
 
 {% block menu %}
-<div id="topmenu">
-	<ul id="menu-gorne-menu" class="nav nav-pills">
-		<li class="menu-item"><a href="/">HOME</a></li>
-		<li class="menu-item"><a target="_blank" href="http://wiki.hackerspace-krk.pl/">WIKI</a></li>
+	<div id="topmenu">
+		<ul id="menu-gorne-menu" class="nav nav-pills">
+			<li class="menu-item"><a href="/">HOME</a></li>
+			<li class="menu-item"><a target="_blank" href="http://wiki.hackerspace-krk.pl/">WIKI</a></li>
+			<li class="menu-item"><a href="http://whois.hskrk.pl/">WHOIS</a></li>
+		</ul>
+	</div>
+{% endblock %}
 
-		<li class="menu-item"><a href="http://whois.hskrk.pl/">WHOIS</a></li>
-
-	</ul>
-</div>
+{% block content %}
+	<div class="container">
+		<div class="row welcome text-center">
+			<div class="span12">
+				<p class="lead" style="line-height:50px;">System Zarządzania Członkami Hackerspace</p>
+			</div>
+		</div>
+		<hr>
+		<div class="middle">
+			<div class="leftmenu">
+				<ol>
+					<li><a href="/">strona główna</a></li>
+					<li><a href="/{{ app_base }}/tools">sprzęt</a>
+						<ul>
+							<li><a href="/{{ app_base }}/add_tool">dodaj</a></li>
+							<li><a href="/{{ ">wypożycz</a></li>
+							<li><a href="#">oddaj</a></li>
+						</ul>
+					</li>
+					<li><a href="#">faktury</a>
+						<ul>
+							<li><a href="#">historia faktur</a></li>
+							<li><a href="#">dodaj fakture</a></li>
+						</ul>			
+					</li>
+					<li><a href="#">@<span class="username">{{ user.cn }}</span></a>
+						<ul>
+							<li><a href="#">status konta</a></li>
+							<li><a href="#">ustawienia</a></li>
+							<li><a href="#">dane do przelewu</a></li>
+							<li><a href="/{{ app_base }}/logout">wyloguj</a></li>
+						</ul>
+					</li>
+				</ol>
+			</div>
+			<div class="plugin">
+				{% block plugins %}
+				{% endblock %}
+			</div>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
 {% endblock %}
