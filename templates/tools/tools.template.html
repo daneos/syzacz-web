@@ -16,9 +16,9 @@
 				<td>{{ tool.placement_id.room_name }}</td>
 				<td>
 					{% if tool.available %}
-						<a href="\{{ app_base }}\tools.lend\{{ tool.id }}"><span class="wypozycz">wypożycz</span></a>
+						<a href="/{{ app_base }}/tools.lend/{{ tool.id }}/"><span class="wypozycz">wypożycz</span></a>
 					{% else %}
-						<a href="\{{ app_base }}\tools.return\{{ tool.id }}"><span class="oddaj">oddaj</span></a>
+						<a href="/{{ app_base }}/tools.return/{{ tool.id }}/"><span class="oddaj">oddaj</span></a>
 					{% endif %}
 				</td> 
 			</tr>

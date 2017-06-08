@@ -1,20 +1,26 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import Error
 
+from core.version import Version
+
 env = {}
 
 
 def init(plugin_env):
 	global env
 	env = plugin_env
-	return (0,0,1)
+	return Version([0, 0, 2, "alpha"])
 
 
 def urls():
 	return [
-		["%s/tools.(?P<tool_id>[0-9]+)/$", "get_tool_information", "tools/.html"],
+		# ["%s/tools.(?P<tool_id>[0-9]+)/$", "get_tool_information", "tools/.html"],
 		["%s/tools.all$", "tools_list", "tools/tools.template.html"],
-		["%s/tools.add_tool$", "add_tool", "tools/add_tool.template.html"]
+		["%s/tools.add$", "add_tool", "tools/add_tool.template.html"],
+		["%s/tools.my$", "tools_my", "tools/tools.template.html"],
+		["%s/tools.lent$", "tools_lent", "tools/tools.template.html"],
+		["%s/tools.lend/(?P<id>[0-9]+)/$", "lend_tool", "tools/lend_tool.template.html"],
+		["%s/tools.return/(?P<id>[0-9]+)/$", "return_tool", "tools/return_tool.template.html"]
 	]
 
 
@@ -41,6 +47,39 @@ def tools_list(rq):
 		return {"error": "Object does not exist"}
 
 	return {"tools": tools}
+
+
+def tools_my(rq):
+	Tool = env["getModel"]("Tool")
+	Session = env["getModel"]("Session")
+	s = Session.objects.get(session_hash=env["sessid"](rq))
+	try:
+		tools = Tool.objects.filter(member_id=s.user)
+	except ObjectDoesNotExist:
+		return {"error": "Object does not exist"}
+
+	return {"tools": tools}
+
+
+def tools_lent(rq):
+	Session = env["getModel"]("Session")
+	Lent = env["getModel"]("Lent")
+	s = Session.objects.get(session_hash=env["sessid"](rq))
+	try:
+
+		tools = [l.tool_id for l in Lent.objects.filter(member_id=s.user) if l.return_date is None]
+	except ObjectDoesNotExist:
+		return {"error": "Object does not exist"}
+
+	return {"tools": tools}
+
+
+def lend_tool(rq, id):
+	return {}
+
+
+def return_tool(rq, id):
+	return {}
 
 
 def add_tool(rq):

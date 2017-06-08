@@ -10,7 +10,7 @@
 			Miejsce
 		</div>
 		<div id="imputy" style="float:left; padding-left: 3px;">
-			<form action="/{{ app_base }}/add_tool" method="post">
+			<form action="/{{ app_base }}/tools.add" method="post">
 				{% csrf_token %}
 				<input type="text" name="name" maxlength="63"></br> 
 				<textarea rows="4" name="description" maxlength="511"></textarea></br>
