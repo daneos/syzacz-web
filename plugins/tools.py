@@ -1,6 +1,10 @@
+from datetime import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import Error
+from django.shortcuts import redirect
 
+from conf import app_base
 from core.version import Version
 
 env = {}
@@ -18,9 +22,10 @@ def urls():
 		["%s/tools.all$", "tools_list", "tools/tools.template.html"],
 		["%s/tools.add$", "add_tool", "tools/add_tool.template.html"],
 		["%s/tools.my$", "tools_my", "tools/tools.template.html"],
-		["%s/tools.lent$", "tools_lent", "tools/tools.template.html"],
+		["%s/tools.lent$", "tools_lent", "tools/lent_tools.template.html"],
 		["%s/tools.lend/(?P<id>[0-9]+)/$", "lend_tool", "tools/lend_tool.template.html"],
-		["%s/tools.return/(?P<id>[0-9]+)/$", "return_tool", "tools/return_tool.template.html"]
+		["%s/tools.return/(?P<id>[0-9]+)/$", "return_tool", None],
+		["%s/tools.prolong/(?P<id>[0-9]+)/$", "prolong_tool", "tools/prolong_tool.template.html"]
 	]
 
 
@@ -42,7 +47,7 @@ def get_tool_information(rq, tool_id):
 def tools_list(rq):
 	tool_model = env["getModel"]("Tool")
 	try:
-		tools = tool_model.objects.all()
+		tools = tool_model.objects.filter(available=True)
 	except ObjectDoesNotExist:
 		return {"error": "Object does not exist"}
 
@@ -66,25 +71,59 @@ def tools_lent(rq):
 	Lent = env["getModel"]("Lent")
 	s = Session.objects.get(session_hash=env["sessid"](rq))
 	try:
-
-		tools = [l.tool_id for l in Lent.objects.filter(member_id=s.user) if l.return_date is None]
+		lents = {}
+		for lent in Lent.objects.filter(member_id=s.user):
+			if lent.return_date is None:
+				lents[lent.tool_id] = lent
+		tools = lents.keys()
 	except ObjectDoesNotExist:
 		return {"error": "Object does not exist"}
 
-	return {"tools": tools}
+	return {"tools": tools, "lents": lents}
 
 
 def lend_tool(rq, id):
+	Tool = env["getModel"]("Tool")
+	Lent = env["getModel"]("Lent")
+	Session = env["getModel"]("Session")
 	if rq.method == "GET":
-		context = {}
+		tool = Tool.objects.get(pk=id)
+		context = {"tool": tool}
 		context.update(env["csrf"](rq))
 		return context
 
 	if rq.method == "POST":
-		
+		s = Session.objects.get(session_hash=env["sessid"](rq))
+		tool = Tool.objects.get(pk=id)
+		lent = Lent()
+		lent.planned_return_date = rq.POST.get("return_date")
+		lent.return_date = None
+		lent.comment = ""
+		lent.member_id = s.user
+		lent.tool_id = tool
+		lent.save()
+		tool.available = False
+		tool.save()
+		return {"lent": lent}
 
 
 def return_tool(rq, id):
+	Tool = env["getModel"]("Tool")
+	Lent = env["getModel"]("Lent")
+	Session = env["getModel"]("Session")
+	s = Session.objects.get(session_hash=env["sessid"](rq))
+
+	tool = Tool.objects.get(pk=id)
+	lent = Lent.objects.get(tool_id=tool, member_id=s.user, return_date=None)
+	lent.return_date = datetime.now()
+	lent.save()
+	tool.available = True
+	tool.save()
+
+	return redirect("/%s/tools.lent" % app_base)
+
+
+def prolong_tool(rq, id):
 	return {}
 
 

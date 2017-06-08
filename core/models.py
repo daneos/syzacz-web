@@ -82,19 +82,19 @@ class Tool(models.Model):
 	placement_id = models.ForeignKey('Placement')
 
 	def __str__(self):
-		return "Tool(id:%d, description:%s, is_able:%s, lent_permission:%s, member_id:%s, placement_id:%s)" % (self.id, self.description, self.available, self.lent_permission, self.member_id, self.placement_id)
+		return "Tool(id:%d, description:..., is_able:%s, lent_permission:%s, member_id:%s, placement_id:%s)" % (self.id, self.available, self.lent_permission, self.member_id, self.placement_id)
 
 class Lent(models.Model):
 	id = models.AutoField(primary_key=True)
 	lent_date = models.DateTimeField(auto_now_add=True)
 	planned_return_date = models.DateTimeField(auto_now_add=True)
-	return_date = models.DateTimeField(auto_now_add=False)
+	return_date = models.DateTimeField(null=True)
 	comment = models.CharField(max_length=256)
 	member_id = models.ForeignKey('User')
 	tool_id = models.ForeignKey('Tool')
 
 	def __str__(self):
-		return "Lent(id:%d, lent_date:%s, planned_return_date:%s, return_date:%s, comment:%s ,member_id:%d, placement_id:%d)" % (self.id, self.lent_date, self.planned_return_date, self.return_date,self.comment, self.member_id, self.tool_id)
+		return "Lent(id:%d, lent_date:%s, planned_return_date:%s, return_date:%s, comment:%s ,member_id:%s, placement_id:%s)" % (self.id, self.lent_date, self.planned_return_date, self.return_date,self.comment, self.member_id, self.tool_id)
 
 class Lent_form(models.Model):
 	id = models.AutoField(primary_key=True)

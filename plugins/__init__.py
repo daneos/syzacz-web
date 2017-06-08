@@ -27,8 +27,6 @@ for f in glob.glob(os.path.dirname(__file__) + "/*"):
 	if os.path.isfile(f) and not os.path.basename(f).startswith('_') and not os.path.basename(f).endswith("pyc"):
 		plugin_list.append(os.path.basename(f)[:-3])
 
-print plugin_list
-
 for p in plugin_list:
 	try:
 		__import__(p, locals(), globals())
@@ -56,7 +54,6 @@ def makeUrls(base_url):
 					r"%s" % (u[0] % base_url),
 					buildView(p, u)
 				)
-			print uc
 			urls.append(uc)
 	return urls
 

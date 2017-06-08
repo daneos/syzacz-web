@@ -2,20 +2,31 @@
 
 {% block plugins %}
 	<span style="color:#333;; font-weight: 700;">Wypożycz narzędzie:</span>  
-    </br> </br></br>
-    <div id=nazwaInputa style="float:left; margin-right: 7px;">Data wypożyczenia</br></br>
-    Planowana data oddania
-    </br></br>narzędzie
-    </div>
-    <div id=imputy style="float:left; padding-left: 3px;">
-     <input id="date" type="date">
-
-     </br>    <input id="date2" type="date">
-
-     </br><input type="text" placeholder="nie wybrałeś sprzętu" disabled>  </br><span style="float:left;" disabled><a href="#">wybierz sprzęt<span>
-</br></br>
-<button type="submit" >Zatwierdź</button>
-
-    </div>
-    
+	</br></br></br>
+	<div id="nazwaInputa" style="float:left; margin-right: 7px;">
+		Data wypożyczenia</br></br>
+		Planowana data oddania</br></br>
+		Narzędzie
+	</div>
+	<div id="imputy" style="float:left; padding-left: 3px;">
+		<form action="/{{ app_base }}/tools.lend/{{ tool.id }}/" method="POST">
+			{% csrf_token %}
+			<input id="date" type="date" name="lend_date">
+			</br>
+			<input id="date2" type="date" name="return_date">
+			</br>
+			<input type="text" placeholder="{{ tool.name }} / {{ tool.placement_id.room_name }}" disabled>
+			</br>
+			<span style="float:left;" disabled>
+				<a href="#">
+					wybierz sprzęt
+					<span>
+						</br></br>
+						<button type="submit" >Zatwierdź</button>
+					</span>
+				</a>
+			</span>
+		</form>
+	</div>
+	
 {% endblock %}
