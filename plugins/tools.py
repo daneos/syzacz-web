@@ -75,7 +75,13 @@ def tools_lent(rq):
 
 
 def lend_tool(rq, id):
-	return {}
+	if rq.method == "GET":
+		context = {}
+		context.update(env["csrf"](rq))
+		return context
+
+	if rq.method == "POST":
+		
 
 
 def return_tool(rq, id):
