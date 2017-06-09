@@ -36,4 +36,3 @@ urlpatterns = [
 ]
 
 urlpatterns.extend(plugins.makeUrls(base_url))
-print urlpatterns
