@@ -1,0 +1,28 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<input type="text" placeholder="wyszukaj" style="margin-left:69%; ">
+	<table cellpadding="5px;" style="min-width: 706px;">
+		<tr style="font-weight: 700;">
+			<td>Sprzęt</td>
+			<td>Opis</td>
+			<td>Miejsce</td>
+			<td>Wpożycz</td> 
+		</tr>
+		{% for tool in tools %}
+			<tr>
+				<td>{{ tool.name }}</td>
+				<td>{{ tool.description }}</td>
+				<td>{{ tool.placement_id.room_name }}</td>
+				<td>
+					{% if tool.available %}
+						<a href="/{{ app_base }}/tools.lend/{{ tool.id }}/"><span class="wypozycz">wypożycz</span></a>
+					{% else %}
+						<a href="/{{ app_base }}/tools.prolong/{{ tool.id }}/"><span class="przedloz">przedłuż</span></a>
+						<a href="/{{ app_base }}/tools.return/{{ tool.id }}/"><span class="oddaj">oddaj</span></a>
+					{% endif %}
+				</td> 
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

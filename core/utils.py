@@ -1,4 +1,5 @@
 # import json
+import socket
 from datetime import datetime
 # from time import time
 # from uuid import uuid4
@@ -6,6 +7,7 @@ from datetime import datetime
 # from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.template.defaulttags import register
 
 from conf import app_base
 from core.models import *
@@ -57,4 +59,13 @@ def get_request_remote_ip(rq):
 
 
 def get_request_local_ip(rq):
-	return "127.0.0.1"
+	return socket.gethostbyname(rq.META.get('SERVER_NAME'))
+
+
+@register.filter
+def item(dictionary, key):
+	return dictionary.get(key)
+
+@register.filter
+def attr(obj, attr):
+	return getattr(obj, attr)
