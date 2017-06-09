@@ -10,17 +10,23 @@
 			<td>Wypożyczone do:</td>
 			<td>Przedłuż / Oddaj</td> 
 		</tr>
-		{% for tool in tools %}
+		{% if tools %}
+			{% for tool in tools %}
+				<tr>
+					<td>{{ tool.name }}</td>
+					<td>{{ tool.description }}</td>
+					<td>{{ tool.placement_id.room_name }}</td>
+					<td>{{ lents|item:tool|attr:"planned_return_date"|format_date:"%Y/%m/%d" }}</td>
+					<td>
+						<a href="/{{ app_base }}/tools.prolong/{{ tool.id }}/"><span class="przedloz">przedłuż</span></a>
+						<a href="/{{ app_base }}/tools.return/{{ tool.id }}/"><span class="oddaj">oddaj</span></a>
+					</td> 
+				</tr>
+			{% endfor %}
+		{% else %}
 			<tr>
-				<td>{{ tool.name }}</td>
-				<td>{{ tool.description }}</td>
-				<td>{{ tool.placement_id.room_name }}</td>
-				<td>{{ lents|item:tool|attr:"planned_return_date" }}</td>
-				<td>
-					<a href="/{{ app_base }}/tools.prolong/{{ tool.id }}/"><span class="przedloz">przedłuż</span></a>
-					<a href="/{{ app_base }}/tools.return/{{ tool.id }}/"><span class="oddaj">oddaj</span></a>
-				</td> 
+				<td colspan="5" style="text-align: center;">Brak elementów do wyświetlenia.</td>
 			</tr>
-		{% endfor %}
+		{% endif %}
 	</table>
 {% endblock %}

@@ -104,7 +104,7 @@ def lend_tool(rq, id):
 		lent.save()
 		tool.available = False
 		tool.save()
-		return {"lent": lent}
+		return redirect("/%s/tools.lent" % app_base)
 
 
 def return_tool(rq, id):
@@ -124,7 +124,23 @@ def return_tool(rq, id):
 
 
 def prolong_tool(rq, id):
-	return {}
+	Tool = env["getModel"]("Tool")
+	Lent = env["getModel"]("Lent")
+	Session = env["getModel"]("Session")
+	s = Session.objects.get(session_hash=env["sessid"](rq))
+	tool = Tool.objects.get(pk=id)
+	lent = Lent.objects.get(tool_id=tool, member_id=s.user, return_date=None)
+
+	if rq.method == "GET":
+		context = {"tool": tool, "lent": lent}
+		context.update(env["csrf"](rq))
+		return context
+
+	if rq.method == "POST":
+		lent.planned_return_date = rq.POST.get("return_date")
+		lent.save()
+
+		return redirect("/%s/tools.lent" % app_base)
 
 
 def add_tool(rq):
@@ -159,4 +175,4 @@ def add_tool(rq):
 		except Error as e:
 			return {"error": "Cannot add new object: %s" % e}
 
-		return {"result": tool_model}
+		return redirect("/%s/tools.my" % app_base)
