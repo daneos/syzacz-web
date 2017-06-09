@@ -136,3 +136,5 @@ a:link{
   color: #8bc91d;
   font-weight: bold;
 }
+
+.form td { vertical-align: middle; }

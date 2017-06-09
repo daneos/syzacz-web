@@ -87,7 +87,7 @@ class Tool(models.Model):
 class Lent(models.Model):
 	id = models.AutoField(primary_key=True)
 	lent_date = models.DateTimeField(auto_now_add=True)
-	planned_return_date = models.DateTimeField(auto_now_add=True)
+	planned_return_date = models.DateTimeField()
 	return_date = models.DateTimeField(null=True)
 	comment = models.CharField(max_length=256)
 	member_id = models.ForeignKey('User')
