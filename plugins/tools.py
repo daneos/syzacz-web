@@ -13,7 +13,7 @@ env = {}
 def init(plugin_env):
 	global env
 	env = plugin_env
-	return Version([0, 0, 2, "alpha"])
+	return Version([1, 0, 0, "beta"])
 
 
 def urls():
