@@ -1,0 +1,27 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<span style="color:#333;; font-weight: 700;">Edytuj narzędzie:</span>
+	<br><br><br>
+	<div id="nazwaInputa" style="float:left; margin-right: 7px;">
+		Nazwa<br><br>
+		Opis<br><br><br><br><br>
+		Pozwolenie na wypożyczenie<br><br>
+		Miejsce
+	</div>
+	<div id="imputy" style="float:left; padding-left: 3px;">
+		<form action="/{{ app_base }}/tools.edit/{{ tool.id }}/" method="post">
+			{% csrf_token %}
+			<input type="text" name="name" maxlength="63" value="{{ tool.name }}"><br> 
+			<textarea rows="4" name="description" maxlength="511">{{ tool.description }}</textarea><br>
+			<input type="checkbox" name="permission" {% if tool.lend_permission %} checked {% endif %}><br><br>
+			<select name="placement_id">
+				{% for placement in placements %}
+					<option value="{{ placement.id }}" {% if tool.placement == placement %} selected {% endif %}>{{ placement.room_name }}</option>
+				{% endfor %}
+			</select>
+			<br><br>
+			<button type="submit">Zatwierdź</button>
+		</form>
+	</div>
+{% endblock %}

@@ -16,6 +16,9 @@
 					<td>{{ tool.description }}</td>
 					<td>{{ tool.placement.room_name }}</td>
 					<td>
+						{% if display_edit and tool.member == user %}
+							<a href="/{{ app_base }}/tools.edit/{{ tool.id }}/"><span class="edytuj">edytuj</span></a>
+						{% endif %}
 						{% if tool.lend_permission %}
 							{% if tool.available %}
 								<a href="/{{ app_base }}/tools.lend/{{ tool.id }}/"><span class="wypozycz">wypożycz</span></a>
