@@ -1,14 +1,18 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import Error
 from django.shortcuts import redirect
+
 from conf import app_base
+from core.version import Version
 
 env = {}
+
 
 def init(plugin_env):
     global env
     env = plugin_env
-    return Version([0, 0, 1, "alpha"])
+    return Version([0, 0, 2, "alpha"])
+
 
 def urls():
     return [
@@ -24,7 +28,7 @@ def account_status(rq):
     Session = env["getModel"]("Session")
     try:
         session = Session.objects.get(session_hash=env["sessid"](rq))
-        sessions = Session.objects.filter(user=session.user,active=True)
+        sessions = Session.objects.filter(user=session.user, active=True)
         user = session.user
     except ObjectDoesNotExist:
         return {"error": "Object does not exist"}

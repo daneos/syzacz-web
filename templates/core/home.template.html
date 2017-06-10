@@ -8,14 +8,7 @@
 					<li><a href="/">strona główna</a></li>
 					{% include "tools/sidemenu.template.html" %}
 					{% include "invoice/sidemenu.template.html" %}
-					<li><a href="#">@<span class="username">{{ user.cn }}</span></a>
-						<ul>
-							<li><a href="/{{app_base}}/account.status">status konta</a></li>
-							<li><a href="/{{app_base}}/account.settings">ustawienia</a></li>
-							<li><a href="https://wiki.hackerspace-krk.pl/finanse/skladki">dane do przelewu</a></li>
-							<li><a href="/{{ app_base }}/logout">wyloguj</a></li>
-						</ul>
-					</li>
+					{% include "account/sidemenu.template.html" %}
 				</ol>
 			{% endblock %}
 		</div>
