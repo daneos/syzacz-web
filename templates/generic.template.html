@@ -68,7 +68,14 @@
 						</div>
 					</div>
 					<div class="span8">
-						{% block menu %}
+						{% block topmenu %}
+							<div id="topmenu">
+								<ul id="menu-gorne-menu" class="nav nav-pills">
+									<li class="menu-item"><a href="/">HOME</a></li>
+									<li class="menu-item"><a target="_blank" href="http://wiki.hackerspace-krk.pl/">WIKI</a></li>
+									<li class="menu-item"><a href="http://whois.hskrk.pl/">WHOIS</a></li>
+								</ul>
+							</div>
 						{% endblock %}
 					</div>
 				</div>
@@ -77,8 +84,26 @@
 
 		<div id="ornament1">&nbsp;</div>
 		<div id="middle">
-			{% block content %}
-			{% endblock %}
+			{% if error %}
+				<div style="color:red; text-align: center;">{{ error }}</div>
+				<br>
+			{% endif %}
+			{% if msg %}
+				<div style="color:green; text-align: center;">{{ msg }}</div>
+				<br>
+			{% endif %}
+			<div class="container">
+				<div class="row welcome text-center">
+					<div class="span12">
+						{% block banner %}
+							<p class="lead" style="line-height:50px;">System Zarządzania Członkami Hackerspace</p>
+						{% endblock %}
+					</div>
+				</div>
+				<hr>
+				{% block content %}
+				{% endblock %}
+			</div>
 		</div>
 		<div id="ornament2">&nbsp;</div>
 
