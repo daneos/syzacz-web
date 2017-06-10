@@ -18,30 +18,15 @@ def init(plugin_env):
 
 def urls():
 	return [
-		# ["%s/tools.(?P<tool_id>[0-9]+)/$", "get_tool_information", "tools/.html"],
 		["%s/tools.all$", "tools_list", "tools/tools.template.html"],
-		["%s/tools.add$", "add_tool", "tools/add_tool.template.html"],
 		["%s/tools.my$", "tools_my", "tools/tools.template.html"],
 		["%s/tools.lent$", "tools_lent", "tools/lent_tools.template.html"],
+		["%s/tools.add$", "add_tool", "tools/add_tool.template.html"],
 		["%s/tools.lend/(?P<id>[0-9]+)/$", "lend_tool", "tools/lend_tool.template.html"],
 		["%s/tools.return/(?P<id>[0-9]+)/$", "return_tool", None],
-		["%s/tools.prolong/(?P<id>[0-9]+)/$", "prolong_tool", "tools/prolong_tool.template.html"]
+		["%s/tools.prolong/(?P<id>[0-9]+)/$", "prolong_tool", "tools/prolong_tool.template.html"],
+		["%s/tools.edit/(?P<id>[0-9]+)/$", "edit_tool", "tools/edit_tool.template.html"]
 	]
-
-
-def get_tool_information(rq, tool_id):
-
-	if tool_id < 0:
-		return {"error": "Bad argument"}
-
-	tool_model = env["getModel"]("Tool")
-
-	try:
-		tool = tool_model.objects.get(id=tool_id)
-	except ObjectDoesNotExist:
-		return {"error": "Object does not exist"}
-
-	return {"result": tool}
 
 
 def tools_list(rq):
@@ -87,6 +72,34 @@ def tools_lent(rq):
 		return {"error": "Object does not exist"}
 
 	return {"tools": tools, "lents": lents}
+
+
+def add_tool(rq):
+	if rq.method == "GET":
+		Placement = env["getModel"]("Placement")
+		context = {"placements": Placement.objects.all()}
+		context.update(env["csrf"](rq))
+		return context
+
+	if rq.method == "POST":
+		Session = env["getModel"]("Session")
+		Tool = env["getModel"]("Tool")
+
+		try:
+			s = Session.objects.get(session_hash=env["sessid"](rq))
+
+			tool = Tool()
+			tool.name = rq.POST.get("name")
+			tool.description = rq.POST.get("description")
+			tool.lend_permission = bool(rq.POST.get("permission"))
+			tool.member = s.user
+			placement = env["getModel"]("Placement").objects.get(pk=rq.POST.get("placement_id"))
+			tool.placement = placement
+			tool.save()
+		except Error as e:
+			return {"error": "Cannot add new object: %s" % e}
+
+		return redirect("/%s/tools.my" % app_base)
 
 
 def lend_tool(rq, id):
@@ -150,29 +163,16 @@ def prolong_tool(rq, id):
 		return redirect("/%s/tools.lent" % app_base)
 
 
-def add_tool(rq):
+def edit_tool(rq, id):
+	Tool = env["getModel"]("Tool")
+	Lent = env["getModel"]("Lent")
+	Placement = env["getModel"]("Placement")
+
+	tool = Tool.objects.get(pk=id)
+	lents = Lent.objects.filter(tool=tool)
+	placements = Placement.objects.all()
+
 	if rq.method == "GET":
-		Placement = env["getModel"]("Placement")
-		context = {"placements": Placement.objects.all()}
+		context = {"tool": tool, "lents": lents, "placements": placements}
 		context.update(env["csrf"](rq))
 		return context
-
-	if rq.method == "POST":
-		Session = env["getModel"]("Session")
-		Tool = env["getModel"]("Tool")
-
-		try:
-			s = Session.objects.get(session_hash=env["sessid"](rq))
-
-			tool = Tool()
-			tool.name = rq.POST.get("name")
-			tool.description = rq.POST.get("description")
-			tool.lend_permission = bool(rq.POST.get("permission"))
-			tool.member = s.user
-			placement = env["getModel"]("Placement").objects.get(pk=rq.POST.get("placement_id"))
-			tool.placement = placement
-			tool.save()
-		except Error as e:
-			return {"error": "Cannot add new object: %s" % e}
-
-		return redirect("/%s/tools.my" % app_base)
