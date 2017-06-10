@@ -13,7 +13,7 @@ env = {}
 def init(plugin_env):
 	global env
 	env = plugin_env
-	return Version([1, 0, 0, "beta"])
+	return Version([1, 0, 1, "beta"])
 
 
 def urls():
@@ -32,7 +32,7 @@ def urls():
 def get_tool_information(rq, tool_id):
 
 	if tool_id < 0:
-		return {"error":"Bad argument"}
+		return {"error": "Bad argument"}
 
 	tool_model = env["getModel"]("Tool")
 
@@ -41,13 +41,13 @@ def get_tool_information(rq, tool_id):
 	except ObjectDoesNotExist:
 		return {"error": "Object does not exist"}
 
-	return {"result":tool}
+	return {"result": tool}
 
 
 def tools_list(rq):
-	tool_model = env["getModel"]("Tool")
+	Tool = env["getModel"]("Tool")
 	try:
-		tools = tool_model.objects.filter(available=True)
+		tools = Tool.objects.filter(available=True)
 	except ObjectDoesNotExist:
 		return {"error": "Object does not exist"}
 
@@ -158,29 +158,20 @@ def add_tool(rq):
 		return context
 
 	if rq.method == "POST":
-		name = rq.POST.get("name")
-		description = rq.POST.get("description")
-		# tool_is_able = rq.POST.get("tool_is_able")
-		tool_lent_permission = rq.POST.get("permission")
-		tool_placement_id = rq.POST.get("placement_id") # zabezpieczyc czy istnieje takie miejsce
-
-		print "-------------------------------- %s" % bool(tool_lent_permission)
-
 		Session = env["getModel"]("Session")
 		Tool = env["getModel"]("Tool")
 
 		try:
 			s = Session.objects.get(session_hash=env["sessid"](rq))
 
-			tool_model = Tool()
-			tool_model.name = name
-			tool_model.description = description
-			# tool_model.is_able = tool_is_able
-			tool_model.lend_permission = bool(tool_lent_permission)
-			tool_model.member = s.user
-			placement = env["getModel"]("Placement").objects.get(pk=tool_placement_id)
-			tool_model.placement = placement
-			tool_model.save()
+			tool = Tool()
+			tool.name = rq.POST.get("name")
+			tool.description = rq.POST.get("description")
+			tool.lend_permission = bool(rq.POST.get("permission"))
+			tool.member = s.user
+			placement = env["getModel"]("Placement").objects.get(pk=rq.POST.get("placement_id"))
+			tool.placement = placement
+			tool.save()
 		except Error as e:
 			return {"error": "Cannot add new object: %s" % e}
 
