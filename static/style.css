@@ -136,3 +136,17 @@ a:link{
   color: #8bc91d;
   font-weight: bold;
 }
+
+.userinfo td {
+  padding:5px;
+}
+
+.sessions-list th, .sessions-list td {
+  padding: 5px;
+  border-bottom: 1px solid #444;
+}
+
+.delete-session {
+  font-size: 1.7em;
+  color: red;
+}
