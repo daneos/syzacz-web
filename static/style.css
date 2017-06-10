@@ -114,6 +114,11 @@ font-size: 15px;
 
     color: grey;
 }
+
+.edytuj {
+  margin-right: 10px;
+}
+
 a:hover{
     text-decoration-line: none;
 }

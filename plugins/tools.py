@@ -40,6 +40,8 @@ def tools_list(rq):
 
 
 def tools_my(rq):
+	context = {"msg": rq.GET.get("msg"), "error": rq.GET.get("error")}
+
 	Tool = env["getModel"]("Tool")
 	Session = env["getModel"]("Session")
 	Lent = env["getModel"]("Lent")
@@ -55,10 +57,13 @@ def tools_my(rq):
 	except ObjectDoesNotExist:
 		return {"error": "Object does not exist"}
 
-	return {"tools": tools, "lents": filtered_lents}
+	context.update({"tools": tools, "lents": filtered_lents, "display_edit": True})
+	return context
 
 
 def tools_lent(rq):
+	context = {"msg": rq.GET.get("msg"), "error": rq.GET.get("error")}
+
 	Session = env["getModel"]("Session")
 	Lent = env["getModel"]("Lent")
 	s = Session.objects.get(session_hash=env["sessid"](rq))
@@ -71,7 +76,8 @@ def tools_lent(rq):
 	except ObjectDoesNotExist:
 		return {"error": "Object does not exist"}
 
-	return {"tools": tools, "lents": lents}
+	context.update({"tools": tools, "lents": lents})
+	return context
 
 
 def add_tool(rq):
@@ -99,7 +105,7 @@ def add_tool(rq):
 		except Error as e:
 			return {"error": "Cannot add new object: %s" % e}
 
-		return redirect("/%s/tools.my" % app_base)
+		return redirect("/%s/tools.my?msg=Saved" % app_base)
 
 
 def lend_tool(rq, id):
@@ -124,7 +130,7 @@ def lend_tool(rq, id):
 		lent.save()
 		tool.available = False
 		tool.save()
-		return redirect("/%s/tools.lent" % app_base)
+		return redirect("/%s/tools.lent?msg=Saved" % app_base)
 
 
 def return_tool(rq, id):
@@ -140,7 +146,7 @@ def return_tool(rq, id):
 	tool.available = True
 	tool.save()
 
-	return redirect("/%s/tools.lent" % app_base)
+	return redirect("/%s/tools.lent?msg=Saved" % app_base)
 
 
 def prolong_tool(rq, id):
@@ -160,7 +166,7 @@ def prolong_tool(rq, id):
 		lent.planned_return_date = rq.POST.get("return_date")
 		lent.save()
 
-		return redirect("/%s/tools.lent" % app_base)
+		return redirect("/%s/tools.lent?msg=Saved" % app_base)
 
 
 def edit_tool(rq, id):
@@ -176,3 +182,13 @@ def edit_tool(rq, id):
 		context = {"tool": tool, "lents": lents, "placements": placements}
 		context.update(env["csrf"](rq))
 		return context
+
+	if rq.method == "POST":
+		tool.name = rq.POST.get("name")
+		tool.description = rq.POST.get("description")
+		tool.lend_permission = bool(rq.POST.get("permission"))
+		placement = env["getModel"]("Placement").objects.get(pk=rq.POST.get("placement_id"))
+		tool.placement = placement
+		tool.save()
+
+		return redirect("/%s/tools.my?msg=Saved" % app_base)

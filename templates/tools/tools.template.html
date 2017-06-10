@@ -16,7 +16,7 @@
 					<td>{{ tool.description }}</td>
 					<td>{{ tool.placement.room_name }}</td>
 					<td>
-						{% if tool.member == user %}
+						{% if display_edit and tool.member == user %}
 							<a href="/{{ app_base }}/tools.edit/{{ tool.id }}/"><span class="edytuj">edytuj</span></a>
 						{% endif %}
 						{% if tool.lend_permission %}
