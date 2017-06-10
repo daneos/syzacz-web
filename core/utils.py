@@ -66,6 +66,17 @@ def get_request_local_ip(rq):
 def item(dictionary, key):
 	return dictionary.get(key)
 
+
 @register.filter
 def attr(obj, attr):
 	return getattr(obj, attr)
+
+
+@register.filter
+def format_date(date, format):
+	return date.strftime(format)
+
+
+@register.filter
+def equals(obj, obj2):
+	return obj == obj2

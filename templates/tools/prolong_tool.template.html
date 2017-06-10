@@ -1,18 +1,18 @@
 {% extends "core/home.template.html" %}
 
 {% block plugins %}
-	<span style="color:#333;; font-weight: 700;">Wypożycz narzędzie:</span>  
+	<span style="color:#333;; font-weight: 700;">Przedłuż:</span>  
 	<br><br><br>
 	<div id="nazwaInputa" style="float:left; margin-right: 7px;">
 		Narzędzie<br><br>
 		Planowana data oddania
 	</div>
 	<div id="imputy" style="float:left; padding-left: 3px;">
-		<form action="/{{ app_base }}/tools.lend/{{ tool.id }}/" method="POST">
+		<form action="/{{ app_base }}/tools.prolong/{{ tool.id }}/" method="POST">
 			{% csrf_token %}
 			<input type="text" placeholder="{{ tool.name }} / {{ tool.placement.room_name }}" disabled>
 			<br>
-			<input id="date" type="date" name="return_date">
+			<input id="date" type="date" name="return_date" value="{{ lent.planned_return_date|format_date:'%Y-%m-%d' }}">
 			<br>
 			<button type="submit">Zatwierdź</button>
 		</form>

@@ -7,22 +7,37 @@
 			<td>Sprzęt</td>
 			<td>Opis</td>
 			<td>Miejsce</td>
-			<td>Wpożycz</td> 
+			<td>Akcje</td> 
 		</tr>
-		{% for tool in tools %}
+		{% if tools %}
+			{% for tool in tools %}
+				<tr>
+					<td>{{ tool.name }}</td>
+					<td>{{ tool.description }}</td>
+					<td>{{ tool.placement.room_name }}</td>
+					<td>
+						{% if tool.lend_permission %}
+							{% if tool.available %}
+								<a href="/{{ app_base }}/tools.lend/{{ tool.id }}/"><span class="wypozycz">wypożycz</span></a>
+							{% else %}
+								{% if not lents or lents|item:tool|attr:"member" == user %}
+									<a href="/{{ app_base }}/tools.prolong/{{ tool.id }}/"><span class="przedloz">przedłuż</span></a>
+									&nbsp;&nbsp;
+									<a href="/{{ app_base }}/tools.return/{{ tool.id }}/"><span class="oddaj">oddaj</span></a>
+								{% else %}
+									<span class="username">{{ lents|item:tool|attr:"member"|attr:"cn" }}</span>: <i>{{ lents|item:tool|attr:"planned_return_date"|format_date:"%Y/%m/%d" }}</i>
+								{% endif %}
+							{% endif %}
+						{% else %}
+							&nbsp;
+						{% endif %}
+					</td> 
+				</tr>
+			{% endfor %}
+		{% else %}
 			<tr>
-				<td>{{ tool.name }}</td>
-				<td>{{ tool.description }}</td>
-				<td>{{ tool.placement_id.room_name }}</td>
-				<td>
-					{% if tool.available %}
-						<a href="/{{ app_base }}/tools.lend/{{ tool.id }}/"><span class="wypozycz">wypożycz</span></a>
-					{% else %}
-						<a href="/{{ app_base }}/tools.prolong/{{ tool.id }}/"><span class="przedloz">przedłuż</span></a>
-						<a href="/{{ app_base }}/tools.return/{{ tool.id }}/"><span class="oddaj">oddaj</span></a>
-					{% endif %}
-				</td> 
+				<td colspan="4" style="text-align: center;">Brak elementów do wyświetlenia.</td>
 			</tr>
-		{% endfor %}
+		{% endif %}
 	</table>
 {% endblock %}
