@@ -1,7 +1,11 @@
 import uuid
 from django.db import models
 from django.core.validators import MaxValueValidator
+from datetime import datetime, timedelta
 
+def user_validity(days):
+	validity_date = datetime.now()+timedelta(days=days)
+	return validity_date
 
 class User(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -11,6 +15,7 @@ class User(models.Model):
 	surname = models.CharField(max_length=100)
 	email = models.EmailField()
 	password = models.CharField(max_length=128)
+	validity = models.DateTimeField(default=user_validity(365))
 
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)

@@ -10,9 +10,9 @@
 					{% include "invoice/sidemenu.template.html" %}
 					<li><a href="#">@<span class="username">{{ user.cn }}</span></a>
 						<ul>
-							<li><a href="#">status konta</a></li>
-							<li><a href="#">ustawienia</a></li>
-							<li><a href="#">dane do przelewu</a></li>
+							<li><a href="/{{app_base}}/account.status">status konta</a></li>
+							<li><a href="/{{app_base}}/account.settings">ustawienia</a></li>
+							<li><a href="https://wiki.hackerspace-krk.pl/finanse/skladki">dane do przelewu</a></li>
 							<li><a href="/{{ app_base }}/logout">wyloguj</a></li>
 						</ul>
 					</li>
