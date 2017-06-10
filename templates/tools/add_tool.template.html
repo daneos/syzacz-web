@@ -2,24 +2,26 @@
 
 {% block plugins %}
 	<span style="color:#333;; font-weight: 700;">Dodaj narzędzie:</span>
-	</br></br></br>
+	<br><br><br>
 	<div id="nazwaInputa" style="float:left; margin-right: 7px;">
-		Nazwa</br></br>
-		Opis</br></br></br></br></br>
+		Nazwa<br><br>
+		Opis<br><br><br><br><br>
+		Pozwolenie na wypożyczenie<br><br>
 		Miejsce
 	</div>
 	<div id="imputy" style="float:left; padding-left: 3px;">
 		<form action="/{{ app_base }}/tools.add" method="post">
 			{% csrf_token %}
-			<input type="text" name="name" maxlength="63"></br> 
-			<textarea rows="4" name="description" maxlength="511"></textarea></br>
+			<input type="text" name="name" maxlength="63"><br> 
+			<textarea rows="4" name="description" maxlength="511"></textarea><br>
+			<input type="checkbox" name="permission"><br><br>
 			<select name="placement_id">
 				{% for placement in placements %}
 					<option value="{{ placement.id }}">{{ placement.room_name }}</option>
 				{% endfor %}
 			</select>
-			</br></br>
-			<button type="submit" >Zatwierdź</button>
+			<br><br>
+			<button type="submit">Zatwierdź</button>
 		</form>
 	</div>
 {% endblock %}

@@ -57,13 +57,20 @@ def tools_list(rq):
 def tools_my(rq):
 	Tool = env["getModel"]("Tool")
 	Session = env["getModel"]("Session")
+	Lent = env["getModel"]("Lent")
 	s = Session.objects.get(session_hash=env["sessid"](rq))
 	try:
-		tools = Tool.objects.filter(member_id=s.user)
+		filtered_lents = {}
+		tools = Tool.objects.filter(member=s.user)
+		for tool in tools:
+			lents = Lent.objects.filter(tool=tool)
+			for lent in lents:
+				if lent.return_date is None:
+					filtered_lents[tool] = lent
 	except ObjectDoesNotExist:
 		return {"error": "Object does not exist"}
 
-	return {"tools": tools}
+	return {"tools": tools, "lents": filtered_lents}
 
 
 def tools_lent(rq):
@@ -72,9 +79,9 @@ def tools_lent(rq):
 	s = Session.objects.get(session_hash=env["sessid"](rq))
 	try:
 		lents = {}
-		for lent in Lent.objects.filter(member_id=s.user):
+		for lent in Lent.objects.filter(member=s.user):
 			if lent.return_date is None:
-				lents[lent.tool_id] = lent
+				lents[lent.tool] = lent
 		tools = lents.keys()
 	except ObjectDoesNotExist:
 		return {"error": "Object does not exist"}
@@ -99,8 +106,8 @@ def lend_tool(rq, id):
 		lent.planned_return_date = rq.POST.get("return_date")
 		lent.return_date = None
 		lent.comment = ""
-		lent.member_id = s.user
-		lent.tool_id = tool
+		lent.member = s.user
+		lent.tool = tool
 		lent.save()
 		tool.available = False
 		tool.save()
@@ -114,7 +121,7 @@ def return_tool(rq, id):
 	s = Session.objects.get(session_hash=env["sessid"](rq))
 
 	tool = Tool.objects.get(pk=id)
-	lent = Lent.objects.get(tool_id=tool, member_id=s.user, return_date=None)
+	lent = Lent.objects.get(tool=tool, member=s.user, return_date=None)
 	lent.return_date = datetime.now()
 	lent.save()
 	tool.available = True
@@ -129,7 +136,7 @@ def prolong_tool(rq, id):
 	Session = env["getModel"]("Session")
 	s = Session.objects.get(session_hash=env["sessid"](rq))
 	tool = Tool.objects.get(pk=id)
-	lent = Lent.objects.get(tool_id=tool, member_id=s.user, return_date=None)
+	lent = Lent.objects.get(tool=tool, member=s.user, return_date=None)
 
 	if rq.method == "GET":
 		context = {"tool": tool, "lent": lent}
@@ -154,8 +161,10 @@ def add_tool(rq):
 		name = rq.POST.get("name")
 		description = rq.POST.get("description")
 		# tool_is_able = rq.POST.get("tool_is_able")
-		# tool_lent_permission = rq.POST.get("tool_lent_permission")
+		tool_lent_permission = rq.POST.get("permission")
 		tool_placement_id = rq.POST.get("placement_id") # zabezpieczyc czy istnieje takie miejsce
+
+		print "-------------------------------- %s" % bool(tool_lent_permission)
 
 		Session = env["getModel"]("Session")
 		Tool = env["getModel"]("Tool")
@@ -167,10 +176,10 @@ def add_tool(rq):
 			tool_model.name = name
 			tool_model.description = description
 			# tool_model.is_able = tool_is_able
-			# tool_model.lent_permission = tool_lent_permission
-			tool_model.member_id = s.user
+			tool_model.lend_permission = bool(tool_lent_permission)
+			tool_model.member = s.user
 			placement = env["getModel"]("Placement").objects.get(pk=tool_placement_id)
-			tool_model.placement_id = placement
+			tool_model.placement = placement
 			tool_model.save()
 		except Error as e:
 			return {"error": "Cannot add new object: %s" % e}

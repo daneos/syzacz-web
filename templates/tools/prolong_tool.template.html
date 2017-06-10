@@ -10,7 +10,7 @@
 	<div id="imputy" style="float:left; padding-left: 3px;">
 		<form action="/{{ app_base }}/tools.prolong/{{ tool.id }}/" method="POST">
 			{% csrf_token %}
-			<input type="text" placeholder="{{ tool.name }} / {{ tool.placement_id.room_name }}" disabled>
+			<input type="text" placeholder="{{ tool.name }} / {{ tool.placement.room_name }}" disabled>
 			<br>
 			<input id="date" type="date" name="return_date" value="{{ lent.planned_return_date|format_date:'%Y-%m-%d' }}">
 			<br>
