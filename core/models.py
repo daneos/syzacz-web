@@ -1,7 +1,11 @@
 import uuid
 from django.db import models
 from django.core.validators import MaxValueValidator
+from datetime import datetime, timedelta
 
+def user_validity(days):
+	validity_date = datetime.now()+timedelta(days=days)
+	return validity_date
 
 class User(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -11,6 +15,7 @@ class User(models.Model):
 	surname = models.CharField(max_length=100)
 	email = models.EmailField()
 	password = models.CharField(max_length=128)
+	validity = models.DateTimeField(default=user_validity(365))
 
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
@@ -77,12 +82,12 @@ class Tool(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=512)
 	available = models.BooleanField(default=True)
-	lent_permission = models.BooleanField(default=True)
-	member_id = models.ForeignKey('User')
-	placement_id = models.ForeignKey('Placement')
+	lend_permission = models.BooleanField()
+	member = models.ForeignKey('User')
+	placement = models.ForeignKey('Placement')
 
 	def __str__(self):
-		return "Tool(id:%d, description:..., is_able:%s, lent_permission:%s, member_id:%s, placement_id:%s)" % (self.id, self.available, self.lent_permission, self.member_id, self.placement_id)
+		return "Tool(id:%d, description:..., is_able:%s, lent_permission:%s, member_id:%s, placement_id:%s)" % (self.id, self.available, self.lend_permission, self.member_id, self.placement_id)
 
 class Lent(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -90,8 +95,8 @@ class Lent(models.Model):
 	planned_return_date = models.DateTimeField()
 	return_date = models.DateTimeField(null=True)
 	comment = models.CharField(max_length=256)
-	member_id = models.ForeignKey('User')
-	tool_id = models.ForeignKey('Tool')
+	member = models.ForeignKey('User')
+	tool = models.ForeignKey('Tool')
 
 	def __str__(self):
 		return "Lent(id:%d, lent_date:%s, planned_return_date:%s, return_date:%s, comment:%s ,member_id:%s, placement_id:%s)" % (self.id, self.lent_date, self.planned_return_date, self.return_date,self.comment, self.member_id, self.tool_id)

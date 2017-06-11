@@ -8,6 +8,13 @@
 
 		<meta http-equiv="Content-Language" content="pl-PL">
 		<title>SyZaCz | Hackerspace Kraków</title>
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
 		<link rel="space-api" href="http://spaceapi.hskrk.pl/">
 		<link rel="Shortcut icon" href="http://hackerspace-krk.pl/wp-content/themes/hskrk/images/favicon.png">
 		<link href="http://hackerspace-krk.pl/wp-content/themes/hskrk/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -60,15 +67,23 @@
 		<div id="top">
 			<div class="container">
 				<div class="row">
-					<div class="span4">
+				<div class="col-sm-4">
 						<div id="mainlogo">
 							<a href="http://hackerspace-krk.pl/" data-ytta-id="-">
 								<img src="http://hackerspace-krk.pl/wp-content/themes/hskrk/images/logo.png" alt="Hackerspace Kraków">
 							</a>
 						</div>
 					</div>
-					<div class="span8">
-						{% block menu %}
+					<!-- <div class="span8"> -->
+					<div class="col-sm-8">
+						{% block topmenu %}
+							<div id="topmenu">
+								<ul id="menu-gorne-menu" class="nav nav-pills">
+									<li class="menu-item"><a href="/">HOME</a></li>
+									<li class="menu-item"><a target="_blank" href="http://wiki.hackerspace-krk.pl/">WIKI</a></li>
+									<li class="menu-item"><a href="http://whois.hskrk.pl/">WHOIS</a></li>
+								</ul>
+							</div>
 						{% endblock %}
 					</div>
 				</div>
@@ -77,8 +92,28 @@
 
 		<div id="ornament1">&nbsp;</div>
 		<div id="middle">
-			{% block content %}
-			{% endblock %}
+			{% if error %}
+				<div style="color:red; text-align: center;">{{ error }}</div>
+				<br>
+			{% endif %}
+			{% if msg %}
+				<div style="color:green; text-align: center;">{{ msg }}</div>
+				<br>
+			{% endif %}
+			<div class="container-fluid">
+				<div class="container">
+					<div class="row welcome text-center">
+						<div class="span12">
+							{% block banner %}
+								<p class="lead" style="line-height:50px;">System Zarządzania Członkami Hackerspace</p>
+							{% endblock %}
+						</div>
+					</div>
+					<hr>
+					{% block content %}
+					{% endblock %}
+				</div>
+			</div>
 		</div>
 		<div id="ornament2">&nbsp;</div>
 

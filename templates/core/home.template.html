@@ -1,56 +1,25 @@
-{% extends "generic.template.html" %} 
-
-{% block menu %}
-	<div id="topmenu">
-		<ul id="menu-gorne-menu" class="nav nav-pills">
-			<li class="menu-item"><a href="/">HOME</a></li>
-			<li class="menu-item"><a target="_blank" href="http://wiki.hackerspace-krk.pl/">WIKI</a></li>
-			<li class="menu-item"><a href="http://whois.hskrk.pl/">WHOIS</a></li>
-		</ul>
-	</div>
-{% endblock %}
+{% extends "generic.template.html" %}
 
 {% block content %}
-	<div class="container">
-		<div class="row welcome text-center">
-			<div class="span12">
-				<p class="lead" style="line-height:50px;">System Zarządzania Członkami Hackerspace</p>
-			</div>
-		</div>
-		<hr>
-		<div class="middle">
-			<div class="leftmenu">
+<div class="row">
+	<div class="middle">
+		<div class="col-sm-3">
+			{% block sidemenu %}
 				<ol>
 					<li><a href="/">strona główna</a></li>
-					<li><a href="/{{ app_base }}/tools.all">sprzęt</a>
-						<ul>
-							<li><a href="/{{ app_base }}/tools.add">dodaj</a></li>
-							<li><a href="/{{ app_base }}/tools.my">mój sprzęt</a></li>
-							<li><a href="/{{ app_base }}/tools.lent">wypożyczone przeze mnie</a></li>
-							
-						</ul>
-					</li>
-					<li><a href="#">faktury</a>
-						<ul>
-							<li><a href="#">historia faktur</a></li>
-							<li><a href="#">dodaj fakture</a></li>
-						</ul>			
-					</li>
-					<li><a href="#">@<span class="username">{{ user.cn }}</span></a>
-						<ul>
-							<li><a href="#">status konta</a></li>
-							<li><a href="#">ustawienia</a></li>
-							<li><a href="#">dane do przelewu</a></li>
-							<li><a href="/{{ app_base }}/logout">wyloguj</a></li>
-						</ul>
-					</li>
+					{% include "tools/sidemenu.template.html" %}
+					{% include "invoice/sidemenu.template.html" %}
+					{% include "account/sidemenu.template.html" %}
 				</ol>
-			</div>
+			{% endblock %}
+		</div>
+		<div class="col-sm-3">
 			<div class="plugin">
 				{% block plugins %}
+					Witaj!
 				{% endblock %}
 			</div>
 		</div>
-		<div style="clear:both;"></div>
 	</div>
+</div>
 {% endblock %}

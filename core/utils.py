@@ -75,3 +75,8 @@ def attr(obj, attr):
 @register.filter
 def format_date(date, format):
 	return date.strftime(format)
+
+
+@register.filter
+def equals(obj, obj2):
+	return obj == obj2

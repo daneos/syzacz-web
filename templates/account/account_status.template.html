@@ -1,0 +1,61 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+<div style="margin-left: 10%;">
+	<h1>
+		<span style="color:green; font-weight: 500;">Witaj {{ user.cn }}</span>
+	</h1> 
+	<div style="margin-left: 5%; margin-top: 5%;">
+		<table class="userinfo">
+			<tr>
+				<td><b>Imię: </b></td>
+				<td>{{ user.name }}</td>
+			</tr>
+			<tr>
+				<td><b>Nazwisko: </b></td>
+				<td>{{ user.surname }}</td>
+			</tr>
+			<tr>
+				<td><b>Data ważności konta: </b></td>
+				<td>{{ user.validity|format_date:"%Y/%m/%d" }}</td>
+			</tr>
+			<tr>
+				<td><b>Email: </b></td>
+				<td>{{ user.email }}</td>
+			</tr>
+		</table>
+	</div>
+	<h2>
+		<span style="color:green; font-weight: 500;">Aktywne sesje:</span>
+	</h2> 
+	<div style="margin-left: 5%; margin-top: 5%;">
+		<table class="sessions-list">
+			<tr>
+				<td></td>
+				<td><b>Czas startu</b></td>
+				<td><b>Ostatnia aktywność</b></td>
+				<td><b>IP</b></td>
+				<td></td>
+			</tr>
+			{% for s in active_sessions %}
+				<tr>
+					{% if s.id == current_session.id %}
+						<td style="color:green; font-size:2em"><b>&rarr;</b></td>
+					{% else %}
+						<td></td>
+					{% endif %}
+					<td>{{ s.time_start|format_date:"%Y/%m/%d %H:%M:%S.%f" }}</td>
+					<td>{{ s.last_activity|format_date:"%Y/%m/%d %H:%M:%S" }}</td>
+					<td>{{ s.remote }}</td>
+					<td><a href="/{{ app_base }}/account.delete_session/{{ s.id }}/"><span class="delete-session">&otimes;</span></a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div style="color:red; text-align: left; margin-left: 80%; margin-top: 5%;">
+		<a href="https://hackerspace-krk.pl/darowizny" style="color: blue; font-weight: 200;">złóż darowiznę</a>
+		<br>
+		<a href="https://wiki.hackerspace-krk.pl/finanse/skladki" style="color: red; font-weight: 200;">zapłać składkę</a>
+	</div>
+</div>
+{% endblock %}

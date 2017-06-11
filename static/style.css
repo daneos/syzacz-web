@@ -114,6 +114,11 @@ font-size: 15px;
 
     color: grey;
 }
+
+.edytuj {
+  margin-right: 10px;
+}
+
 a:hover{
     text-decoration-line: none;
 }
@@ -137,4 +142,16 @@ a:link{
   font-weight: bold;
 }
 
-.form td { vertical-align: middle; }
+.userinfo td {
+  padding:5px;
+}
+
+.sessions-list th, .sessions-list td {
+  padding: 5px;
+  border-bottom: 1px solid #444;
+}
+
+.delete-session {
+  font-size: 1.7em;
+  color: red;
+}

@@ -45,6 +45,9 @@ def _login_form(rq, context, next_url=None):
 def login(rq):
 	next_url = rq.GET.get("next")
 
+	if validate_sessid(rq):
+		return redirect("/%s/home" % app_base)
+
 	if rq.method == "GET":
 		return _login_form(rq, {}, next_url)
 
