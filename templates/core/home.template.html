@@ -1,6 +1,7 @@
 {% extends "generic.template.html" %}
 
 {% block content %}
+<div class="row">
 	<div class="middle">
 		<div class="col-sm-3">
 			{% block sidemenu %}
@@ -12,11 +13,13 @@
 				</ol>
 			{% endblock %}
 		</div>
-		<div class="plugin">
-			{% block plugins %}
-				Witaj!
-			{% endblock %}
+		<div class="col-sm-3">
+			<div class="plugin">
+				{% block plugins %}
+					Witaj!
+				{% endblock %}
+			</div>
 		</div>
 	</div>
-	<div style="clear:both;"></div>
+</div>
 {% endblock %}
