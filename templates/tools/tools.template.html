@@ -2,13 +2,16 @@
 
 {% block plugins %}
 	<input type="text" placeholder="wyszukaj" style="margin-left:69%; ">
-	<table cellpadding="5px;" style="min-width: 706px;">
-		<tr style="font-weight: 700;">
-			<td>Sprzęt</td>
-			<td>Opis</td>
-			<td>Miejsce</td>
-			<td>Akcje</td> 
+  <table class="table table-hover">
+	  <thead>
+		<tr>
+			<th>Sprzęt</th>
+			<th>Opis</th>
+			<th>Miejsce</th>
+			<th>Akcje</th> 
 		</tr>
+	  </thead>
+	  <tbody>
 		{% if tools %}
 			{% for tool in tools %}
 				<tr>
@@ -42,5 +45,6 @@
 				<td colspan="4" style="text-align: center;">Brak elementów do wyświetlenia.</td>
 			</tr>
 		{% endif %}
-	</table>
+	  </tbody>
+	  </table>
 {% endblock %}
