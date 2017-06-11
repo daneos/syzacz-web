@@ -1,21 +1,31 @@
-{% extends "core/home.template.html" %}
+{% extends "core/home.template.html" %} {% block plugins %}
 
-{% block plugins %}
-	<span style="color:#333;; font-weight: 700;">Wypożycz narzędzie:</span>  
-	<br><br><br>
-	<div id="nazwaInputa" style="float:left; margin-right: 7px;">
-		Narzędzie<br><br>
-		Planowana data oddania
+
+<form action="/{{ app_base }}/tools.lend/{{ tool.id }}/" method="POST">
+	{% csrf_token %}
+
+	<div class="row">
+		<div class="col-sm-4">Narzędzie</div>
+		<div class="col-sm-8"><input type="text" placeholder="{{ tool.name }} / {{ tool.placement.room_name }}" disabled></div>
+
 	</div>
-	<div id="imputy" style="float:left; padding-left: 3px;">
-		<form action="/{{ app_base }}/tools.lend/{{ tool.id }}/" method="POST">
-			{% csrf_token %}
-			<input type="text" placeholder="{{ tool.name }} / {{ tool.placement.room_name }}" disabled>
-			<br>
-			<input id="date" type="date" name="return_date">
-			<br>
-			<button type="submit">Zatwierdź</button>
-		</form>
+
+
+	<div class="row">
+		<div class="col-sm-4">Planowana data oddania</div>
+		<div class="col-sm-8">
+			<input id="date" type="date" name="return_date"></div>
+
 	</div>
-	
+
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
+	</div>
+
+
+</form>
+
+
+
 {% endblock %}

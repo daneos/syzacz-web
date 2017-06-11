@@ -1,27 +1,51 @@
 {% extends "core/home.template.html" %}
 
 {% block plugins %}
-	<span style="color:#333;; font-weight: 700;">Dodaj narzędzie:</span>
-	<br><br><br>
-	<div id="nazwaInputa" style="float:left; margin-right: 7px;">
-		Nazwa<br><br>
-		Opis<br><br><br><br><br>
-		Pozwolenie na wypożyczenie<br><br>
-		Miejsce
-	</div>
-	<div id="imputy" style="float:left; padding-left: 3px;">
+
+	
+
 		<form action="/{{ app_base }}/tools.add" method="post">
 			{% csrf_token %}
-			<input type="text" name="name" maxlength="63"><br> 
-			<textarea rows="4" name="description" maxlength="511"></textarea><br>
-			<input type="checkbox" name="permission"><br><br>
-			<select name="placement_id">
+
+
+<div class="row">
+  <div class="col-sm-4">Nazwa</div>
+  <div class="col-sm-8"><input type="text" name="name" /></div>
+</div>
+ 
+
+
+<div class="row">
+  <div class="col-sm-4">Opis</div>
+  <div class="col-sm-8"> <textarea rows="2" cols="50" name="description"></textarea></div>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-4">Pozwolenie na wypożyczenie</div>
+  <div class="col-sm-8">
+ <label class="radio-inline"><input type="radio" name="optradio" name="permission">Tak</label>
+<label class="radio-inline"><input type="radio" name="optradio">Nie</label>
+    </div>
+</div>
+
+		</br>
+			<div class="row">
+  <div class="col-sm-4">Miejsce</div>
+  <div class="col-sm-8">
+    	<select name="placement_id">
 				{% for placement in placements %}
 					<option value="{{ placement.id }}">{{ placement.room_name }}</option>
 				{% endfor %}
-			</select>
-			<br><br>
-			<button type="submit">Zatwierdź</button>
+			</select></div>
+</div>
+
+		<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
+</div>	
 		</form>
 	</div>
+
+
 {% endblock %}

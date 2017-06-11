@@ -1,21 +1,46 @@
-touch {% extends "core/home.template.html" %}
+{% extends "core/home.template.html" %} {% block plugins %}
 
-{% block plugins %}
-   
-      
-  <div class="inputStyle"> Numer faktury</div><div style="float:left;"><input type="text"/></div><div style="clear:both;"></div>
-    <div class="inputStyle"> Data wysłania</div><div style="float:left;"><input type="date"/></div><div style="clear:both;"></div>
-    <div class="inputStyle"> Data opłacenia</div><div style="float:left;"><input type="date"/></div><div style="clear:both;"></div>
-    <div class="inputStyle"> Kwota</div><div style="float:left;"><input type="text"/></div><div style="clear:both;"></div>
-    <div class="inputStyle">    Czy ma być zwracana?</div><div style="float:left;"><input type="checkbox"/>Tak   </div><div style="clear:both;"></div>
-      <br> <div class="inputStyle"> Przydziel do grupy:</div><div style="float:left;">  
-     <select>
+
+<div class="row">
+  <div class="col-sm-4">Numer faktury</div>
+  <div class="col-sm-8"><input type="text" /></div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4">Data wystawienia</div>
+  <div class="col-sm-8"><input type="date" /></div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4">Kwota</div>
+  <div class="col-sm-8"><input type="text" /></div>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-4">Czy ma być zwracana?</div>
+  <div class="col-sm-8">
+ <label class="radio-inline"><input type="radio" name="optradio">Tak</label>
+<label class="radio-inline"><input type="radio" name="optradio">Nie</label>
+    </div>
+</div>
+
+</br>
+<div class="row">
+  <div class="col-sm-4">Przydziel do grupy</div>
+  <div class="col-sm-8">
+    <select>
 	 <option> Brak</option>
 	 <option>grupa 1</option>
-     <option>grupa 2</option>
+   <option>grupa 2</option>
+    </select></div>
+</div>
 
-</select></div><div style="clear:both;"></div>  
-</br></br>
-<div style="margin-left: 38%"><button type="submit" >Zatwierdź</button></div>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
+</div>
+
+
 
 {% endblock %}
