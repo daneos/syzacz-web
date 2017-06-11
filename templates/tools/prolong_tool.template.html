@@ -1,4 +1,5 @@
 {% extends "core/home.template.html" %} {% block plugins %}
+
 <div class="row"><b>Przedłuż:</b></div><br>
 
 <form action="/{{ app_base }}/tools.prolong/{{ tool.id }}/" method="POST">
@@ -20,7 +21,7 @@
 <br>
 <div class="row">
     <div class="col-sm-4"></div>
-    <div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
+    <div class="col-sm-8"><button type="submit">Zatwierdż</button></div>
 </div>
 
 </form>
