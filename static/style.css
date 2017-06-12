@@ -1,157 +1,196 @@
-.leftmenu{
-    
-     float:left;
-     width: 15%;
-     min-height: 400px;
-     margin-top:3%;
+.leftmenu
+{
+	float: left;
+	width: 15%;
+	min-height: 400px;
+	margin-top: 3%;
+}
 
+.plugin
+{
+	margin: 3%;
+	padding: 10px;
+	float: left; 
 }
-.plugin{
- 
-     margin: 3%;
-     padding: 10px;
-     float:left;
-   
- 
-}
+
 ol{
-    
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-    font-size: 20px;
-
-}
-.middle{
-   
-   padding: 10px;
-
-}
-ol a{
-
-    color: black;
-    text-decoration: none;
-    display: block;
-
-}
-ol>li{
-         
-    padding: 5px;
-    min-block-size: 20px;
-    margin-bottom: 20px;
-
-
-
-}
-ol>li:hover>a{
-
-   color: black;
-    text-decoration: none;
-    color:#b9bfbc;
-
-}
-ol>li>ul{
-  
-    padding: 0;
-    margin: 10px;
-    font-size: 16px;
-    height: 20px;
-    list-style-type: square;
-    display: none;
-    
-
-
-
-
-}
-ol>li>ul>li{
-  padding: 3px;
-  min-block-size: 10px;
-  margin-left: 15px;
-
-
-}
-ol>li:hover>ul{
-
-        display: block;
-        margin-bottom: 50px;
-
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	font-size: 20px;
 }
 
-ol>li>ul>li:hover>a{
-
-   color: black;
-   text-decoration: none;
-   color:#F04F3D;
-  
-
+.middle
+{
+	padding: 10px;
 }
 
-button{
- 
-text-align: center;
-width: 150px;
-background-color: #eee;
-border: 2px solid #ddd;
-border-radius: 5px;
-font-size: 15px;
-
-
-
-}
-.plugin{
-
-   min-width: 690px;
-
-}
-.oddaj{
- color:blue;
-}
-.wypozycz{
-    color:green;
-}
-.przedloz{
-
-    color: grey;
+ol a
+{
+	color: black;
+	text-decoration: none;
+	display: block;
 }
 
-.edytuj {
-  margin-right: 10px;
+ol>li
+{
+	padding: 5px;
+	min-block-size: 20px;
+	margin-bottom: 20px;
 }
 
-a:hover{
-    text-decoration-line: none;
-}
-a:visite{
-    text-decoration-line: none;
-}
-a:active{
-    text-decoration-line: none;
-}
-a:link{
-    text-decoration: none;
-}
-.inputStyle{
-
-    float: left; margin-right: 30px; margin-left: 30px;
-    min-width: 200px;
+ol>li:hover>a
+{
+	color: black;
+	text-decoration: none;
+	color: #b9bfbc;
 }
 
-.username {
-  color: #8bc91d;
-  font-weight: bold;
+ol>li>ul
+{
+	padding: 0;
+	margin: 10px;
+	font-size: 16px;
+	height: 20px;
+	list-style-type: square;
+	display: none;
 }
 
-.userinfo td {
-  padding:5px;
+ol>li>ul>li
+{
+	padding: 3px;
+	min-block-size: 10px;
+	margin-left: 15px;
 }
 
-.sessions-list th, .sessions-list td {
-  padding: 5px;
-  border-bottom: 1px solid #444;
+ol>li:hover>ul
+{
+	display: block;
+	margin-bottom: 50px;
 }
 
-.delete-session {
-  font-size: 1.7em;
-  color: red;
+ol>li>ul>li:hover>a
+{
+	color: black;
+	text-decoration: none;
+	color: #F04F3D;
+}
+
+button
+{
+	text-align: center;
+	width: 150px;
+	background-color: #eee;
+	border: 2px solid #ddd;
+	border-radius: 5px;
+	font-size: 15px;
+}
+
+.plugin
+{
+	min-width: 690px;
+}
+
+.oddaj
+{
+	color: blue;
+}
+
+.wypozycz
+{
+	color: green;
+}
+
+.przedloz
+{
+	color: gray;
+}
+
+.edytuj
+{
+	margin-right: 10px;
+}
+
+a:hover
+{
+	text-decoration-line: none;
+}
+
+a:visited
+{
+	text-decoration-line: none;
+}
+
+a:active
+{
+	text-decoration-line: none;
+}
+
+a:link
+{
+	text-decoration: none;
+}
+
+.inputStyle
+{
+	float: left;
+	margin-right: 30px;
+	margin-left: 30px;
+	min-width: 200px;
+}
+
+.username
+{
+	color: #8bc91d;
+	font-weight: bold;
+}
+
+.userinfo td 
+{
+	padding:5px;
+}
+
+.sessions-list th, .sessions-list td
+{
+	padding: 5px;
+	border-bottom: 1px solid #444;
+}
+
+.delete-session
+{
+	font-size: 1.7em;
+	color: red;
+}
+
+.lead
+{
+	margin-bottom: 30px;
+}
+
+#count
+{
+	font-size: 3em;
+	line-height: 1em;
+}
+
+.copyright {
+	font-size: 0.7em;
+}
+
+h3>a:link, h3>a:visited, h3>a:active
+{
+	color: #F04F3D !important;
+	text-decoration: underline !important;
+}
+
+strong.wrong 
+{
+	margin-left: 50px;
+	text-align: right;
+}
+
+form table
+{
+	width: 100%;
+	text-align: left;
 }
