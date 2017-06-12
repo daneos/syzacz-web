@@ -194,3 +194,19 @@ form table
 	width: 100%;
 	text-align: left;
 }
+
+.listalarm
+{
+	display: inline-block;
+	color: red;
+	font-size: 1.6em;
+	margin-top: -0.3em;
+}
+
+.itemalarm
+{
+	display: inline-block;
+	color: red;
+	font-size: 6em;
+	margin-top: 0.2em;
+}

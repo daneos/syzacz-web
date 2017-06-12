@@ -1,0 +1,25 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<form action="/{{ app_base }}/resource.{{ use_refill }}/{{ resource.id }}/" method="POST">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-sm-2">Nazwa</div>
+			<div class="col-sm-2"><input type="text" placeholder="{{ resource.name }}" name="name" disabled></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-2">Ilość</div>
+			<div class="col-sm-2"><input type="text" name="amount"></div>
+		</div>
+		{% if use_refill == "use" %}
+			<div class="row">
+				<div class="col-sm-2">Komentarz</div>
+				<div class="col-sm-2"><textarea rows="2" cols="50" name="comment"></textarea></div>
+			</div>
+		{% endif %}
+		<div class="row">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-2"><button type="submit">Zatwierdź</button></div>
+		</div>
+	</form>
+{% endblock %}

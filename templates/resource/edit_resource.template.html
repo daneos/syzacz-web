@@ -1,25 +1,25 @@
 {% extends "core/home.template.html" %}
 
 {% block plugins %}
-	<form action="/{{ app_base }}/resource.add" method="post">
+	<form action="/{{ app_base }}/resource.edit/{{ resource.id }}/" method="post">
 		{% csrf_token %}
 		<div class="row">
 			<div class="col-sm-4">Nazwa</div>
-			<div class="col-sm-8"><input type="text" name="name" /></div>
+			<div class="col-sm-8"><input type="text" name="name" value="{{ resource.name }}" /></div>
 		</div>
 		<div class="row">
 			<div class="col-sm-4">Opis</div>
-			<div class="col-sm-8"><textarea rows="2" cols="50" name="description"></textarea></div>
+			<div class="col-sm-8"><textarea rows="2" cols="50" name="description">{{ resource.description }}</textarea></div>
 		</div>
 
 		<div class="row">
 			<div class="col-sm-4">Ilość</div>
-			<div class="col-sm-8"><input type="text" name="amount" /></div>
+			<div class="col-sm-8"><input type="text" name="amount" value="{{ resource.amount }}" disabled/></div>
 		</div>
 		
 		<div class="row">
 			<div class="col-sm-4">Alarm</div>
-			<div class="col-sm-8"><input type="text" name="alarm" /></div>
+			<div class="col-sm-8"> <input type="text" name="alarm" value="{{ resource.alarm }}"/></div>
 		</div>
 		
 		<div class="row">

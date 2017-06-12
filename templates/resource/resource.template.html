@@ -1,0 +1,70 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<div class="row">
+		<div class="col-sm-8">
+			<table cellpadding="5px;" style="min-width: 606px;">
+				<tr>
+					<td>Nazwa:</td>
+					<td><b>{{ resource.name }}</b></td>
+				</tr>
+				<tr>
+					<td>Opis:</td>
+					<td><b>{{ resource.description }}</b></td>
+				</tr>
+				<tr>
+					<td>Ilość:</td>
+					<td><b>{{ resource.amount }}</b> / {{ resource.alarm }}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-sm-2">
+			{% if resource.is_alarm %}
+				<span class="itemalarm">&#x26a0;</span>
+			{% endif %}
+		</div>
+	</div>
+
+	<br>
+	<br>
+
+	<div class="row">
+		<div class="col-sm-3" > <a href="/{{ app_base }}/resource.refill/{{ resource.id }}/" class="btn btn-success">Uzupełnij</a></div>
+		<div class="col-sm-3" > <a href="/{{ app_base }}/resource.edit/{{ resource.id }}/" class="btn btn-info">Edytuj</a></div>
+	</div>
+
+	<br>
+	<br>
+
+	<div class="row">
+	</div>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Użytkownik</th>
+				<th>Data</th>
+				<th>Ilość</th>
+				<th>Komentarz</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if usage %}
+				{% for u in usage %}
+					<tr>
+						<td>{{ u.member.cn }}</td>
+						<td>{{ u.date|format_date:"%Y/%m/%d" }}</td>
+						<td>{{ u.amount }}</td>
+						<td>{{ u.comment }}</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<br><br>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;">Brak elementów do wyświetlenia.</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+{% endblock %} 
