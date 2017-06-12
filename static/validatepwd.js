@@ -13,9 +13,7 @@ function check2()
 {
 	var liczba1 = document.getElementById("password").value;
 	var liczba2= document.getElementById("password2").value;
-	if(liczba1===liczba2)
-	{}
-	else
+	if(liczba1!==liczba2)
 		document.getElementById("wynik2").innerHTML="hasło się różnią";
 }
 
