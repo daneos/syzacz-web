@@ -1,6 +1,8 @@
-<li><a href="#">faktury</a>
-	<ul>
-		<li><a href="/{{ app_base }}/show_invoices">historia faktur</a></li>
-		<li><a href="/{{ app_base }}/new_invoice">dodaj fakture</a></li>
-	</ul>
-</li>
+{% if "invoice" not in plugin_blacklist %}
+	<li>faktury
+		<ul>
+			<li><a href="/{{ app_base }}/show_invoices">historia faktur</a></li>
+			<li><a href="/{{ app_base }}/new_invoice">dodaj fakture</a></li>
+		</ul>
+	</li>
+{% endif %}

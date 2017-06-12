@@ -10,41 +10,11 @@
 		<title>SyZaCz | Hackerspace Kraków</title>
 
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	
-	<script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-		function check() {
-          
-            var liczba = document.getElementById("password").value;
-
-            if(liczba.length>7) {
-                 
-                document.getElementById("wynik").innerHTML="Mocne";
-            }
-            else if((liczba.length<6) && (liczba.length>4)) {
-                document.getElementById("wynik").innerHTML="Średnie";
-            }
-            else document.getElementById("wynik").innerHTML="Słabe";
-             
-		}
-		function check2() {
-			var liczba1 = document.getElementById("password").value;
-			var liczba2= document.getElementById("password2").value;
-	
-		
-			if(liczba1===liczba2) {    }
-			else document.getElementById("wynik2").innerHTML="hasło się różnią";
-		}
-		function clean(){
-                  document.getElementById("wynik2").innerHTML="";
-
-		}
-	</script>
-
-	<script type="text/javascript" src="script/script_password.js"></script>
+		<script type="text/javascript" src="{% static "validatepwd.js" %}"></script>
 		
 		<link rel="space-api" href="http://spaceapi.hskrk.pl/">
 		<link rel="Shortcut icon" href="http://hackerspace-krk.pl/wp-content/themes/hskrk/images/favicon.png">
@@ -58,40 +28,6 @@
 		<!--[if lt IE 9]>
 			<script src="http://hackerspace-krk.pl/wp-content/themes/hskrk/bootstrap/js/html5shiv.js"></script>
 		<![endif]-->
-
-		<style>
-			.lead {
-				margin-bottom: 30px;
-			}
-
-			#count {
-				font-size: 3em;
-				line-height: 1em;
-			}
-
-			.copyright {
-				font-size: 0.7em;
-			}
-
-			h3>a:link,
-			h3>a:visited,
-			h3>a:active {
-				color: #F04F3D !important;
-				text-decoration: underline !important;
-			}
-
-
-			strong.wrong {
-				margin-left: 50px;
-				text-align: right;
-			}
-
-
-			form table {
-				width: 100%;
-				text-align: left;
-			}
-		</style>
 	</head>
 
 	<body class="home blog">

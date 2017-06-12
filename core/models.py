@@ -77,26 +77,38 @@ class Placement(models.Model):
 	def __str__(self):
 		return "Placement(id:%d, room_name:%s, rack_id:%s, additional_information:%s)" % (self.id, self.room_name, self.rack_id, self.additinal_information)
 
+
 class Resource(models.Model):
 	id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=64)
 	description = models.CharField(max_length=512)
-	remained = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)])
-	remained_alarm = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)])
+	amount = models.PositiveIntegerField()
+	alarm = models.PositiveIntegerField()
 
 	def __str__(self):
-		return "Resource(id:%d, name:%s, description:%s, remained:%d, remained_alarm:%d)" % (self.id, self.name, self.description, self.remained, self.remained_alarm)
+		return "Resource(id:%d, name:%s, description:%s, amount:%d, alarm:%d)" % (self.id, self.name, self.description, self.amount, self.alarm)
 
-class Resource_using(models.Model):
+	def is_alarm(self):
+		return self.amount <= self.alarm
+
+	def use(self, amount):
+		self.amount -= amount
+
+	def refill(self, amount):
+		self.amount += amount
+
+
+class ResourceUsage(models.Model):
 	id = models.AutoField(primary_key=True)
-	use_date = models.DateTimeField(auto_now_add=True)
-	amount = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)])
+	date = models.DateTimeField(auto_now_add=True)
+	member = models.ForeignKey('User')
+	amount = models.PositiveIntegerField()
 	comment = models.CharField(max_length=256)
-	member_id = models.ForeignKey('User')
-	resource_id = models.ForeignKey('Resource')
+	resource = models.ForeignKey('Resource')
 
 	def __str__(self):
-		return "Resource_using(id:%d, use_date:%s, amount:%d, comment:%s, member_id:%d, resource_id:%d)" % (self.id, self.use_date, self.amount, self.comment, self.member_id, self.resource_id)
+		return "ResourceUsage(id:%d, date:%s, amount:%d, comment:%s, member:%s, resource:%s)" % (self.id, self.date, self.amount, self.comment, self.member, self.resource)
+
 
 class Tool(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -110,6 +122,7 @@ class Tool(models.Model):
 	def __str__(self):
 		return "Tool(id:%d, description:..., is_able:%s, lent_permission:%s, member_id:%s, placement_id:%s)" % (self.id, self.available, self.lend_permission, self.member_id, self.placement_id)
 
+
 class Lent(models.Model):
 	id = models.AutoField(primary_key=True)
 	lent_date = models.DateTimeField(auto_now_add=True)
@@ -121,18 +134,6 @@ class Lent(models.Model):
 
 	def __str__(self):
 		return "Lent(id:%d, lent_date:%s, planned_return_date:%s, return_date:%s, comment:%s ,member_id:%s, placement_id:%s)" % (self.id, self.lent_date, self.planned_return_date, self.return_date,self.comment, self.member_id, self.tool_id)
-
-class Lent_form(models.Model):
-	id = models.AutoField(primary_key=True)
-	lent_date = models.DateTimeField(auto_now_add=True)
-	planned_return_date = models.DateTimeField(auto_now_add=True)
-	comment = models.CharField(max_length=256)
-	permission = models.BooleanField(default=False)
-	member_id = models.ForeignKey('User')
-	tool_id = models.ForeignKey('Tool')
-
-	def __str__(self):
-		return "Lent_form(id:%d, lent_date:%s, planned_return_date:%s, comment:%s , permission:%s, member_id:%d, tool_id:%d)" % (self.id, self.lent_date, self.planned_return_date,self.comment, self.member_id, self.tool_id)
 
 
 class Priority(models.Model):

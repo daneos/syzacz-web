@@ -1,31 +1,21 @@
-{% extends "core/home.template.html" %} {% block plugins %}
+{% extends "core/home.template.html" %}
 
-
-<form action="/{{ app_base }}/tools.lend/{{ tool.id }}/" method="POST">
-	{% csrf_token %}
-
-	<div class="row">
-		<div class="col-sm-4">Narzędzie</div>
-		<div class="col-sm-8"><input type="text" placeholder="{{ tool.name }} / {{ tool.placement.room_name }}" disabled></div>
-
-	</div>
-
-
-	<div class="row">
-		<div class="col-sm-4">Planowana data oddania</div>
-		<div class="col-sm-8">
-			<input id="date" type="date" name="return_date"></div>
-
-	</div>
-
-	<div class="row">
-		<div class="col-sm-4"></div>
-		<div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
-	</div>
-
-
-</form>
-
-
-
+{% block plugins %}
+	<form action="/{{ app_base }}/tools.lend/{{ tool.id }}/" method="POST">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-sm-4">Narzędzie</div>
+			<div class="col-sm-8"><input type="text" placeholder="{{ tool.name }} / {{ tool.placement.room_name }}" disabled></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">Planowana data oddania</div>
+			<div class="col-sm-8">
+				<input id="date" type="date" name="return_date">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
+		</div>
+	</form>
 {% endblock %}

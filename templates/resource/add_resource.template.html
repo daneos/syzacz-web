@@ -11,24 +11,18 @@
 			<div class="col-sm-4">Opis</div>
 			<div class="col-sm-8"> <textarea rows="2" cols="50" name="description"></textarea></div>
 		</div>
-		<div class="row">
-			<div class="col-sm-4">Pozwolenie na wypożyczenie</div>
-			<div class="col-sm-8">
-				<input type="checkbox" name="permission">
-			</div>
+
+        <div class="row">
+			<div class="col-sm-4">Ilość</div>
+			<div class="col-sm-8"> <input type="text" name="amount" /></textarea></div>
 		</div>
-		<br>
-		<div class="row">
-			<div class="col-sm-4">Miejsce</div>
-			<div class="col-sm-8">
-				<select name="placement_id">
-					{% for placement in placements %}
-						<option value="{{ placement.id }}">{{ placement.room_name }}</option>
-					{% endfor %}
-				</select>
-			</div>
+	    
+         <div class="row">
+			<div class="col-sm-4">Alarm</div>
+			<div class="col-sm-8"> <input type="text" name="alarm" /></textarea></div>
 		</div>
-		<div class="row">
+		
+        <div class="row">
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
 		</div>

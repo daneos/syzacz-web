@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.apps import apps
 from django.template.context_processors import csrf
 
-from conf import app_base, version
+from conf import app_base, version, plugin_blacklist
 from core.utils import *
 from core.log import log
 
@@ -24,8 +24,13 @@ plugin_env = {
 
 plugin_list = []
 for f in glob.glob(os.path.dirname(__file__) + "/*"):
-	if os.path.isfile(f) and not os.path.basename(f).startswith('_') and not os.path.basename(f).endswith("pyc"):
-		plugin_list.append(os.path.basename(f)[:-3])
+	fn = os.path.basename(f)
+	if os.path.isfile(f) and not fn.startswith('_') and not fn.endswith("pyc"):
+		module_name = fn[:-3]
+		if module_name in plugin_blacklist:
+			log("[LOAD] Not loading %s; blacklisted" % module_name)
+			continue
+		plugin_list.append(module_name)
 
 for p in plugin_list:
 	try:
@@ -71,7 +76,7 @@ def pluginCallback(plugin, url, callback, template, *args, **kwargs):
 			return context
 		if template:
 			s = Session.objects.get(session_hash=sessid(args[0]))
-			context.update({"user": s.user})
+			context.update({"user": s.user, "plugin_blacklist": plugin_blacklist})
 			# print context
 			return syzacz_render(template, context)
 		else:

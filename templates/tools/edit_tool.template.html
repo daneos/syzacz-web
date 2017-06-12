@@ -1,49 +1,36 @@
-{% extends "core/home.template.html" %} {% block plugins %}
+{% extends "core/home.template.html" %}
 
-
-
-<form action="/{{ app_base }}/tools.add" method="post">
-	{% csrf_token %}
-
-
-	<div class="row">
-		<div class="col-sm-4">Nazwa</div>
-		<div class="col-sm-8"><input type="text" name="name" /></div>
-	</div>
-
-
-
-	<div class="row">
-		<div class="col-sm-4">Opis</div>
-		<div class="col-sm-8"> <textarea rows="2" cols="50" name="description">{{ tool.description }}</textarea></div>
-	</div>
-
-
-	<div class="row">
-		<div class="col-sm-4">Pozwolenie na wypożyczenie</div>
-		<div class="col-sm-8">
-			<label class="radio-inline"><input type="radio" name="optradio" name="permission" {% if tool.lend_permission %} checked {% endif %}>Tak</label>
-			<label class="radio-inline"><input type="radio" name="optradio">Nie</label>
+{% block plugins %}
+	<form action="/{{ app_base }}/tools.edit/{{ tool.id }}/" method="post">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-sm-4">Nazwa</div>
+			<div class="col-sm-8"><input type="text" name="name" value="{{ tool.name }}"/></div>
 		</div>
-	</div>
-
-	</br>
-	<div class="row">
-		<div class="col-sm-4">Miejsce</div>
-		<div class="col-sm-8">
-			<select name="placement_id">
-				{% for placement in placements %}
-					<option value="{{ placement.id }}" {% if tool.placement == placement %} selected {% endif %}>{{ placement.room_name }}</option>
-				{% endfor %}
-			</select></div>
-	</div>
-
-	<div class="row">
-		<div class="col-sm-4"></div>
-		<div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
-	</div>
-</form>
-</div>
-
-
+		<div class="row">
+			<div class="col-sm-4">Opis</div>
+			<div class="col-sm-8"> <textarea rows="2" cols="50" name="description">{{ tool.description }}</textarea></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">Pozwolenie na wypożyczenie</div>
+			<div class="col-sm-8">
+				<input type="checkbox" name="permission" {% if tool.lend_permission %} checked {% endif %}>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4">Miejsce</div>
+			<div class="col-sm-8">
+				<select name="placement_id">
+					{% for placement in placements %}
+						<option value="{{ placement.id }}" {% if tool.placement == placement %} selected {% endif %}>{{ placement.room_name }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
+		</div>
+	</form>
 {% endblock %}
