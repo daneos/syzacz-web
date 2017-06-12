@@ -29,7 +29,7 @@ class Invoice(models.Model):
 	add_date = models.DateTimeField(auto_now_add=True)
 	amount = models.DecimalField(validators=[MaxValueValidator(9999999999)])
 	with_cashbacked = models.BooleanField()
-	cashbacked = models.BooleanField()
+	cashbacked = models.BooleanField(default=False)
 	posted = models.BooleanField()
 	to_group = models.BooleanField(default=False)#zmienić na klucz obcy
 	description = models.CharField(max_length=256)
