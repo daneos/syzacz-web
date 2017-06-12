@@ -31,7 +31,7 @@ class Invoice(models.Model):
 	with_cashbacked = models.BooleanField()
 	cashbacked = models.BooleanField(default=False)
 	posted = models.BooleanField()
-	to_group = models.BooleanField(default=False)#zmienić na klucz obcy
+	to_group = models.BooleanField(default=False)#zmienić na klucz obcy i na inną wartość
 	description = models.CharField(max_length=256)
 	member_id = models.ForeignKey('User')
 	

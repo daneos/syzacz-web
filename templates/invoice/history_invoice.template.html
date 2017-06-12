@@ -2,37 +2,50 @@
 
 {% block plugins %}
 
- 
-
 <input type="text" placeholder="wyszukaj" style="margin-left:69%; ">
-
-
-
-
-
-<table  cellpadding="5px;" style="min-width: 706px;">
-<tr  style="font-weight: 700;">
-	<td>Numer Fatury</td>	<td>Data Wystawienia</td> <td>kwota</td>    <td>Zwrócona</td>   <td>grupa</td> 
-</tr>
-<tr>
-	<td>222</td>	<td>30/04/1990</td>   <td>200</td><td>Tak</td><td>brak</td>
-   
-</tr>
-<tr>
-	<td>222</td>	<td>30/04/1990</td>   <td>300</td><td>Oczekuje na zwrot</td><td>brak</td>
-   
-</tr>
-<tr>
-	<td>222</td>	<td>30/04/1990</td>   <td>300</td><td>Nie</td><td>brak</td>
-   
-</tr>
-
-
-</table>
-
-
-
-
+	<table class="table table-hover">
+	  <thead>
+		<tr>
+			<th>Numer Faktury</th>
+			<th>Data Wystawienia</th>
+			<th>Data Dodania</th>
+			<th>Kwota</th>
+			<th>Stan</th> 
+			<th>Rodzaj wydatku</th>
+			<th>Opis</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		{% if invoices %}
+			{% for invoice in invoices %}
+				<tr>
+					<td>
+						<a href="/{{ app_base }}/show_invoice/{{ invoice.id }}/">
+							{{ invoice.invoice_number }}
+						</a>
+					</td>
+					<td>{{ inovice.issue_date }}</td>
+					<td>{{ invoice.add_date}}</td>
+					<td>{{ invoice.amount }}</td>
+					<td>{% if invoice.with_cashbacked == True %}
+						{% if invoice.cashbacked == True %}
+						Faktura została zwrócona
+						{% endif %}
+						Do zwrotu!!!
+						{% else %}
+						Faktura nie wymaga zwrotu
+						{% endif %}
+					</td>
+					<td>{{invoice.to_group}}</td>
+					<td>{{invoice.description}}</td>				</tr>
+			{% endfor %}
+		{% else %}
+			<tr>
+				<td colspan="4" style="text-align: center;">Brak elementów do wyświetlenia.</td>
+			</tr>
+		{% endif %}
+	  </tbody>
+	</table>
 
 
 

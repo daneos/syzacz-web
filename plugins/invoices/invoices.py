@@ -17,9 +17,9 @@ def init(plugin_env):
 def urls():
 	return [
         ["%s/new_invoice$", "add_invoice", "invoice/add_invoice.template.html"],
-        ["%s/add_invoice_file/(?P<id>[a-z]+)/$", "add_invoice_file", None], #templatka do wyslania pliku faktury uwaga redirect
+        ["%s/add_invoice_file/(?P<id>[a-z]+)/$", "add_invoice_file", None], #templatka do wyslania pliku faktury uwaga redirect TODO
         ["%s/show_invoices/$", "show_invoices", None],
-        ["%s/invoices/$", "invoices", None], #templatka do faktur transparency
+        ["%s/invoices/$", "invoices", "invice/history_invoice.template.html"], #templatka do faktur transparency
         ["%s/show_invoice(?P<id>[a-z]+)/$", "show_invoice", "invoice/show_invoice.template.html"], #templatka do pokazania pojedynczej faktury
         ["%s/download_invoices/$", "download_all", "invoice/download_invoices.template.html"] #templatka do pobrania wszystkich faktur
 	]
@@ -69,5 +69,6 @@ def show_invoices(rq):
 		return{"invoices": invoices}
 		
 def add_invoice_file(rq, id):
+
 	return 0
 	
