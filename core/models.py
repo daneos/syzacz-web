@@ -23,16 +23,13 @@ class User(models.Model):
 
 class Book(models.Model):
 	id = models.AutoField(primary_key=True)
+	title = models.CharField(max_length=512, default="")
+	pages = models.IntegerField(default=1)
 	description = models.CharField(max_length=512)
-	is_able = models.BooleanField(default=True)
-	lent_permission = models.BooleanField(default=True)
+	available = models.BooleanField(default=True)
+	review = models.CharField(max_length=4096, default="Brak")
 	member_id = models.ForeignKey('User')
 	placement_id = models.ForeignKey('Placement')
-
-	def __str__(self):
-		return "Placement(id:%d, room_name:%s, rack_id:%s, additional_information:%s)" % (
-		self.id, self.room_name, self.rack_id, self.additinal_information)
-
 
 class Session(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -109,7 +106,8 @@ class Lent(models.Model):
 	return_date = models.DateTimeField(null=True)
 	comment = models.CharField(max_length=256)
 	member = models.ForeignKey('User')
-	tool = models.ForeignKey('Tool')
+	tool = models.ForeignKey('Tool', null=True)
+	book = models.ForeignKey('Book', null=True)
 
 	def __str__(self):
 		return "Lent(id:%d, lent_date:%s, planned_return_date:%s, return_date:%s, comment:%s ,member_id:%s, placement_id:%s)" % (self.id, self.lent_date, self.planned_return_date, self.return_date,self.comment, self.member_id, self.tool_id)

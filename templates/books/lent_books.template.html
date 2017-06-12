@@ -1,0 +1,36 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<input type="text" placeholder="wyszukaj" style="margin-left:69%; ">
+	<table cellpadding="5px;" style="min-width: 706px;">
+		<tr style="font-weight: 700;">
+			<td>Tytuł</td>
+			<td>Strony</td>
+			<td>Miejsce</td>
+			<td>Wypożyczone do:</td>
+			<td>Akcje</td> 
+		</tr>
+		{% if books %}
+			{% for book in books %}
+				<tr>
+					<td><a href="/{{ app_base }}/book.show/{{ book.id }}/"><span class="title">{{ book.title }}</span></a></td>
+					<td>{{ book.description }}</td>
+					<td>{{ book.placement_id.room_name }}</td>
+					<td>{{ lents|item:book|attr:"planned_return_date"|format_date:"%Y/%m/%d" }}</td>
+					<td>
+						<a href="/{{ app_base }}/books.prolong/{{ book.id }}/"><span class="przedloz">przedłuż</span></a>
+						&nbsp;&nbsp;
+						<a href="/{{ app_base }}/books.return/{{ book.id }}/"><span class="oddaj">oddaj</span></a>
+					</td> 
+				</tr>
+			{% endfor %}
+		{% else %}
+			<tr>
+				<br><br>
+			</tr>
+			<tr>
+				<td colspan="5" style="text-align: center;">Brak elementów do wyświetlenia.</td>
+			</tr>
+		{% endif %}
+	</table>
+{% endblock %}

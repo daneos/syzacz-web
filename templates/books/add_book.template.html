@@ -1,0 +1,46 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+
+	
+
+		<form action="/{{ app_base }}/books.add" method="post">
+			{% csrf_token %}
+
+
+<div class="row">
+  <div class="col-sm-4">Tytuł</div>
+  <div class="col-sm-8"><input type="text" name="title" /></div>
+</div>
+ <div class="row">
+  <div class="col-sm-4">Ilość stron</div>
+  <div class="col-sm-8"><input type="text" name="pages" /></div>
+</div>
+<div class="row">
+  <div class="col-sm-4">Opis</div>
+  <div class="col-sm-8"> <textarea rows="2" cols="50" name="description"></textarea></div>
+</div>
+<div class="row">
+  <div class="col-sm-4">Recenzja</div>
+  <div class="col-sm-8"> <textarea rows="2" cols="50" name="review"></textarea></div>
+</div>
+		</br>
+			<div class="row">
+  <div class="col-sm-4">Miejsce</div>
+  <div class="col-sm-8">
+    	<select name="placement_id">
+				{% for placement in placements %}
+					<option value="{{ placement.id }}">{{ placement.room_name }}</option>
+				{% endfor %}
+			</select></div>
+</div>
+
+		<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
+</div>	
+		</form>
+	</div>
+
+
+{% endblock %}
