@@ -82,7 +82,7 @@ def home(rq):
 	if validate_sessid(rq):
 		session = get_object_or_404(Session, session_hash=sessid(rq))
 		context = {"user": session.user, "plugin_blacklist": plugin_blacklist}
-		return syzacz_render("core/home.template.html", context)
+		return syzacz_render("resource/refill_resource.template.html", context)
 	else:
 		return session_expired("/%s/home" % app_base)
 
