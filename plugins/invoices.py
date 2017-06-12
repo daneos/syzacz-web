@@ -6,7 +6,6 @@ from django.shortcuts import redirect
 
 from conf import app_base
 from core.version import Version
-import hashlib
 
 env = {}
 
@@ -35,7 +34,6 @@ def add_invoice(rq):
 		
 		try:
 			s = Session.objects.get(session_hash=env["sessid"](rq))
-			hashed = hashlib
 			
 			invoice = Invoice()
 			invoice.invoice_number = rq.POST.get("invoice_number")
@@ -48,7 +46,6 @@ def add_invoice(rq):
 			invoice.save()
 		except Error as e:
 			return {"error": "Cannot add new object: %s" % e}
-		print(invoice.issue_date + "\n\n\n")
 		return redirect("/%s/add_invoice_file/%s/" % (app_base, invoice.id))
 		
 	return context
@@ -78,11 +75,18 @@ def show_invoices(rq):
 		return context
 	
 def add_invoice_file(rq, id):
+	context = {"msg": rq.GET.get("msg"), "error": rq.GET.get("error")}
 	Invoice = env["getModel"]("Invoice")
 	context = {"id":id}
 	if rq.method == "GET":
 		context.update(env["csrf"](rq))
 	if rq.method == "POST":
-		return ("text")
-			
+		try:
+			invoice = Invoice.objects.get(id=id)
+			invoice.file = rq.FILES.get("file")
+			invoice.save()
+		except Error as e:
+			return {"error": "Cannot add new object: %s" % e}
+		return redirect("/%s/new_invoice" % app_base)
+
 	return context

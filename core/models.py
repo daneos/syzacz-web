@@ -34,6 +34,7 @@ class Invoice(models.Model):
 	to_group = models.BooleanField(default=False)#zmienic na klucz obcy i na inna wartosc
 	description = models.CharField(max_length=256)
 	member_id = models.ForeignKey('User')
+	file =  models.FileField(upload_to="syzacz/faktury", null=True)
 	
 	def __str__(self):
 		return ("Invoice(id:%d, permalink:%s, issue_date:%s, add_date:%s, amount:%s, with_cashbacked:%s,"+
