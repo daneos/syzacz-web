@@ -1,4 +1,11 @@
+from datetime import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import Error
+from django.shortcuts import redirect
+
+from conf import app_base
+from core.version import Version
 
 env = {}
 
@@ -18,5 +25,6 @@ def urls():
 	]
 
 def add_info(rq):
-	
-    return 0
+		if rq.method == "GET":
+			
+	return 0
