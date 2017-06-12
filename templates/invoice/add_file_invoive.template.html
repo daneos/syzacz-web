@@ -1,0 +1,16 @@
+{% extends "core/home.template.html" %} {% block plugins %}
+
+<form action="/{{ app_base }}/invoice.add_file" method="post">
+    {% csrf_token %}
+
+    <div class="row">
+        <input type="file" value="Dodaj fakture" />
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-8"><button type="submit">Dodaj</button></div>
+    </div>
+
+
+</form>
+{% endblock %}
