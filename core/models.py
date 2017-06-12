@@ -20,6 +20,26 @@ class User(models.Model):
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
 
+		
+class Invoice(models.Model):
+	id = models.AutoField(primary_key=True)
+	permalink = models.CharField(max_length=256)
+	issue_date = models.DateTimeField(default=user_validity(365))
+	add_date = models.DateTimeField(auto_now_add=True)
+	amount = models.DecimalField(validators=[MaxValueValidator(9999999999)])
+	with_cashbacked = models.BooleanField()
+	cashbacked = models.BooleanField()
+	posted = models.BooleanField()
+	to_group = models.BooleanField(default=False)#zmienić na klucz obcy
+	description = models.CharField(max_length=256)
+	member_id = models.ForeignKey('User')
+	
+	def __str__(self):
+		return "Invoice(id:%d, permalink:%s, issue_date:%s, add_date:%s, amount:%s, with_cashbacked:%s,"+
+		"cashbacked:%s, posted:%s, to_group:%s, description:%s, member_id:%s)" % (
+		self.id, self.permalink, self.issue_date, self.add_date, self.amount, self.with_cashbacked,
+		self.cashbacked, self.posted, self.to_group, self.description, self.member_id)
+
 
 class Book(models.Model):
 	id = models.AutoField(primary_key=True)
