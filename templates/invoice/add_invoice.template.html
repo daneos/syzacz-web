@@ -1,44 +1,55 @@
-{% extends "core/home.template.html" %} {% block plugins %}
+{% extends "core/home.template.html" %} 
 
+{% block plugins %}
+
+<form action="/{{ app_base }}/invoices/add_invoice" method="post">
+			{% csrf_token %}
 
 <div class="row">
-  <div class="col-sm-4">Numer faktury</div>
-  <div class="col-sm-8"><input type="text" /></div>
+	<div class="col-sm-4">Numer faktury</div>
+	<div class="col-sm-8"><input type="text" name="invoice_number" /></div>
 </div>
 
 <div class="row">
-  <div class="col-sm-4">Data wystawienia</div>
-  <div class="col-sm-8"><input type="date" /></div>
+	<div class="col-sm-4">Data wystawienia</div>
+	<div class="col-sm-8"><input type="date" name="issue_date" /></div>
 </div>
 
 <div class="row">
-  <div class="col-sm-4">Kwota</div>
-  <div class="col-sm-8"><input type="text" /></div>
+	<div class="col-sm-4">Kwota</div>
+	<div class="col-sm-8"><input type="text" name="amount"/></div>
 </div>
 
 
 <div class="row">
-  <div class="col-sm-4">Czy ma być zwracana?</div>
-  <div class="col-sm-8">
- <label class="radio-inline"><input type="radio" name="optradio">Tak</label>
-<label class="radio-inline"><input type="radio" name="optradio">Nie</label>
-    </div>
+	<div class="col-sm-4">Czy ma być zwracana?</div>
+	<div class="col-sm-8">
+		<label class="radio-inline"><input type="radio" name="optradio" name="with_cashbacked">Tak</label>
+		<label class="radio-inline"><input type="radio" name="optradio">Nie</label>
+	</div>
 </div>
 
-</br>
+<br />
 <div class="row">
-  <div class="col-sm-4">Przydziel do grupy</div>
-  <div class="col-sm-8">
-    <select>
-	 <option> Brak</option>
-	 <option>grupa 1</option>
-   <option>grupa 2</option>
-    </select></div>
+	<div class="col-sm-4">Przydziel do grupy</div>
+	<div class="col-sm-8">
+		<select>
+			<option> Brak</option>
+			<option>grupa 1</option>
+			<option>grupa 2</option>
+		</select></div>
 </div>
 
+<br />
 <div class="row">
-  <div class="col-sm-4"></div>
-  <div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
+  <div class="col-sm-4">Opis</div>
+  <div class="col-sm-8"> <textarea rows="2" cols="50" name="description"></textarea></div>
+</div>
+
+<br />
+<div class="row">
+	<div class="col-sm-4"></div>
+	<div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
 </div>
 
 
