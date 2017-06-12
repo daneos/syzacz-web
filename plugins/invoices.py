@@ -18,10 +18,10 @@ def init(plugin_env):
 def urls():
 	return [
         ["%s/new_invoice$", "add_invoice", "invoice/add_invoice.template.html"],
-        ["%s/add_invoice_file/(?P<id>[0-9]+)/$", "add_invoice_file", "invoice/add_invoice_file.template.html"], #templatka do wyslania pliku faktury uwaga redirect TODO
+        ["%s/add_invoice_file/(?P<id>\d+)/$", "add_invoice_file", "invoice/add_invoice_file.template.html"], #templatka do wyslania pliku faktury uwaga redirect TODO
         ["%s/show_invoices$", "show_invoices", "invoice/history_invoice.template.html"],
         # podobna do powyzszej["%s/invoices/$", "invoices", None], #templatka do faktur transparency
-        #["%s/show_invoice(?P<id>[a-z]+)/$", "show_invoice", "invoice/show_invoice.template.html"], #templatka do pokazania pojedynczej faktury
+        #["%s/show_invoice(?P<id>\d+)/$", "show_invoice", "invoice/show_invoice.template.html"], #templatka do pokazania pojedynczej faktury
         #["%s/download_invoices$", "download_all", "invoice/download_invoices.template.html"] #templatka do pobrania wszystkich faktur
 	]
 
@@ -44,11 +44,12 @@ def add_invoice(rq):
 			invoice.with_cashbacked = rq.POST.get("with_cashbacked")
 			invoice.member_id = s.user
 			invoice.permalink = ""
+			invoice.description = rq.POST.get("description")
 			invoice.save()
 		except Error as e:
 			return {"error": "Cannot add new object: %s" % e}
-			
-		return redirect("%s/add_invoice_file/%s/" % (app_base, invoice.id))
+		print(invoice.issue_date + "\n\n\n")
+		return redirect("/%s/add_invoice_file/%s/" % (app_base, invoice.id))
 		
 	return context
 	
@@ -60,23 +61,25 @@ def show_invoices(rq):
 		try:
 			last_two_months = datetime.today() - timedelta(days=61)
 			invoices = Invoice.objects.filter(issue_date__gte = last_two_months)
-			context = {"invoices" : invoices}
+			context = {"invoices" : sorted(invoices, key=lambda invoice: invoice.issue_date)}
 			context.update(env["csrf"](rq))
 		except ObjectDoesNotExist:
 			return {"error:": "Object does not exist"}
 		return context
 	if rq.method == "POST":
 		try:
-			od = rq.POST.get("od")
-			do = rq.POST.get("do")
+			start_date = rq.POST.get("od")
+			end_date = rq.POST.get("do")
 			invoices = Invoice.objects.filter(issue_date__range=(start_date, end_date))
 		except ObjectDoesNotExist:
 			return {"error:": "Object does not exist"}
-		return{"invoices": invoices}
+		context = {"invoices" : sorted(invoices, key=lambda invoice: invoice.issue_date)}
+		context.update(env["csrf"](rq))
+		return context
 	
 def add_invoice_file(rq, id):
 	Invoice = env["getModel"]("Invoice")
-	context
+	context = {"id":id}
 	if rq.method == "GET":
 		context.update(env["csrf"](rq))
 	if rq.method == "POST":
