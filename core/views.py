@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.template.context_processors import csrf
 from django.core.exceptions import ObjectDoesNotExist
 
-from conf import app_base
+from conf import app_base, plugin_blacklist
 from core.models import *
 from core.utils import *
 
@@ -81,7 +81,7 @@ def logout(rq):
 def home(rq):
 	if validate_sessid(rq):
 		session = get_object_or_404(Session, session_hash=sessid(rq))
-		context = {"user": session.user}
+		context = {"user": session.user, "plugin_blacklist": plugin_blacklist}
 		return syzacz_render("core/home.template.html", context)
 	else:
 		return session_expired("/%s/home" % app_base)
