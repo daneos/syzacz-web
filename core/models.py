@@ -27,7 +27,7 @@ class Invoice(models.Model):
 	permalink = models.CharField(max_length=256)
 	issue_date = models.DateTimeField(default=user_validity(365))
 	add_date = models.DateTimeField(auto_now_add=True)
-	amount = models.DecimalField(validators=[MaxValueValidator(9999999999)])
+	amount = models.DecimalField(validators=[MaxValueValidator(9999999999)], decimal_places=2, max_digits=10)
 	with_cashbacked = models.BooleanField()
 	cashbacked = models.BooleanField(default=False)
 	posted = models.BooleanField()
