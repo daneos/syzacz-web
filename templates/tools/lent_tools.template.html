@@ -1,35 +1,39 @@
-{% extends "core/home.template.html" %} {% block plugins %}
-<input type="text" placeholder="wyszukaj" style="margin-left:69%; ">
-<table class="table table-hover">
-	<thead>
-		<tr>
-			<th>Sprzęt</th>
-			<th>Opis</th>
-			<th>Miejsce</th>
-			<th>Wypożyczone do:</th>
-			<th>Akcje</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% if tools %} {% for tool in tools %}
-		<tr>
-			<td>{{ tool.name }}</td>
-			<td>{{ tool.description }}</td>
-			<td>{{ tool.placement.room_name }}</td>
-			<td>{{ lents|item:tool|attr:"planned_return_date"|format_date:"%Y/%m/%d" }}</td>
-			<td>
-				<a href="/{{ app_base }}/tools.prolong/{{ tool.id }}/"><span class="przedloz">przedłuż</span></a> &nbsp;&nbsp;
-				<a href="/{{ app_base }}/tools.return/{{ tool.id }}/"><span class="oddaj">oddaj</span></a>
-			</td>
-		</tr>
-		{% endfor %} {% else %}
-		<tr>
-			<br><br>
-		</tr>
-		<tr>
-			<td colspan="5" style="text-align: center;">Brak elementów do wyświetlenia.</td>
-		</tr>
-		{% endif %}
-	</tbody>
-</table>
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<input type="text" placeholder="wyszukaj" style="margin-left:69%; ">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Sprzęt</th>
+				<th>Opis</th>
+				<th>Miejsce</th>
+				<th>Wypożyczone do:</th>
+				<th>Akcje</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if tools %}
+				{% for tool in tools %}
+					<tr>
+						<td>{{ tool.name }}</td>
+						<td>{{ tool.description }}</td>
+						<td>{{ tool.placement.room_name }}</td>
+						<td>{{ lents|item:tool|attr:"planned_return_date"|format_date:"%Y/%m/%d" }}</td>
+						<td>
+							<a href="/{{ app_base }}/tools.prolong/{{ tool.id }}/"><span class="przedloz">przedłuż</span></a> &nbsp;&nbsp;
+							<a href="/{{ app_base }}/tools.return/{{ tool.id }}/"><span class="oddaj">oddaj</span></a>
+						</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<br><br>
+				</tr>
+				<tr>
+					<td colspan="5" style="text-align: center;">Brak elementów do wyświetlenia.</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
 {% endblock %}
