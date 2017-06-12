@@ -28,10 +28,10 @@ class Invoice(models.Model):
 	issue_date = models.DateTimeField(default=user_validity(365))
 	add_date = models.DateTimeField(auto_now_add=True)
 	amount = models.DecimalField(validators=[MaxValueValidator(9999999999)], decimal_places=2, max_digits=10)
-	with_cashbacked = models.BooleanField()
+	with_cashbacked = models.NullBooleanField(null=True)
 	cashbacked = models.BooleanField(default=False)
-	posted = models.BooleanField()
-	to_group = models.BooleanField(default=False)#zmienić na klucz obcy i na inną wartość
+	posted = models.NullBooleanField(null=True)
+	to_group = models.BooleanField(default=False)#zmienic na klucz obcy i na inna wartosc
 	description = models.CharField(max_length=256)
 	member_id = models.ForeignKey('User')
 	

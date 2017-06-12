@@ -1,7 +1,9 @@
 {% extends "core/home.template.html" %}
 
 {% block plugins %}
-
+<form action="/{{ app_base }}/show_invoices" method="post">
+			{% csrf_token %}
+			
 <input type="text" placeholder="wyszukaj" style="margin-left:69%; ">
 	<table class="table table-hover">
 	  <thead>
