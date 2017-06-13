@@ -9,10 +9,12 @@ from core.version import Version
 
 env = {}
 
+
 def init(plugin_env):
 	global env
 	env = plugin_env
-	return (0,0,1)
+	return Version([0, 0, 2, "alpha"])
+
 
 def urls():
 	return [
@@ -26,6 +28,7 @@ def urls():
 		["%s/book.show/(?P<book_id>[0-9]+)/$", "show_book", "books/show_book.template.html"]
 	]
 
+
 def books_list(rq):
 	Book = env["getModel"]("Book")
 	try:
@@ -33,6 +36,7 @@ def books_list(rq):
 	except ObjectDoesNotExist:
 		return {"error": "Object does not exist"}
 	return {"books": books}
+
 
 def books_my(rq):
 	context = {"msg": rq.GET.get("msg"), "error": rq.GET.get("error")}
@@ -54,6 +58,7 @@ def books_my(rq):
 
 	context.update({"books": books, "lents": filtered_lents, "display_edit": True})
 	return context
+
 
 def add_book(rq):
 	if rq.method == "GET":
@@ -83,6 +88,7 @@ def add_book(rq):
 
 		return redirect("/%s/books.my?msg=Saved" % app_base)
 
+
 def books_lent(rq):
 	context = {"msg": rq.GET.get("msg"), "error": rq.GET.get("error")}
 
@@ -101,10 +107,12 @@ def books_lent(rq):
 	context.update({"books": books, "lents": lents})
 	return context
 
+
 def show_book(rq, book_id):
 	Book = env["getModel"]("Book")
 	book = Book.objects.get(id=book_id)
 	return {"book": book}
+
 
 def lend_book(rq, book_id):
 	Book = env["getModel"]("Book")
@@ -129,6 +137,7 @@ def lend_book(rq, book_id):
 		book.available = False
 		book.save()
 		return redirect("/%s/books.lent?msg=Saved" % app_base)
+
 
 def return_book(rq, book_id):
 	Book = env["getModel"]("Book")
@@ -164,4 +173,3 @@ def prolong_book(rq, book_id):
 		lent.save()
 
 		return redirect("/%s/books.lent?msg=Saved" % app_base)
-

@@ -14,7 +14,7 @@
 			{% for book in books %}
 				<tr>
 					<td><a href="/{{ app_base }}/book.show/{{ book.id }}/"><span class="title">{{ book.title }}</span></a></td>
-					<td>{{ book.description }}</td>
+					<td>{{ book.pages }}</td>
 					<td>{{ book.placement_id.room_name }}</td>
 					<td>{{ lents|item:book|attr:"planned_return_date"|format_date:"%Y/%m/%d" }}</td>
 					<td>
