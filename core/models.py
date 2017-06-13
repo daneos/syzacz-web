@@ -2,7 +2,8 @@ import uuid
 from django.db import models
 from django.core.validators import MaxValueValidator
 from datetime import datetime, timedelta
-
+from conf import app_base
+		
 def user_validity(days):
 	validity_date = datetime.now()+timedelta(days=days)
 	return validity_date
@@ -19,6 +20,28 @@ class User(models.Model):
 
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
+
+		
+class Invoice(models.Model):
+	id = models.AutoField(primary_key=True)
+	invoice_number = models.CharField(max_length=32)
+	permalink = models.CharField(max_length=256)
+	issue_date = models.DateTimeField()
+	add_date = models.DateTimeField(auto_now_add=True)
+	amount = models.DecimalField(decimal_places=2, max_digits=10)
+	with_cashbacked = models.NullBooleanField(null=True)
+	cashbacked = models.BooleanField(default=False)
+	posted = models.NullBooleanField(null=True)
+	group = models.CharField(null=True, max_length=16)
+	description = models.CharField(max_length=256)
+	member_id = models.ForeignKey('User')
+	file =  models.FileField(upload_to={"/%s/syzacz/faktury" % app_base}, null=True)
+	
+	def __str__(self):
+		return ("Invoice(id:%d, permalink:%s, issue_date:%s, add_date:%s, amount:%s, with_cashbacked:%s,"+
+		"cashbacked:%s, posted:%s, to_group:%s, description:%s, member_id:%s)") % (
+		self.id, self.permalink, self.issue_date, self.add_date, self.amount, self.with_cashbacked,
+		self.cashbacked, self.posted, self.to_group, self.description, self.member_id)
 
 
 class Book(models.Model):
