@@ -1,5 +1,5 @@
 # from time import time, mktime
-# from datetime import datetime
+from datetime import datetime
 # from base64 import b64encode
 from django.shortcuts import get_object_or_404, redirect
 # from django.db.models import Q
@@ -7,9 +7,15 @@ from django.http import HttpResponse
 from django.template.context_processors import csrf
 from django.core.exceptions import ObjectDoesNotExist
 
-from conf import app_base, plugin_blacklist
+from conf import app_base, plugin_blacklist, version
 from core.models import *
 from core.utils import *
+from core.log import log
+
+
+def start(rq):
+	log("[START] Started at %s" % str(datetime.today()))
+	return HttpResponse("syzacz-web %s [HSKRK]" % str(version))
 
 
 def landing(rq):
