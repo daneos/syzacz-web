@@ -1,9 +1,10 @@
 import uuid
 from django.db import models
 from django.core.validators import MaxValueValidator
-from conf import app_base
 from datetime import datetime, timedelta
-
+from django import forms
+from conf import app_base
+		
 def user_validity(days):
 	validity_date = datetime.now()+timedelta(days=days)
 	return validity_date
@@ -21,6 +22,11 @@ class User(models.Model):
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
 
+
+
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    file = forms.FileField()
 		
 class Invoice(models.Model):
 	id = models.AutoField(primary_key=True)

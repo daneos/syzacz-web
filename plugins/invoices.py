@@ -4,6 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import Error
 from django.shortcuts import redirect
 
+from django.core.files import File
+
 from conf import app_base
 from core.version import Version
 
@@ -80,16 +82,27 @@ def show_invoices(rq):
 		context = {"invoices" : sorted(invoices, key=lambda invoice: invoice.issue_date)}
 		context.update(env["csrf"](rq))
 		return context
-	
+		
+def handle_uploaded_file(f):
+    with open('some/file/name.txt', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+		
 def add_invoice_file(rq, id):
 	context = {"msg": rq.GET.get("msg"), "error": rq.GET.get("error")}
 	Invoice = env["getModel"]("Invoice")
+	UploadFileForm = env["getModel"]("UploadFileForm")
 	context = {"id":id}
 	if rq.method == "GET":
 		context.update(env["csrf"](rq))
 	if rq.method == "POST":
 		try:
 			invoice = Invoice.objects.get(id=id)
+			form = UploadFileForm(invoice.invoice_number, rq.FILES)
+			if form.is_valid():
+				handle_uploaded_file(rq.FILES['file'])
+				print("Sukces\n\n\n\n")
+				
 			invoice.file = rq.FILES.get("file")
 			invoice.save()
 		except Error as e:
