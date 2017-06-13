@@ -38,10 +38,11 @@
 					<td>{% if invoice.with_cashbacked == True %}
 							{% if invoice.cashbacked == True %}
 								Faktura została zwrócona
-							{% endif %}
+							{% else %}
 								<a href="/{{ app_base }}/account.info/{{ invoice.id }}">
 									Do zwrotu!!!
 								</a>
+							{% endif %}
 						{% else %}
 							Faktura nie wymaga zwrotu
 						{% endif %}
