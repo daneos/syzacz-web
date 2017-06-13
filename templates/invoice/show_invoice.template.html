@@ -15,30 +15,42 @@
 		<td>Data dodania:</td>
 		<td>{{invoice.add_date}}</td>
 	</tr>
+		<td>Zwrot:</td>
 		<td>{% if invoice.with_cashbacked == True %}
 				{% if invoice.cashbacked == True %}
 					Faktura została zwrócona
 				{% endif %}
-					Do zwrotu!!!
-			{% else %}
+					<a href="/{{ app_base }}/account.info/{{ invoice.id }}">
+						Do zwrotu!!!
+					</a>
+				{% else %}
 				Faktura nie wymaga zwrotu
 			{% endif %}
 		</td>
 	<tr>
 		<td>Kwota:</td>
 		<td>{{invoice.amount}}</td>
-	</tr>	
+	</tr>
+	<tr>
+		<td>Grupa:</td>
+		<td>{{invoice.group}}</td>
+	</tr>
+	<tr>
+		<td>Dodał:</td>
+		<td>{{invoice.member_id.name}} {{invoice.member_id.name}}</td>
+	</tr>
 	<tr>
 		<td>Opis:</td>
 		<td>{{invoice.description}}</td>
 	</tr>
-	<tr>
+	<!-- <tr>
 		<td colspan = 2> 
 		<a href="/{{app_base}}/syzacz/faktury/{{invoice.file}}"> 
 		Pobierz
 		</a>
 		</td>
 	</tr>
+	-->
 
 </table>
 

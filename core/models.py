@@ -2,7 +2,6 @@ import uuid
 from django.db import models
 from django.core.validators import MaxValueValidator
 from datetime import datetime, timedelta
-from django import forms
 from conf import app_base
 		
 def user_validity(days):
@@ -22,11 +21,6 @@ class User(models.Model):
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
 
-
-
-class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    file = forms.FileField()
 		
 class Invoice(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -38,7 +32,7 @@ class Invoice(models.Model):
 	with_cashbacked = models.NullBooleanField(null=True)
 	cashbacked = models.BooleanField(default=False)
 	posted = models.NullBooleanField(null=True)
-	to_group = models.BooleanField(default=False)#zmienic na klucz obcy i na inna wartosc
+	group = models.CharField(null=True, max_length=16)
 	description = models.CharField(max_length=256)
 	member_id = models.ForeignKey('User')
 	file =  models.FileField(upload_to={"/%s/syzacz/faktury" % app_base}, null=True)

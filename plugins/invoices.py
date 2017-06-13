@@ -4,7 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import Error
 from django.shortcuts import redirect
 
-from django.core.files import File
 
 from conf import app_base
 from core.version import Version
@@ -22,7 +21,8 @@ def urls():
         ["%s/add_invoice_file/(?P<id>\d+)/$", "add_invoice_file", "invoice/add_invoice_file.template.html"],
         ["%s/show_invoices$", "show_invoices", "invoice/history_invoice.template.html"],
         # podobna do powyzszej["%s/invoices/$", "invoices", None], #templatka do faktur transparency
-        ["%s/show_invoice/(?P<id>\d+)/$", "show_invoice", "invoice/show_invoice.template.html"], #templatka do pokazania pojedynczej faktury
+        ["%s/show_invoice/(?P<id>\d+)/$", "show_invoice", "invoice/show_invoice.template.html"],
+		["%s/account.info/(?P<id>\d+)/$","account_info", "account/account_info.template.html"]
         #["%s/download_invoices$", "download_all", "invoice/download_invoices.template.html"] #templatka do pobrania wszystkich faktur
 	]
 
@@ -31,6 +31,19 @@ def show_invoice(rq, id):
 	context = {"invoice" : Invoice.objects.get(id=id)}
 	context.update(env["csrf"](rq))
 	return context
+
+	
+# def account_info(rq, id):
+	# User = env["getModel"]("User")
+	# Invoice = env["getModel"]("Invoice")
+	# invoice = Invoice.objects.get(pk=id)
+	# invoice.cashbacked = True
+	# invoice.save()
+	# user = User.objects.get(pk=invoice.member_id)
+	# context = {"user": user}
+	# context.update(env["csrf"](rq))
+	# retrun context
+	
 
 	
 def add_invoice(rq):
@@ -51,6 +64,7 @@ def add_invoice(rq):
 			invoice.with_cashbacked = rq.POST.get("with_cashbacked")
 			invoice.member_id = s.user
 			invoice.permalink = ""
+			invoice.group = rq.POST.get("group")
 			invoice.description = rq.POST.get("description")
 			invoice.save()
 		except Error as e:
@@ -83,26 +97,16 @@ def show_invoices(rq):
 		context.update(env["csrf"](rq))
 		return context
 		
-def handle_uploaded_file(f):
-    with open('some/file/name.txt', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
 		
 def add_invoice_file(rq, id):
 	context = {"msg": rq.GET.get("msg"), "error": rq.GET.get("error")}
 	Invoice = env["getModel"]("Invoice")
-	UploadFileForm = env["getModel"]("UploadFileForm")
 	context = {"id":id}
 	if rq.method == "GET":
 		context.update(env["csrf"](rq))
 	if rq.method == "POST":
 		try:
 			invoice = Invoice.objects.get(id=id)
-			form = UploadFileForm(invoice.invoice_number, rq.FILES)
-			if form.is_valid():
-				handle_uploaded_file(rq.FILES['file'])
-				print("Sukces\n\n\n\n")
-				
 			invoice.file = rq.FILES.get("file")
 			invoice.save()
 		except Error as e:

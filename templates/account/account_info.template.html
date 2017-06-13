@@ -1,0 +1,33 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+<div style="margin-left: 10%;">
+	<h1>
+		<span style="color:green;"> <h3>Witaj {{ user.cn }}</h3></span>
+	</h1> 
+	<div style="margin-left: 5%; margin-top: 5%;">
+		<table class="userinfo">
+			<tr>
+				<td><b>Imię: </b></td>
+				<td>{{ user.name }}</td>
+			</tr>
+			<tr>
+				<td><b>Nazwisko: </b></td>
+				<td>{{ user.surname }}</td>
+			</tr>
+			<tr>
+				<td><b>Data ważności konta: </b></td>
+				<td>{{ user.validity|format_date:"%Y/%m/%d" }}</td>
+			</tr>
+			<tr>
+				<td><b>Email: </b></td>
+				<td>{{ user.email }}</td>
+			</tr>
+			<tr>
+				<td><b>Numer konta</b></td>
+				<td>1111 2222 3333 4444 5555 6666</td>
+			</tr>
+		</table>
+	</div>
+</div>
+{% endblock %}

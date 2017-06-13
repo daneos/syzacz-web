@@ -39,12 +39,14 @@
 							{% if invoice.cashbacked == True %}
 								Faktura została zwrócona
 							{% endif %}
-								Do zwrotu!!!
+								<a href="/{{ app_base }}/account.info/{{ invoice.id }}">
+									Do zwrotu!!!
+								</a>
 						{% else %}
 							Faktura nie wymaga zwrotu
 						{% endif %}
 					</td>
-					<td>{{invoice.to_group}}</td>
+					<td>{{invoice.group}}</td>
 					<td>{{invoice.description}}</td>				
 				</tr>
 			{% endfor %}
