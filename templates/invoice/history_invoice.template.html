@@ -1,7 +1,7 @@
 {% extends "core/home.template.html" %}
 
 {% block plugins %}
-<form action="/{{ app_base }}/show_invoices" method="post">
+<form action="/{{ app_base }}/invoice.all" method="post">
 			{% csrf_token %}
 			
 	<div class="col-sm-1">Od:</div>
@@ -28,7 +28,7 @@
 			{% for invoice in invoices %}
 				<tr>
 					<td>
-						<a href="/{{ app_base }}/show_invoice/{{ invoice.id }}/">
+						<a href="/{{ app_base }}/invoice/{{ invoice.id }}/">
 							{{ invoice.invoice_number }}
 						</a>
 					</td>

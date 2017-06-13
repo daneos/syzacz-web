@@ -2,7 +2,7 @@
 
 {% block plugins %}
 
-<form action="/{{ app_base }}/add_invoice_file/{{id}}/" method="post">
+<form action="/{{ app_base }}/invoice.upload/{{ id }}/" method="post">
     {% csrf_token %}
 
     <div class="row">'

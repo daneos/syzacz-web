@@ -1,60 +1,61 @@
-{% extends "generic.template.html" %} {% block banner %}
-<p class="lead">Zarejestruj się</p>
-{% endblock %} {% block content %}
-<div class="row">
-	<div class="span12 text-center">
-		<form action="/{{ app_base }}/register" method="post">
-			{% csrf_token %}
+{% extends "generic.template.html" %}
 
+{% block banner %}
+	<p class="lead">Zarejestruj się</p>
+{% endblock %}
 
-			<div class="row">
-				<div class="col-sm-2">Login</div>
-				<div class="col-sm-2"><input type="text" id="login" name="cn" /></div>
-			</div>
+{% block content %}
+	<div class="row">
+		<div class="span12 text-center">
+			<form action="/{{ app_base }}/register" method="post">
+				{% csrf_token %}
 
-
-			<div class="row">
-				<div class="col-sm-2">Imię</div>
-				<div class="col-sm-2"><input type="text" id="name" name="name" /></div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-2">Nazwisko</div>
-				<div class="col-sm-2"><input type="text" id="surname" name="surname" /></div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-2">E-mail</div>
-				<div class="col-sm-2"><input type="email" id="email" name="email" /></div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-2">Hasło</div>
-				<div class="col-sm-2"><input type="password" id="password" name="password" onchange="check();" onclick="clean();" /></div>
-				<div class="col-sm-4">
-					<div id="wynik" style="color:red;"></div>
+				<div class="row">
+					<div class="col-sm-2">Login</div>
+					<div class="col-sm-2"><input type="text" id="login" name="cn" /></div>
 				</div>
-			</div>
 
 
-			<div class="row">
-				<div class="col-sm-2">Powtórz hasło</div>
-				<div class="col-sm-2"><input type="password" id="password2" onchange="check2();"></div>
-				<div class="col-sm-4">
-					<div id="wynik2" style="color:red;"></div>
+				<div class="row">
+					<div class="col-sm-2">Imię</div>
+					<div class="col-sm-2"><input type="text" id="name" name="name" /></div>
 				</div>
-			</div>
-<br>
-			<div class="row">
-				<div class="col-sm-2"></div>
-				<div class="col-sm-4"><button type="submit" onclick="check2();">Wyślij</button></div>
-			</div>
 
-		</form>
-		<hr>
-		<div style="text-align: right">
-			<a href="/{{ app_base }}/login" style="color:gray">Powrót do logowania</a>
+				<div class="row">
+					<div class="col-sm-2">Nazwisko</div>
+					<div class="col-sm-2"><input type="text" id="surname" name="surname" /></div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-2">E-mail</div>
+					<div class="col-sm-2"><input type="email" id="email" name="email" /></div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-2">Hasło</div>
+					<div class="col-sm-2"><input type="password" id="password" name="password" onchange="check();" onclick="clean();" /></div>
+					<div class="col-sm-4">
+						<div id="wynik" style="color:red;"></div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-2">Powtórz hasło</div>
+					<div class="col-sm-2"><input type="password" id="password2" onchange="check2();"></div>
+					<div class="col-sm-4">
+						<div id="wynik2" style="color:red;"></div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4"><button type="submit" onclick="check2();">Wyślij</button></div>
+				</div>
+			</form>
+			<hr>
+			<div style="text-align: right">
+				<a href="/{{ app_base }}/login" style="color:gray">Powrót do logowania</a>
+			</div>
 		</div>
 	</div>
-</div>
 {% endblock %}
