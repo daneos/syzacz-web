@@ -71,7 +71,7 @@ def add_invoice(rq):
 			invoice.save()
 		except Error as e:
 			return {"error": "Cannot add new object: %s" % e}
-		return redirect("/%s/add_invoice_file/%s/" % (app_base, invoice.id))
+		return redirect("/%s/invoice.upload/%s/" % (app_base, invoice.id))
 
 	return context
 
@@ -113,6 +113,6 @@ def add_invoice_file(rq, id):
 			invoice.save()
 		except Error as e:
 			return {"error": "Cannot add new object: %s" % e}
-		return redirect("/%s/new_invoice?msg=Saved" % app_base)
+		return redirect("/%s/invoice.all?msg=Saved" % app_base)
 
 	return context

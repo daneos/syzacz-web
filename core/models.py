@@ -2,11 +2,12 @@ import uuid
 from django.db import models
 from django.core.validators import MaxValueValidator
 from datetime import datetime, timedelta
-from conf import app_base
-		
+
+
 def user_validity(days):
-	validity_date = datetime.now()+timedelta(days=days)
+	validity_date = datetime.now() + timedelta(days=days)
 	return validity_date
+
 
 class User(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -21,7 +22,7 @@ class User(models.Model):
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
 
-		
+
 class Invoice(models.Model):
 	id = models.AutoField(primary_key=True)
 	invoice_number = models.CharField(max_length=32)
@@ -35,8 +36,8 @@ class Invoice(models.Model):
 	group = models.CharField(null=True, max_length=16)
 	description = models.CharField(max_length=256)
 	member_id = models.ForeignKey('User')
-	file =  models.FileField(upload_to={"/%s/syzacz/faktury" % app_base}, null=True)
-	
+	file = models.FileField(upload_to="storage/syzacz/faktury", null=True)
+
 	def __str__(self):
 		return ("Invoice(id:%d, permalink:%s, issue_date:%s, add_date:%s, amount:%s, with_cashbacked:%s,"+
 		"cashbacked:%s, posted:%s, to_group:%s, description:%s, member_id:%s)") % (
@@ -54,6 +55,7 @@ class Book(models.Model):
 	member_id = models.ForeignKey('User')
 	placement_id = models.ForeignKey('Placement')
 
+
 class Session(models.Model):
 	id = models.AutoField(primary_key=True)
 	time_start = models.DateTimeField(auto_now_add=True)
@@ -66,6 +68,7 @@ class Session(models.Model):
 
 	def __str__(self):
 		return "Session(id:%d, active:%s, user:%s, remote:%s, local:%s, hash:%s)" % (self.id, self.active, self.user, self.remote, self.local, str(self.session_hash))
+
 
 class Placement(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -167,7 +170,6 @@ class Members_special_function(models.Model):
 
 	def __str__(self):
 		return "Members_special_function(member_id:%d, priority_id:%d)" % (self.id, self.function_name)
-
 
 
 class Log(models.Model):
