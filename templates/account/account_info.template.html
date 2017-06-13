@@ -2,9 +2,6 @@
 
 {% block plugins %}
 <div style="margin-left: 10%;">
-	<h1>
-		<span style="color:green;"> <h3>Witaj {{ user.cn }}</h3></span>
-	</h1> 
 	<div style="margin-left: 5%; margin-top: 5%;">
 		<table class="userinfo">
 			<tr>
@@ -14,10 +11,6 @@
 			<tr>
 				<td><b>Nazwisko: </b></td>
 				<td>{{ user.surname }}</td>
-			</tr>
-			<tr>
-				<td><b>Data ważności konta: </b></td>
-				<td>{{ user.validity|format_date:"%Y/%m/%d" }}</td>
 			</tr>
 			<tr>
 				<td><b>Email: </b></td>

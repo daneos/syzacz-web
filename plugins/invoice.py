@@ -36,16 +36,17 @@ def show_invoice(rq, id):
 	return context
 
 
-# def account_info(rq, id):
-	# User = env["getModel"]("User")
-	# Invoice = env["getModel"]("Invoice")
-	# invoice = Invoice.objects.get(pk=id)
-	# invoice.cashbacked = True
-	# invoice.save()
-	# user = User.objects.get(pk=invoice.member_id)
-	# context = {"user": user}
-	# context.update(env["csrf"](rq))
-	# retrun context
+def account_info(rq, id):
+	Invoice = env["getModel"]("Invoice")
+	User = env["getModel"]("User")
+	context = {"invoice": Invoice.objects.get(id=id)}
+	context.update(env["csrf"](rq))
+	invoice = Invoice.objects.get(pk=id)
+	user = invoice.member_id
+	context = {"user": user}
+	invoice.cashbacked = True
+	invoice.save()
+	return context
 
 
 def add_invoice(rq):
