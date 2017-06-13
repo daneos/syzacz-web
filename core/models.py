@@ -40,9 +40,9 @@ class Invoice(models.Model):
 
 	def __str__(self):
 		return ("Invoice(id:%d, permalink:%s, issue_date:%s, add_date:%s, amount:%s, with_cashbacked:%s,"+
-		"cashbacked:%s, posted:%s, to_group:%s, description:%s, member_id:%s)") % (
+		"cashbacked:%s, posted:%s, description:%s, member_id:%s)") % (
 		self.id, self.permalink, self.issue_date, self.add_date, self.amount, self.with_cashbacked,
-		self.cashbacked, self.posted, self.to_group, self.description, self.member_id)
+		self.cashbacked, self.posted, self.description, self.member_id)
 
 
 class Book(models.Model):
