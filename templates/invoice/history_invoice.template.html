@@ -36,16 +36,17 @@
 					<td>{{ invoice.add_date}}</td>
 					<td>{{ invoice.amount }}</td>
 					<td>{% if invoice.with_cashbacked == True %}
-						{% if invoice.cashbacked == True %}
-						Faktura została zwrócona
-						{% endif %}
-						Do zwrotu!!!
+							{% if invoice.cashbacked == True %}
+								Faktura została zwrócona
+							{% endif %}
+								Do zwrotu!!!
 						{% else %}
-						Faktura nie wymaga zwrotu
+							Faktura nie wymaga zwrotu
 						{% endif %}
 					</td>
 					<td>{{invoice.to_group}}</td>
-					<td>{{invoice.description}}</td>				</tr>
+					<td>{{invoice.description}}</td>				
+				</tr>
 			{% endfor %}
 		{% else %}
 			<tr>

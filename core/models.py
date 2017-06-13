@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.core.validators import MaxValueValidator
+from conf import app_base
 from datetime import datetime, timedelta
 
 def user_validity(days):
@@ -34,7 +35,7 @@ class Invoice(models.Model):
 	to_group = models.BooleanField(default=False)#zmienic na klucz obcy i na inna wartosc
 	description = models.CharField(max_length=256)
 	member_id = models.ForeignKey('User')
-	file =  models.FileField(upload_to="syzacz/faktury", null=True)
+	file =  models.FileField(upload_to={"/%s/syzacz/faktury" % app_base}, null=True)
 	
 	def __str__(self):
 		return ("Invoice(id:%d, permalink:%s, issue_date:%s, add_date:%s, amount:%s, with_cashbacked:%s,"+
