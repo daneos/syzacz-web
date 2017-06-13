@@ -16,9 +16,6 @@
 					<td>{{ book.pages }}</td>
 					<td>{{ book.placement_id.room_name }}</td>
 					<td>
-						{% if display_edit and book.member_id == user %}
-							<a href="/{{ app_base }}/books.edit/{{ book.id }}/"><span class="edytuj">edytuj</span></a>
-						{% endif %}
 						{% if book.available %}
 							<a href="/{{ app_base }}/book.lend/{{ book.id }}/"><span class="wypozycz">wypożycz</span></a>
 						{% else %}
