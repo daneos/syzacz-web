@@ -43,7 +43,7 @@ def account_info(rq, id):
 	context.update(env["csrf"](rq))
 	invoice = Invoice.objects.get(pk=id)
 	user = invoice.member_id
-	context = {"user": user}
+	context = {"invoice": invoice}
 	invoice.cashbacked = True
 	invoice.save()
 	return context
