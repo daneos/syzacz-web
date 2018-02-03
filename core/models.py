@@ -161,14 +161,14 @@ class Notification(models.Model):
                 (1, 'Nowy'),
                 (2, 'Zablokowane'),
                 (3, 'On going'),
-                (4, 'Rozwiązane'),
+                (4, 'Rozwiazane'),
                 )
         id = models.AutoField(primary_key=True)
 	user_priority = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)])
 	description = models.CharField(max_length=512)
 	member_id = models.ForeignKey('User')
 	priority_id = models.ForeignKey('Priority')
-        status = mogels.PositiveIntegerField(choices=STATUS_CHOICES, default=1)
+        status = models.PositiveIntegerField(choices=STATUS_CHOICES, default=1)
 
 	def __str__(self):
 		return "Notification(id: %d, user_priority:%d, description:%s, member_id:%s, priority_id:%s)" % (self.id, self.user_priority, self.description, self.member_id, self.priority_id)
