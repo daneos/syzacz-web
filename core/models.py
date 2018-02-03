@@ -128,6 +128,7 @@ class Tool(models.Model):
 	available = models.BooleanField(default=True)
 	lend_permission = models.BooleanField()
 	needs_training = models.BooleanField()
+	is_stationary = models.BooleanField()
 	member = models.ForeignKey('User')
 	placement = models.ForeignKey('Placement')
 
