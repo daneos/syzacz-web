@@ -10,6 +10,14 @@ def user_validity(days):
 
 
 class User(models.Model):
+	ROLE_CHOICES= (
+                (1, 'Admin'),
+                (2, 'Active'),
+                (3, 'Unactive'),
+                (4, 'Blocked'),
+                (5, 'Registered'),
+                )
+	
 	id = models.AutoField(primary_key=True)
 	ldap = models.CharField(max_length=100)
 	cn = models.CharField(max_length=50)
@@ -18,13 +26,14 @@ class User(models.Model):
 	email = models.EmailField()
 	password = models.CharField(max_length=128)
 	validity = models.DateTimeField(default=user_validity(365))
+        role = models.PositiveIntegerField(choices=ROLE_CHOICES, default=5)
 
 	def __str__(self):
 		return "User(id:%d, cn:%s, ldap:%s)" % (self.id, self.cn, self.ldap)
 
 
 class Invoice(models.Model):
-	id = models.AutoField(primary_key=True)
+        id = models.AutoField(primary_key=True)
 	invoice_number = models.CharField(max_length=32)
 	permalink = models.CharField(max_length=256)
 	issue_date = models.DateTimeField()
