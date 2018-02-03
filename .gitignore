@@ -93,3 +93,6 @@ ENV/
 
 # Sublime project
 .sublime-project/
+
+# Migrations
+core/migrations
