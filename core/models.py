@@ -195,3 +195,8 @@ class Log(models.Model):
 
 	def __str__(self):
 		return "Log(id: %d, timestamp:%s, message:%s)" % (self.id, self.timestamp, self.message)
+
+class Rfid(models.Model):
+        id = models.CharField(primary_key=True, max_length=32)
+        user = models.ForeignKey('User')
+        active = models.BooleanField(default=True);
