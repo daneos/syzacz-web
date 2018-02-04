@@ -6,13 +6,6 @@
 	margin-top: 3%;
 }
 
-.plugin
-{
-	margin: 3%;
-	padding: 10px;
-	float: left;
-}
-
 ol{
 	padding: 0;
 	margin: 0;
@@ -23,6 +16,12 @@ ol{
 .middle
 {
 	padding: 10px;
+}
+
+.col-sm-9
+{
+	padding-top: 20px;
+	min-height: 600px;
 }
 
 ol a
@@ -89,11 +88,6 @@ button
 button[disabled], html input[disabled] {
     cursor: default;
     color: lightgrey;
-}
-
-.plugin
-{
-	min-width: 690px;
 }
 
 .oddaj
