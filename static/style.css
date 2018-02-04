@@ -25,6 +25,12 @@ ol{
 	padding: 10px;
 }
 
+.col-sm-3
+{
+	min-height: 600px;
+
+}
+
 ol a
 {
 	color: black;
@@ -89,11 +95,6 @@ button
 button[disabled], html input[disabled] {
     cursor: default;
     color: lightgrey;
-}
-
-.plugin
-{
-	min-width: 690px;
 }
 
 .oddaj
