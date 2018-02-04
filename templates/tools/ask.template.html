@@ -1,0 +1,22 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<div class="row">
+		<div class="col-sm-4">Narzędzie</div>
+		<div class="col-sm-8"><input type="text" placeholder="{{ tool.name }} / {{ tool.placement.room_name }}" disabled></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">Właściciel</div>
+		<div class="col-sm-8">
+			<span style="font-size: 2em">{{ tool.member.cn }}</span> <a href="xmpp://{{ tool.member.cn }}@hskrk.pl">{{ tool.member.cn }}@hskrk.pl</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">Opiekunowie</div>
+		<div class="col-sm-8">
+			{% for agent in meta.agents %}
+				<span>{{ agent.cn }}<span> <a href="xmpp://{{ agent.cn }}@hskrk.pl">{{ agent.cn }}@hskrk.pl</a>,
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
