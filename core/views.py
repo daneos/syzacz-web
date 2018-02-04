@@ -1,4 +1,4 @@
-# from time import time, mktime
+from time import time
 from datetime import datetime
 # from base64 import b64encode
 from django.shortcuts import get_object_or_404, redirect
@@ -95,3 +95,15 @@ def home(rq):
 
 def test_core(rq):
 	return HttpResponse("Welcome from core view!")
+
+
+def heartbeat(rq):
+	""" Use this view to perform periodic actions """
+	ts = time()
+
+	# INSERT CODE HERE
+
+	diff = time() - ts
+	msg = "Heartbeat took %fs." % diff
+	log(msg)
+	return msg
