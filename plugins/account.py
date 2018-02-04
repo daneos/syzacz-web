@@ -17,6 +17,7 @@ def urls():
         ["%s/account.status$", "account_status", "account/account_status.template.html"],
         ["%s/account.delete_session/(?P<session_id>[0-9]+)/$", "delete_session", None],
         ["%s/account.change_email$", "change_email", None],
+	["%s/account.rfid_state/(?P<rfid_id>[0-9a-zA-Z]+)/$", "rfid_state", None],
         ["%s/account.change_password$", "change_password", None],
         ["%s/account.settings", "account_settings", "account/settings.template.html"]
     ]
@@ -24,13 +25,15 @@ def urls():
 
 def account_status(rq):
     Session = env["getModel"]("Session")
+    Rfid = env["getModel"]("Rfid")
     try:
         current_session = Session.objects.get(session_hash=env["sessid"](rq))
         sessions = Session.objects.filter(user=current_session.user, active=True)
+        rfids = Rfid.objects.filter(user=current_session.user)
     except Exception as e:
             return redirect("/%s/account.settings?error=%s" % (app_base, str(e)))
 
-    return {"active_sessions": sessions, "current_session": current_session}
+    return {"active_sessions": sessions, "current_session": current_session, "rfids": rfids}
 
 
 def delete_session(rq, session_id):
@@ -87,3 +90,26 @@ def change_password(rq):
             return redirect("/%s/account.settings?error=Invalid password" % app_base)
 
     return redirect("/%s/account.settings?msg=Password updated" % app_base)
+	
+	
+def rfid_state(rq, rfid_id):
+	    print "tutaj"
+            Session = env["getModel"]("Session")
+	    User = env["getModel"]("User")
+	    Rfid = env["getModel"]("Rfid")
+	    rfid = Rfid.objects.get(id=rfid_id)
+            try: 
+	    	session = Session.objects.get(session_hash=env["sessid"](rq))
+		userr = session.user
+	    except Exception as e:
+		return redirect("/%s/account.settings?error=%s" % (app_base, str(e)))
+		
+		
+            if rfid.active == True:
+		rfid.active = False
+	    else:
+		rfid.active = True
+	    rfid.save()
+	    return redirect("/%s/account.status?msg=Password updated" % app_base)
+		
+		

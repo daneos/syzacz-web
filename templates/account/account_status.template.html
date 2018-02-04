@@ -25,7 +25,25 @@
 			</tr>
 		</table>
 	</div>
-	
+	<h2>
+		<h3>Rfid</h3>
+	</h2>
+	<div style="margin-left: 5%; margin-top: 5%;">
+		<table class="session-list">
+			<tr>
+				<td><b>Id</b></td>
+				<td><b>Aktywny</b></td>
+				<td></td>
+			</tr>
+			{% for r in rfids %}
+				<tr>
+					<td>{{ r.id }}</td>
+					<td>{{ r.active }}</td>
+					<td><a href="/{{ app_base }}/account.rfid_state/{{ r.id }}/"><span class="delete-session">&otimes;</span></a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
 	<h2>
 		<h3>Aktywne sesje:</h3>
 	</h2> 
