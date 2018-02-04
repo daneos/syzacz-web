@@ -3,7 +3,7 @@
 {% block plugins %}
 	<div class="row">
 		<div class="col-sm-4">Książka</div>
-		<div class="col-sm-8"><input type="text" placeholder="{{ book.title }} / {{ book.placement.room_name }}" disabled></div>
+		<div class="col-sm-8"><input type="text" placeholder="{{ book.title }} / {{ book.placement_id.room_name }}" disabled></div>
 	</div>
 	<div class="row">
 		<div class="col-sm-4">Właściciel</div>
@@ -19,9 +19,9 @@
 			{% endfor %}
 		</div>
 	</div>
+	<br><br>
+	<h3>Historia</h3>
 	{% if lents %}
-		<br><br>
-		<h3>Historia</h3>
 		<table>
 			<tr>
 				<th>Data wypożyczenia</th>
@@ -31,12 +31,14 @@
 			</tr>
 			{% for lent in lents %}
 				<tr>
-					<td>{{ lent.lent_date }}</td>
-					<td>{{ lent.return_date }}</td>
+					<td>{{ lent.lent_date|format_date:"%Y/%m/%d" }}</td>
+					<td>{{ lent.return_date|format_date:"%Y/%m/%d" }}</td>
 					<td>{{ lent.member.cn }}</td>
 					<td>{{ lent.comment }}</td>
 				</tr>
 			{% endfor %}
 		</table>
+	{% else %}
+		Brak elementów do wyświetlenia.
 	{% endif %}
 {% endblock %}
