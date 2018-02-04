@@ -102,6 +102,8 @@ def add_tool(rq):
 			tool.name = rq.POST.get("name")
 			tool.description = rq.POST.get("description")
 			tool.lend_permission = bool(rq.POST.get("permission"))
+			tool.needs_training = bool(rq.POST.get("training"))
+			tool.is_stationary = bool(rq.POST.get("stationary"))
 			tool.member = s.user
 			placement = env["getModel"]("Placement").objects.get(pk=rq.POST.get("placement_id"))
 			tool.placement = placement
@@ -206,6 +208,8 @@ def edit_tool(rq, id):
 		tool.description = rq.POST.get("description")
 		tool.lend_permission = bool(rq.POST.get("permission"))
 		placement = env["getModel"]("Placement").objects.get(pk=rq.POST.get("placement_id"))
+		tool.needs_training = bool(rq.POST.get("training"))
+		tool.is_stationary = bool(rq.POST.get("stationary"))
 		tool.placement = placement
 		tool.save()
 
