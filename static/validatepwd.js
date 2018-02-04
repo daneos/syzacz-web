@@ -1,23 +1,54 @@
-function check()
-{
-	var liczba = document.getElementById("password").value;
-	if(liczba.length > 7)
-		document.getElementById("wynik").innerHTML="Mocne";
-	else if((liczba.length < 6) && (liczba.length > 4))
-		document.getElementById("wynik").innerHTML="Średnie";
-	else
-		document.getElementById("wynik").innerHTML="Słabe";	 
-}
+$( document ).ready(function() {
 
-function check2()
-{
-	var liczba1 = document.getElementById("password").value;
-	var liczba2= document.getElementById("password2").value;
-	if(liczba1!==liczba2)
-		document.getElementById("wynik2").innerHTML="hasło się różnią";
-}
+	var newpass = $('#newpassword');
+	var newpassTooltip = $('#wynik');
 
-function clean()
-{
-	document.getElementById("wynik2").innerHTML="";
-}
+	var verifypass = $('#verifypassword');
+	var verifypassTooltip = $('#wynik2');
+
+	var submitbutton = $('#submitbutton');
+
+	function check()
+	{
+		if(newpass.val().length > 7){
+			newpassTooltip.css('color','green');
+			newpassTooltip.html("Mocne");
+		}
+		else if((newpass.val().length < 6) && (newpass.val().length > 4)){
+			newpassTooltip.css('color','orange');
+			newpassTooltip.html("Średnie");
+		}
+		else {
+			newpassTooltip.css('color','red');
+			newpassTooltip.html("Słabe");
+		}
+
+		if(newpass.val() !== verifypass.val()){
+			verifypassTooltip.css('color','red');
+			verifypassTooltip.html("Hasła się różnią");
+			submitbutton.attr( "disabled", true );
+
+		}
+		else {
+			if(newpass.val() !== '' && verifypass.val() !== ''){
+				verifypassTooltip.html("Hasła są takie same");
+				verifypassTooltip.css('color','green');
+				submitbutton.attr( "disabled", false );
+			}
+			else {
+				newpassTooltip.html('');
+				verifypassTooltip.html('');
+				submitbutton.attr( "disabled", true );
+			}
+		}
+	}
+
+newpass.change(function(){
+	check();
+});
+
+verifypass.change(function(){
+	check();
+});
+
+});

@@ -28,21 +28,21 @@
 		<div class="row">
 			<div class="col-sm-4">
 				Nowe hasło</div>
-			<div class="col-sm-4"><input type="password" id="password" onchange="check();" onclick="clean();" /></div>
+			<div class="col-sm-4"><input type="password" id="newpassword"/></div>
 			<div class="col-sm-4">
 				<div id="wynik" style="color:red;"></div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-4">Powtórz hasło</div>
-			<div class="col-sm-4"><input type="password" name="new_password" id="password2" onchange="check2();" /></div>
+			<div class="col-sm-4"><input type="password" name="new_password" id="verifypassword"/></div>
 			<div class="col-sm-4">
 			<div id="wynik2" style="color:red;"></div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-4"></div>
-			<div class="col-sm-8"><button type="submit" onclick="check2();">Zmień</button></div>
+			<div class="col-sm-8"><button id="submitbutton" type="submit">Zmień</button></div>
 		</div>
 	</form>
 {% endblock %}

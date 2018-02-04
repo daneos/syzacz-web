@@ -10,7 +10,7 @@
 {
 	margin: 3%;
 	padding: 10px;
-	float: left; 
+	float: left;
 }
 
 ol{
@@ -86,6 +86,11 @@ button
 	font-size: 15px;
 }
 
+button[disabled], html input[disabled] {
+    cursor: default;
+    color: lightgrey;
+}
+
 .plugin
 {
 	min-width: 690px;
@@ -145,7 +150,7 @@ a:link
 	font-weight: bold;
 }
 
-.userinfo td 
+.userinfo td
 {
 	padding:5px;
 }
@@ -183,7 +188,7 @@ h3>a:link, h3>a:visited, h3>a:active
 	text-decoration: underline !important;
 }
 
-strong.wrong 
+strong.wrong
 {
 	margin-left: 50px;
 	text-align: right;
