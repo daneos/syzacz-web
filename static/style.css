@@ -1,84 +1,87 @@
-.leftmenu
-{
-	float: left;
-	width: 15%;
-	min-height: 400px;
-	margin-top: 3%;
-}
-
-ol{
-	padding: 0;
-	margin: 0;
-	list-style-type: none;
-	font-size: 20px;
-}
 
 .middle
 {
 	padding: 10px;
 }
 
-.col-sm-9
+.plugin
 {
 	padding-top: 20px;
-	min-height: 600px;
+	min-height: 500px;
+}
+
+ol
+{
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	font-size: 18px;
+	height: 35px;
+	line-height: 200%;
+	display: inline-block;
 }
 
 ol a
 {
-	color: black;
 	text-decoration: none;
 	display: block;
 }
 
-ol>li
+ol > li
 {
-	padding: 5px;
-	min-block-size: 20px;
-	margin-bottom: 20px;
+	width: 150px;
+	height: 40px;
 }
 
-ol>li:hover>a
+ol > li:hover
+{
+	background-color: white;
+}
+
+ol > li:hover > a
 {
 	color: black;
-	text-decoration: none;
-	color: #b9bfbc;
 }
 
-ol>li>ul
+ol > li > ul
 {
-	padding: 0;
-	margin: 10px;
-	font-size: 16px;
-	height: 20px;
-	list-style-type: square;
+	list-style-type: none;
 	display: none;
+	margin-left: 130px;
+	margin-top: 0px;
+	bottom: 300px;
+	margin-top: -20px;
 }
 
-ol>li>ul>li
-{
-	padding: 3px;
-	min-block-size: 10px;
-	margin-left: 15px;
-}
-
-ol>li:hover>ul
+ol > li:hover > ul
 {
 	display: block;
-	margin-bottom: 50px;
+	display: inline-block;
 }
 
-ol>li>ul>li:hover>a
+ol > li > ul > li
+{
+	position: relative;
+	z-index: 100;
+	width: 150px;
+	height: 40px;
+	background-color: white;
+}
+
+ol > li > ul > li:hover
+{
+	background-color: white;
+}
+
+ol > li > ul > li:hover > a
 {
 	color: black;
-	text-decoration: none;
-	color: #F04F3D;
 }
 
 button
 {
 	text-align: center;
-	width: 150px;
+	width: 120px;
 	background-color: #eee;
 	border: 2px solid #ddd;
 	border-radius: 5px;
@@ -128,6 +131,7 @@ a:active
 a:link
 {
 	text-decoration: none;
+	color: black;
 }
 
 .inputStyle
