@@ -22,6 +22,8 @@ def urls():
 		["%s/tools.my$", "tools_my", "tools/tools.template.html"],
 		["%s/tools.lent$", "tools_lent", "tools/lent_tools.template.html"],
 		["%s/tools.add$", "add_tool", "tools/add_tool.template.html"],
+		["%s/tools.ask/(?P<id>[0-9]+)/$", "ask", "tools/ask.template.html"],
+		# ["%s/tools.agents/(?P<key>[0-9a-f]+)/$", "agents", "tools/agents.template.html"],
 		["%s/tools.lend/(?P<id>[0-9]+)/$", "lend_tool", "tools/lend_tool.template.html"],
 		["%s/tools.return/(?P<id>[0-9]+)/$", "return_tool", None],
 		["%s/tools.prolong/(?P<id>[0-9]+)/$", "prolong_tool", "tools/prolong_tool.template.html"],
@@ -84,7 +86,8 @@ def tools_lent(rq):
 def add_tool(rq):
 	if rq.method == "GET":
 		Placement = env["getModel"]("Placement")
-		context = {"placements": Placement.objects.all()}
+		User = env["getModel"]("User")
+		context = {"placements": Placement.objects.all(), "users": User.objects.all()}
 		context.update(env["csrf"](rq))
 		return context
 
@@ -102,6 +105,7 @@ def add_tool(rq):
 			tool.member = s.user
 			placement = env["getModel"]("Placement").objects.get(pk=rq.POST.get("placement_id"))
 			tool.placement = placement
+			tool.metadata = "{\"agents\":[%s]}" % rq.POST.get("agent_ids")
 			tool.save()
 		except Error as e:
 			return {"error": "Cannot add new object: %s" % e}
@@ -132,6 +136,19 @@ def lend_tool(rq, id):
 		tool.available = False
 		tool.save()
 		return redirect("/%s/tools.lent?msg=Saved" % app_base)
+
+
+def ask(rq, id):
+	Tool = env["getModel"]("Tool")
+	tool = Tool.objects.get(pk=id)
+	meta = env["parse_metadata"](tool.metadata)
+	return {"tool": tool, "meta": meta}
+
+
+# def agents(rq, key):
+# 	User = env["getModel"]("User")
+# 	users = User.objects.all()
+# 	return {"users": users, "key": key}
 
 
 def return_tool(rq, id):
@@ -180,7 +197,7 @@ def edit_tool(rq, id):
 	placements = Placement.objects.all()
 
 	if rq.method == "GET":
-		context = {"tool": tool, "lents": lents, "placements": placements}
+		context = {"tool": tool, "lents": lents, "placements": placements, "meta": env["parse_metadata"](tool.metadata)}
 		context.update(env["csrf"](rq))
 		return context
 

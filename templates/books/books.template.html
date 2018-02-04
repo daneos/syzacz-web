@@ -27,6 +27,7 @@
 								<span class="username">{{ lents|item:book|attr:"member"|attr:"cn" }}</span>: <i>{{ lents|item:book|attr:"planned_return_date"|format_date:"%Y/%m/%d" }}</i>
 							{% endif %}
 						{% endif %}
+						<a href="/{{ app_base }}/books.ask/{{ book.id }}/"><span class="info">informacje</span></a>
 					</td> 
 				</tr>
 			{% endfor %}

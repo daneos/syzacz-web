@@ -62,6 +62,7 @@ class Book(models.Model):
 	available = models.BooleanField(default=True)
 	review = models.CharField(max_length=4096, default="Brak")
 	member_id = models.ForeignKey('User')
+	metadata = models.CharField(max_length=512, default="{}")
 	placement_id = models.ForeignKey('Placement')
 
 
@@ -130,6 +131,7 @@ class Tool(models.Model):
 	needs_training = models.BooleanField()
 	is_stationary = models.BooleanField()
 	member = models.ForeignKey('User')
+	metadata = models.CharField(max_length=512, default="{}")
 	placement = models.ForeignKey('Placement')
 
 	def __str__(self):
@@ -158,6 +160,7 @@ class Priority(models.Model):
 	def __str__(self):
 		return "Priority(id:%d, priority_name:%s, priority_level:%d)" % (self.id, self.priority_name, self.priority_level)
 
+
 class Notification(models.Model):
 	STATUS_CHOICES =(
                 (1, 'Nowy'),
@@ -175,12 +178,14 @@ class Notification(models.Model):
 	def __str__(self):
 		return "Notification(id: %d, user_priority:%d, description:%s, member_id:%s, priority_id:%s)" % (self.id, self.user_priority, self.description, self.member_id, self.priority_id)
 
+
 class Special_function(models.Model):
 	id = models.AutoField(primary_key=True)
 	function_name = models.CharField(max_length=32)
 
 	def __str__(self):
 		return "Special_function(id:%d, function_name:%s)" % (self.id, self.function_name)
+
 
 class Members_special_function(models.Model):
 	member_id = models.ForeignKey('User')

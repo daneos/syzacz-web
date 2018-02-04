@@ -1,0 +1,42 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<div class="row">
+		<div class="col-sm-4">Książka</div>
+		<div class="col-sm-8"><input type="text" placeholder="{{ book.title }} / {{ book.placement.room_name }}" disabled></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">Właściciel</div>
+		<div class="col-sm-8">
+			<span style="font-size: 2em">{{ book.member_id.cn }}</span> <a href="xmpp://{{ book.member_id.cn }}@hskrk.pl">{{ book.member_id.cn }}@hskrk.pl</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">Opiekunowie</div>
+		<div class="col-sm-8">
+			{% for agent in meta.agents %}
+				<span>{{ agent.cn }}<span> <a href="xmpp://{{ agent.cn }}@hskrk.pl">{{ agent.cn }}@hskrk.pl</a>,
+			{% endfor %}
+		</div>
+	</div>
+	{% if lents %}
+		<br><br>
+		<h3>Historia</h3>
+		<table>
+			<tr>
+				<th>Data wypożyczenia</th>
+				<th>Data zwrotu</th>
+				<th>Użytkownik</th>
+				<th>Komentarz</th>
+			</tr>
+			{% for lent in lents %}
+				<tr>
+					<td>{{ lent.lent_date }}</td>
+					<td>{{ lent.return_date }}</td>
+					<td>{{ lent.member.cn }}</td>
+					<td>{{ lent.comment }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
+{% endblock %}

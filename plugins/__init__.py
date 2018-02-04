@@ -19,7 +19,8 @@ plugin_env = {
 	"sessid": sessid,
 	"log": log,
 	"getModel": lambda name: apps.get_model(app_label="core", model_name=name),
-	"csrf": csrf
+	"csrf": csrf,
+	"parse_metadata": parse_metadata
 }
 
 plugin_list = []
