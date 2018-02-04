@@ -25,7 +25,8 @@ def urls():
 		["%s/tools.lend/(?P<id>[0-9]+)/$", "lend_tool", "tools/lend_tool.template.html"],
 		["%s/tools.return/(?P<id>[0-9]+)/$", "return_tool", None],
 		["%s/tools.prolong/(?P<id>[0-9]+)/$", "prolong_tool", "tools/prolong_tool.template.html"],
-		["%s/tools.edit/(?P<id>[0-9]+)/$", "edit_tool", "tools/edit_tool.template.html"]
+		["%s/tools.edit/(?P<id>[0-9]+)/$", "edit_tool", "tools/edit_tool.template.html"],
+		["%s/tools.stationary", "tools_list", "tools/tools.stationary.template.html"]
 	]
 
 

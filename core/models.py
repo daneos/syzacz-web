@@ -127,6 +127,8 @@ class Tool(models.Model):
 	description = models.CharField(max_length=512)
 	available = models.BooleanField(default=True)
 	lend_permission = models.BooleanField()
+	needs_training = models.BooleanField()
+	is_stationary = models.BooleanField()
 	member = models.ForeignKey('User')
 	placement = models.ForeignKey('Placement')
 
@@ -186,6 +188,14 @@ class Members_special_function(models.Model):
 
 	def __str__(self):
 		return "Members_special_function(member_id:%d, priority_id:%d)" % (self.id, self.function_name)
+
+class Members_training(models.Model):
+        member_id = models.ForeignKey('User')
+        tool_id = models.ForeignKey('Tool')
+        timestamp = models.DateTimeField(auto_now_add=True)
+
+        def __str__(self):
+                return "Members_training(member_id:%d, tool_id:%d, timestamp:%d)" % (self.member_id, self.tool_id, self.timestamp)
 
 
 class Log(models.Model):
