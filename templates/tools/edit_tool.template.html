@@ -19,6 +19,15 @@
 		</div>
 		<br>
 		<div class="row">
+			<div class="col-sm-4">Opiekunowie</div>
+			<div class="col-sm-4">
+				<input type="text" name="agents" placeholder="{% for a in meta.agents %}{{ a.cn }},{% endfor %}" disabled>
+			</div>
+			<div class="col-sm-4">
+				<button>Zmień</button>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-sm-4">Miejsce</div>
 			<div class="col-sm-8">
 				<select name="placement_id">

@@ -1,6 +1,16 @@
 {% extends "core/home.template.html" %}
 
 {% block plugins %}
+	<script type="text/javascript">
+		function addAgent()
+		{
+			select = document.getElementById("select_agent");
+			names = document.getElementById("agents");
+			ids = document.getElementById("agent_ids");
+			ids.value = ids.value + select.options[select.selectedIndex].value + ", ";
+			names.value = names.value + select.options[select.selectedIndex].text + ", ";
+		}
+	</script>
 	<form action="/{{ app_base }}/tools.add" method="post">
 		{% csrf_token %}
 		<div class="row">
@@ -18,6 +28,28 @@
 			</div>
 		</div>
 		<br>
+		<div class="row">
+			<div class="col-sm-4">Opiekunowie</div>
+			<div class="col-sm-4">
+				<input type="text" name="agents" id="agents" disabled>
+				<input type="hidden" name="agent_ids" id="agent_ids">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				&nbsp;
+			</div>
+			<div class="col-sm-4">
+				<select name="select_agent" id="select_agent">
+					{% for user in users %}
+						<option value="{{ user.id }}">{{ user.cn }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="col-sm-4">
+				<button type="button" onclick="addAgent()">Dodaj</button>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-sm-4">Miejsce</div>
 			<div class="col-sm-8">

@@ -1,6 +1,7 @@
 # import json
 import socket
 from datetime import datetime
+from ast import literal_eval
 # from time import time
 # from uuid import uuid4
 
@@ -60,6 +61,16 @@ def get_request_remote_ip(rq):
 
 def get_request_local_ip(rq):
 	return socket.gethostbyname(rq.META.get('SERVER_NAME'))
+
+
+def parse_metadata(md):
+	try:
+		meta = literal_eval(md)
+		return {
+			"agents": [User.objects.get(pk=a) for a in meta["agents"]]
+		}
+	except Exception:
+		return {}
 
 
 @register.filter

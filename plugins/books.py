@@ -20,6 +20,7 @@ def urls():
 	return [
 		["%s/books.all$", "books_list", "books/books.template.html"],
 		["%s/books.add$", "add_book", "books/add_book.template.html"],
+		["%s/books.ask/(?P<id>[0-9]+)/$", "ask", "books/ask.template.html"],
 		["%s/books.my$", "books_my", "books/books.template.html"],
 		["%s/books.lent$", "books_lent", "books/lent_books.template.html"],
 		["%s/books.return/(?P<book_id>[0-9]+)/$", "return_book", None],
@@ -63,7 +64,8 @@ def books_my(rq):
 def add_book(rq):
 	if rq.method == "GET":
 		Placement = env["getModel"]("Placement")
-		context = {"placements": Placement.objects.all()}
+		User = env["getModel"]("User")
+		context = {"placements": Placement.objects.all(), "users": User.objects.all()}
 		context.update(env["csrf"](rq))
 		return context
 
@@ -82,6 +84,7 @@ def add_book(rq):
 			book.member_id = session.user
 			placement = env["getModel"]("Placement").objects.get(pk=rq.POST.get("placement_id"))
 			book.placement_id = placement
+			book.metadata = "{\"agents\":[%s]}" % rq.POST.get("agent_ids")
 			book.save()
 		except Error as e:
 			return {"error": "Cannot add new object: %s" % e}
@@ -112,6 +115,15 @@ def show_book(rq, book_id):
 	Book = env["getModel"]("Book")
 	book = Book.objects.get(id=book_id)
 	return {"book": book}
+
+
+def ask(rq, id):
+	Book = env["getModel"]("Book")
+	Lent = env["getModel"]("Lent")
+	book = Book.objects.get(pk=id)
+	lents = Lent.objects.filter(book=book)
+	meta = env["parse_metadata"](book.metadata)
+	return {"book": book, "meta": meta, "lents": lents}
 
 
 def lend_book(rq, book_id):
