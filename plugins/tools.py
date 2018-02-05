@@ -20,6 +20,7 @@ def urls():
 	return [
 		["%s/tools.all$", "tools_list", "tools/tools.template.html"],
 		["%s/tools.my$", "tools_my", "tools/tools.template.html"],
+		["%s/tools.log/(?P<id>[0-9]+)/$", "tool_log", "tools/tool_log.template.html"],
 		["%s/tools.lent$", "tools_lent", "tools/lent_tools.template.html"],
 		["%s/tools.add$", "add_tool", "tools/add_tool.template.html"],
 		["%s/tools.ask/(?P<id>[0-9]+)/$", "ask", "tools/ask.template.html"],
@@ -62,6 +63,14 @@ def tools_my(rq):
 
 	context.update({"tools": tools, "lents": filtered_lents, "display_edit": True})
 	return context
+
+
+def tool_log(rq, id):
+	Tool = env["getModel"]("Tool")
+	Lent = env["getModel"]("Lent")
+	tool = Tool.objects.get(pk=id)
+	lents = Lent.objects.filter(tool=tool)
+	return {"tool": tool, "lents": lents}
 
 
 def tools_lent(rq):

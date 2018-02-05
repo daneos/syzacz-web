@@ -21,6 +21,7 @@
 						<td>
 							{% if display_edit and tool.member == user %}
 								<a href="/{{ app_base }}/tools.edit/{{ tool.id }}/"><span class="edytuj">edytuj</span></a>
+								<a href="/{{ app_base }}/tools.log/{{ tool.id }}/"><span class="historia">historia</span></a>
 							{% endif %}
 							{% if tool.lend_permission %}
 								{% if tool.available %}

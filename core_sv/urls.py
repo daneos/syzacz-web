@@ -25,6 +25,7 @@ base_url = r"^%s" % conf.app_base
 
 urlpatterns = [
 	url(r'^syzacz/start$',								'core.views.start'),
+	url(r'^syzacz/heartbeat$',							'core.views.heartbeat'),
 	url(r'%s/dba/' % base_url,							include(admin.site.urls)),
 
 	url(r'%s/test-core$' % base_url, 					'core.views.test_core'),
