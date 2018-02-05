@@ -54,7 +54,7 @@ def stationary_tools_list(rq):
 	except ObjectDoesNotExist:
 		return {"error": "Object does not exist"}
 
-	return {"tools": tools, "training": training}
+	return {"tools": tools, "training": training, "Training": Training}
 
 def tools_my(rq):
 	context = {"msg": rq.GET.get("msg"), "error": rq.GET.get("error")}
