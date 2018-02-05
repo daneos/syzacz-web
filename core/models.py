@@ -192,7 +192,7 @@ class Members_special_function(models.Model):
 	function_id = models.ForeignKey('Special_function')
 
 	def __str__(self):
-		return "Members_special_function(member_id:%d, function_id:%d)" % (self.member_id, self.function_id)
+		return "Members_special_function(member_id:%s, function_id:%s)" % (self.member_id, self.function_id)
 
 class Training(models.Model):
         member_id = models.ForeignKey('User')
@@ -200,7 +200,7 @@ class Training(models.Model):
         timestamp = models.DateTimeField(auto_now_add=True)
 
         def __str__(self):
-                return "Members_training(member_id:%d, tool_id:%d, timestamp:%d)" % (self.member_id, self.tool_id, self.timestamp)
+                return "Members_training(member_id:%s, tool_id:%s, timestamp:%s)" % (self.member_id, self.tool_id, self.timestamp)
 
 
 class Log(models.Model):
