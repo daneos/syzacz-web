@@ -1,0 +1,50 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<table cellpadding="5px;" style="min-width: 706px;">
+		<tr style="font-weight: 700;">
+			<td>ID</td>
+			<td>cn</td>
+			<td>Imię</td>
+			<td>Nazwisko</td> 			
+			<td>Poziom</td>
+		</tr>
+		{% if user %}
+				<tr>
+					<td><span class="user_id">{{ suser.id }}</span></td>
+					<td>{{ suser.cn }}</td>
+					<td>{{ suser.name }}</td>
+					<td>{{ suser.surname }}</td>
+					<td>{{ suser.role }}</td>
+				</tr>
+		{% else %}
+			<tr>
+				<br><br>
+			</tr>
+			<tr>
+				<td colspan="4" style="text-align: center;">Brak elementów do wyświetlenia.</td>
+			</tr>
+		{% endif %}
+	</table>
+	<br />
+	<br />
+	<form action="/{{ app_base }}/user.role/{{ suser.id }}/" method="post">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-sm-4">Poziom dostępu</div>
+			<div class="col-sm-8">
+				<select name="role">
+					<option value=1>Adminstrator</option>
+					<option value=2>Aktywny</option>
+					<option value=3>Nieaktywny</option>
+					<option value=4>Zablokowany</option>
+					<option value=5>Nowy</option>					
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-8"><button type="submit">Zatwierdź</button></div>
+		</div>	
+	</form>
+{% endblock %}

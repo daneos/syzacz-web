@@ -22,7 +22,8 @@ def urls():
 		["%s/users_m/$", "users_list_m", "user/users_manage.template.html"],
 		["%s/users_s/$", "users_list_s", "user/users_show.template.html"],
         ["%s/user.show/(?P<user_id>[0-9]+)/$", "user_show", "user/user_data.template.html"],
-		["%s/user.rfid_state/(?P<rfid_id>[0-9a-zA-Z]+)/$", "rfid_state", None]
+		["%s/user.rfid_state/(?P<rfid_id>[0-9a-zA-Z]+)/$", "rfid_state", None],
+		["%s/user.role/(?P<user_id>[0-9]+)/$", "grant_access", "user/grant.template.html"]
         #["%s/account.delete_session/(?P<session_id>[0-9]+)/$", "delete_session", None],
         #["%s/account.change_email$", "change_email", None],
         #["%s/account.change_password$", "change_password", None],
@@ -75,22 +76,48 @@ def user_show(rq, user_id):
 	rfids = Rfid.objects.filter(user = suser)
 	if suser:
 		if currentUser.role == 1:
-			return {"user" : suser, "rfids" : rfids}
+			return {"suser" : suser, "rfids" : rfids}
 	return HttpResponseNotFound('<h1>No Page Here</h1>')
 	
 def rfid_state(rq, rfid_id):
-		Session = env["getModel"]("Session")
-		User = env["getModel"]("User")
-		Rfid = env["getModel"]("Rfid")
-		rfid = Rfid.objects.get(id = rfid_id)
-		user = rfid.user
-		try:
-			session = Session.objects.get(session_hash=env["sessid"](rq))
-		except Exception as e:
-			return redirect("/%s/user.show/%s/?error=%s" % (app_base, user.id, str(e)))
-		if rfid.active is True:
-			rfid.active = False
-		else:
-			rfid.active = True
-		rfid.save()
-		return redirect("/%s/user.show/%s/?msg=Rfid updated" % (app_base, user.id))
+	Session = env["getModel"]("Session")
+	User = env["getModel"]("User")
+	Rfid = env["getModel"]("Rfid")
+	rfid = Rfid.objects.get(id = rfid_id)
+	suser = rfid.user
+	try:
+		session = Session.objects.get(session_hash=env["sessid"](rq))
+	except Exception as e:
+		return redirect("/%s/user.show/%s/?error=%s" % (app_base, suser.id, str(e)))
+	if rfid.active is True:
+		rfid.active = False
+	else:
+		rfid.active = True
+	rfid.save()
+	return redirect("/%s/user.show/%s/?msg=Rfid updated" % (app_base, suser.id))
+		
+def grant_access(rq, user_id):
+	Session = env["getModel"]("Session")
+	User = env["getModel"]("User")
+	session = Session.objects.get(session_hash=env["sessid"](rq))
+	admin = session.user
+	suser = User.objects.get(id=user_id)
+	if rq.method == "GET":
+		if suser:
+			if admin.role == 1:
+				context = {"suser" : suser}
+				context.update(env["csrf"](rq))
+				return context
+		return HttpResponseNotFound('<h1>No Page Here</h1>')
+	
+	if rq.method == "POST":
+		if suser:
+			if admin.role == 1:
+				try:
+					suser.role = rq.POST.get("role")
+					suser.save()
+				except Error as e:
+					return {"error": "Cannot add new object: %s" % e}
+				return redirect("/%s/user.show/%s/?msg=Role updated" % (app_base, suser.id))
+		return HttpResponseNotFound('<h1>No Page Here</h1>')
+			

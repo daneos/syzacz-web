@@ -14,14 +14,14 @@
 		</tr>
 		{% if user %}
 				<tr>
-					<td><a href="/{{ app_base }}/user.show/{{ user.id }}/"><span class="user_id">{{ user.id }}</span></a></td>
-					<td><a href="/{{ app_base }}/user.ldap/{{ user.ldap }}/">{{ user.ldap }}</a></td>
-					<td><a href="/{{ app_base }}/user.cn/{{ user.cn }}/">{{ user.cn }}</a></td>
-					<td>{{ user.name }}</td>
-					<td><a href="/{{ app_base }}/user.surname/{{ user.surname }}/">{{ user.surname }}</a></td>
-					<td><a href="/{{ app_base }}/user.email/{{ user.email }}/">{{ user.email }}</a></td>
-					<td><a href="/{{ app_base }}/user.validity/{{ user.validity }}/">{{ user.validity }}</a></td>
-					<td><a href="/{{ app_base }}/user.role/{{ user.role }}/">{{ user.role }}</a></td>
+					<td><a href="/{{ app_base }}/user.show/{{ suser.id }}/"><span class="user_id">{{ suser.id }}</span></a></td>
+					<td>{{ suser.ldap }}</td>
+					<td>{{ suser.cn }}</td>
+					<td>{{ suser.name }}</td>
+					<td>{{ suser.surname }}</td>
+					<td>{{ suser.email }}</td>
+					<td>{{ suser.validity }}</td>
+					<td><a href="/{{ app_base }}/user.role/{{ suser.id }}/">{{ suser.role }}</a></td>
 				</tr>
 		{% else %}
 			<tr>
