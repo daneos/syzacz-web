@@ -194,7 +194,7 @@ class Members_special_function(models.Model):
 	def __str__(self):
 		return "Members_special_function(member_id:%d, priority_id:%d)" % (self.id, self.function_name)
 
-class Members_training(models.Model):
+class Training(models.Model):
         member_id = models.ForeignKey('User')
         tool_id = models.ForeignKey('Tool')
         timestamp = models.DateTimeField(auto_now_add=True)

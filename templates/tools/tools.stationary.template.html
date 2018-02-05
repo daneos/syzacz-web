@@ -28,7 +28,15 @@
 								{% endif %}
 							</td> 
 							<td>
+								{% if training %}
+									{% for train in training %}
+										{% if train.tool_id == tool.id %}
+											Tak
+										{% endif %}
+									{% endfor %}
+								{% else %}
 									&nbsp;
+								{% endif %}						
 							</td> 
 						</tr>
 					{% endif %}
