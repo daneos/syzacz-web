@@ -189,10 +189,10 @@ class Special_function(models.Model):
 
 class Members_special_function(models.Model):
 	member_id = models.ForeignKey('User')
-	priority_id = models.ForeignKey('Special_function')
+	function_id = models.ForeignKey('Special_function')
 
 	def __str__(self):
-		return "Members_special_function(member_id:%d, priority_id:%d)" % (self.id, self.function_name)
+		return "Members_special_function(member_id:%d, function_id:%d)" % (self.member_id, self.function_id)
 
 class Training(models.Model):
         member_id = models.ForeignKey('User')
