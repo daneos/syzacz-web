@@ -70,6 +70,8 @@ def login(rq):
 				session.save()
 				response = redirect(next_url or "/%s/home" % app_base)
 				response.set_cookie("syzacz_sessid", session.session_hash)
+				if user.role == 5:
+					return _login_form(rq, { "error": "You will wait for activate your account" }, next_url)
 				return response
 		return _login_form(rq, { "error": "Invalid user name or password" }, next_url)
 
