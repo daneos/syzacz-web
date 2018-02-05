@@ -1,14 +1,13 @@
 {% extends "core/home.template.html" %}
 
 {% block plugins %}
-	<input type="text" placeholder="wyszukaj" style="margin-left:69%; ">
+
 	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>Sprzęt</th>
 				<th>Opis</th>
 				<th>Miejsce</th>
-				<th>Akcje</th>
 				<th>Wymaga przeszkolenia?</th> 
 				<th>Mam przeszkolenie?</th> 
 			</tr>
@@ -22,11 +21,6 @@
 							<td>{{ tool.description }}</td>
 							<td>{{ tool.placement.room_name }}</td>
 							<td>
-								{% if display_edit and tool.member == user %}
-									<a href="/{{ app_base }}/tools.edit/{{ tool.id }}/"><span class="edytuj">edytuj</span></a>
-								{% endif %}
-							</td>
-							<td>
 								{% if tool.needs_training %}
 									Wymaga przeszkolenia
 								{% else %}
@@ -34,7 +28,15 @@
 								{% endif %}
 							</td> 
 							<td>
-									&nbsp;
+								{% if training %}
+									{% for train in training %}
+										{% if train.tool_id == tool %}
+											Tak
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									Nie
+								{% endif %}						
 							</td> 
 						</tr>
 					{% endif %}

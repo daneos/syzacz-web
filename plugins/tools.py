@@ -29,7 +29,7 @@ def urls():
 		["%s/tools.return/(?P<id>[0-9]+)/$", "return_tool", None],
 		["%s/tools.prolong/(?P<id>[0-9]+)/$", "prolong_tool", "tools/prolong_tool.template.html"],
 		["%s/tools.edit/(?P<id>[0-9]+)/$", "edit_tool", "tools/edit_tool.template.html"],
-		["%s/tools.stationary", "tools_list", "tools/tools.stationary.template.html"]
+		["%s/tools.stationary", "stationary_tools_list", "tools/tools.stationary.template.html"]
 	]
 
 
@@ -42,6 +42,20 @@ def tools_list(rq):
 
 	return {"tools": tools}
 
+def stationary_tools_list(rq):
+	Tool = env["getModel"]("Tool")
+	Session = env["getModel"]("Session")
+	User = env["getModel"]("User")
+	Training = env["getModel"]("Training")
+	s = Session.objects.get(session_hash=env["sessid"](rq))
+	user = s.user
+	try:
+		tools = Tool.objects.filter(available=True)
+		training = Training.objects.filter(member_id = user)
+	except ObjectDoesNotExist:
+		return {"error": "Object does not exist"}
+
+	return {"tools": tools, "training": training, "Training": Training}
 
 def tools_my(rq):
 	context = {"msg": rq.GET.get("msg"), "error": rq.GET.get("error")}
@@ -111,6 +125,8 @@ def add_tool(rq):
 			tool.name = rq.POST.get("name")
 			tool.description = rq.POST.get("description")
 			tool.lend_permission = bool(rq.POST.get("permission"))
+			tool.needs_training = bool(rq.POST.get("training"))
+			tool.is_stationary = bool(rq.POST.get("stationary"))
 			tool.member = s.user
 			placement = env["getModel"]("Placement").objects.get(pk=rq.POST.get("placement_id"))
 			tool.placement = placement
@@ -215,6 +231,8 @@ def edit_tool(rq, id):
 		tool.description = rq.POST.get("description")
 		tool.lend_permission = bool(rq.POST.get("permission"))
 		placement = env["getModel"]("Placement").objects.get(pk=rq.POST.get("placement_id"))
+		tool.needs_training = bool(rq.POST.get("training"))
+		tool.is_stationary = bool(rq.POST.get("stationary"))
 		tool.placement = placement
 		tool.save()
 
