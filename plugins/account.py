@@ -93,7 +93,6 @@ def change_password(rq):
 
 
 def rfid_state(rq, rfid_id):
-		print "tutaj"
 		Session = env["getModel"]("Session")
 		User = env["getModel"]("User")
 		Rfid = env["getModel"]("Rfid")
@@ -102,10 +101,10 @@ def rfid_state(rq, rfid_id):
 			session = Session.objects.get(session_hash=env["sessid"](rq))
 			user = session.user
 		except Exception as e:
-			return redirect("/%s/account.settings?error=%s" % (app_base, str(e)))
+			return redirect("/%s/account.status?error=%s" % (app_base, str(e)))
 		if rfid.active is True:
 			rfid.active = False
 		else:
 			rfid.active = True
 		rfid.save()
-		return redirect("/%s/account.status?msg=Password updated" % app_base)
+		return redirect("/%s/account.status?msg=Rfid updated" % app_base)

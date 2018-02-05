@@ -21,7 +21,8 @@ def urls():
 		["%s/users/$", "users", None],
 		["%s/users_m/$", "users_list_m", "user/users_manage.template.html"],
 		["%s/users_s/$", "users_list_s", "user/users_show.template.html"],
-        ["%s/user.show/(?P<user_id>[0-9]+)/$", "user_show", "user/user_data.template.html"]
+        ["%s/user.show/(?P<user_id>[0-9]+)/$", "user_show", "user/user_data.template.html"],
+		["%s/user.rfid_state/(?P<rfid_id>[0-9a-zA-Z]+)/$", "rfid_state", None]
         #["%s/account.delete_session/(?P<session_id>[0-9]+)/$", "delete_session", None],
         #["%s/account.change_email$", "change_email", None],
         #["%s/account.change_password$", "change_password", None],
@@ -64,3 +65,32 @@ def users_list_s(rq):
 		return {"error": "Object does not exist"}
 	return {"users": users}
 	
+def user_show(rq, user_id):
+	Session = env["getModel"]("Session")
+	User = env["getModel"]("User")
+	Rfid = env["getModel"]("Rfid")
+	session = Session.objects.get(session_hash=env["sessid"](rq))
+	suser = User.objects.get(id=user_id)
+	currentUser = session.user
+	rfids = Rfid.objects.filter(user = suser)
+	if suser:
+		if currentUser.role == 1:
+			return {"user" : suser, "rfids" : rfids}
+	return HttpResponseNotFound('<h1>No Page Here</h1>')
+	
+def rfid_state(rq, rfid_id):
+		Session = env["getModel"]("Session")
+		User = env["getModel"]("User")
+		Rfid = env["getModel"]("Rfid")
+		rfid = Rfid.objects.get(id = rfid_id)
+		user = rfid.user
+		try:
+			session = Session.objects.get(session_hash=env["sessid"](rq))
+		except Exception as e:
+			return redirect("/%s/user.show/%s/?error=%s" % (app_base, user.id, str(e)))
+		if rfid.active is True:
+			rfid.active = False
+		else:
+			rfid.active = True
+		rfid.save()
+		return redirect("/%s/user.show/%s/?msg=Rfid updated" % (app_base, user.id))

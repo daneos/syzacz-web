@@ -14,7 +14,7 @@
 		</tr>
 		{% if user %}
 				<tr>
-					<td>taktakakaka<a href="/{{ app_base }}/user.show/{{ user.id }}/"><span class="user_id">{{ user.id }}</span></a></td>
+					<td><a href="/{{ app_base }}/user.show/{{ user.id }}/"><span class="user_id">{{ user.id }}</span></a></td>
 					<td><a href="/{{ app_base }}/user.ldap/{{ user.ldap }}/">{{ user.ldap }}</a></td>
 					<td><a href="/{{ app_base }}/user.cn/{{ user.cn }}/">{{ user.cn }}</a></td>
 					<td>{{ user.name }}</td>
@@ -31,7 +31,8 @@
 				<td colspan="4" style="text-align: center;">Brak elementów do wyświetlenia.</td>
 			</tr>
 		{% endif %}
-	<br /> 
+	</table>
+	<br />
 	<h2>
 		<h3>Rfid</h3>
 	</h2>
@@ -47,7 +48,7 @@
 					<tr>
 						<td>{{ r.id }}</td>
 						<td>{{ r.active }}</td>
-						<td><a href="/{{ app_base }}/account.rfid_state/{{ r.id }}/"><span class="change_rfid">&otimes;</span></a></td>
+						<td><a href="/{{ app_base }}/user.rfid_state/{{ r.id }}/"><span class="change_rfid">&otimes;</span></a></td>
 					</tr>
 				{% endfor %}
 			{% else %}
@@ -60,5 +61,4 @@
 			{% endif %}
 		</table>
 	</div>
-	</table>
 {% endblock %}
