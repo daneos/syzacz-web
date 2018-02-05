@@ -1,0 +1,37 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<table cellpadding="5px;" style="min-width: 706px;">
+		<tr style="font-weight: 700;">
+			<td>ID</td>
+			<td>LDAP</td>
+			<td>cn</td>
+			<td>Imię</td>
+			<td>Nazwisko</td> 			
+			<td>Email</td>
+			<td>Ważność konta</td>
+			<td>Poziom</td>
+		</tr>
+		{% if users %}
+			{% for user in users %}
+				<tr>
+					<td><a href="/{{ app_base }}/user.show/{{ user.id }}/"><span class="user_id">{{ user.id }}</span></a></td>
+					<td><a href="/{{ app_base }}/user.show/{{ user.id }}/">{{ user.ldap }}</a></td>
+					<td><a href="/{{ app_base }}/user.show/{{ user.id }}/">{{ user.cn }}</a></td>
+					<td><a href="/{{ app_base }}/user.show/{{ user.id }}/">{{ user.name }}</a></td>
+					<td><a href="/{{ app_base }}/user.show/{{ user.id }}/">{{ user.surname }}</a></td>
+					<td><a href="/{{ app_base }}/user.show/{{ user.id }}/">{{ user.email }}</a></td>
+					<td><a href="/{{ app_base }}/user.show/{{ user.id }}/">{{ user.validity }}</a></td>
+					<td><a href="/{{ app_base }}/user.show/{{ user.id }}/">{{ user.role }}</a></td>
+				</tr>
+			{% endfor %}
+		{% else %}
+			<tr>
+				<br><br>
+			</tr>
+			<tr>
+				<td colspan="4" style="text-align: center;">Brak elementów do wyświetlenia.</td>
+			</tr>
+		{% endif %}
+	</table>
+{% endblock %}

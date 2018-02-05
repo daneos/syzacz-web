@@ -1,0 +1,30 @@
+{% extends "core/home.template.html" %}
+
+{% block plugins %}
+	<table cellpadding="5px;" style="min-width: 706px;">
+		<tr style="font-weight: 700;">
+			<td>ID</td>
+			<td>Imię</td>
+			<td>Nazwisko</td> 			
+			<td>Email</td>
+		</tr>
+		{% if users %}
+			{% for user in users %}
+				<tr>
+					<td><span class="user_id">{{ user.id }}</span></td>
+					<td>{{ user.cn }}</td>
+					<td>{{ user.name }}</td>
+					<td>{{ user.surname }}</td>
+					<td>{{ user.email }}</td>
+				</tr>
+			{% endfor %}
+		{% else %}
+			<tr>
+				<br><br>
+			</tr>
+			<tr>
+				<td colspan="4" style="text-align: center;">Brak elementów do wyświetlenia.</td>
+			</tr>
+		{% endif %}
+	</table>
+{% endblock %}
